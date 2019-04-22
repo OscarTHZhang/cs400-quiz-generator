@@ -18,24 +18,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
-public class AddNewQuestion extends Application {
+public class AddNewQuestion2{
 	
 	private double hSpacing = 5;	
 
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = setBorderPane();
-			
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Add New Qestions");
-			primaryStage.show();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public Scene getScene() {
+	  BorderPane root = setBorderPane();
+      
+      Scene scene = new Scene(root,400,400);
+      scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      return scene;
 	}
 	
 	private BorderPane setBorderPane() {
@@ -75,6 +67,7 @@ public class AddNewQuestion extends Application {
 		
 		Button back = new Button();
 		back.setText("SAVE & BACK");
+//		back.setOnAction(value);
 		Button addMore = new Button();
 		addMore.setText("SAVE & ADD MORE");
 		
@@ -136,7 +129,4 @@ public class AddNewQuestion extends Application {
 		return root;
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
 }

@@ -62,8 +62,8 @@ public class MainMenu extends Application {
         // generate three buttons for different functions
         Button loadFile = createNewButton("Load File");
         Button addQuestion = createNewButton("Add Questions");
-        AddNewQuestion tempInstance = new AddNewQuestion();
-        addQuestion.setOnAction(e -> {stage.setScene(tempInstance.returnScene()); stage.show();}); // @#%$&!?
+        AddNewQuestion2 tempInstance = new AddNewQuestion2();
+        addQuestion.setOnAction(e -> {stage.setScene(tempInstance.getScene()); stage.show();}); // @#%$&!?
         Button saveToLocal = createNewButton("Save Current Questions to Local File");
         Button exit = createNewButton("Exit");
   
