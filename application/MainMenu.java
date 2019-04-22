@@ -24,9 +24,13 @@ import javafx.scene.text.Text;
  * @author Rui Pan
  */
 public class MainMenu extends Application {
+  
+    Stage stage;
+  
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+		    stage = primaryStage;
 		    BorderPane root = setBorderPane();
 		  
 			Scene scene = new Scene(root,400,400);
@@ -58,13 +62,15 @@ public class MainMenu extends Application {
         // generate three buttons for different functions
         Button loadFile = createNewButton("Load File");
         Button addQuestion = createNewButton("Add Questions");
+        AddNewQuestion tempInstance = new AddNewQuestion();
+        addQuestion.setOnAction(e -> {stage.setScene(tempInstance.returnScene()); stage.show();}); // @#%$&!?
         Button saveToLocal = createNewButton("Save Current Questions to Local File");
         Button exit = createNewButton("Exit");
   
         // the functionalities of the exit button
         exit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                Stage stage = new Stage();
+//                Stage stage = new Stage();
                 BorderPane root = new BorderPane();
                 root.setMaxSize(200, 100);
                 
