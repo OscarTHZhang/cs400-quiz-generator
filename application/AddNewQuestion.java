@@ -21,13 +21,19 @@ import javafx.scene.layout.VBox;
 public class AddNewQuestion extends Application {
 	
 	private double hSpacing = 5;
+	Scene scene;
+	
+	public Scene returnScene() {
+	  return scene;
+	}
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = setBorderPane();
 			
-			Scene scene = new Scene(root,400,400);
+			Scene scene1 = new Scene(root,400,400);
+			scene = scene1;
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Add New Qestions");
