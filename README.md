@@ -3,7 +3,7 @@
 ## Authors
 * Oscar Zhang
 * Haochen Shi
-* Peter Pan
+* Rui (Peter) Pan
 * Bradley Mao
 
 ## Specification
