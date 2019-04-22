@@ -7,4 +7,4 @@
 * Bradley Mao
 
 ## Specification
-For detailed specification, please go to design.pdf
+For detailed specification, go to design.pdf
