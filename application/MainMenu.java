@@ -1,11 +1,13 @@
 package application;
 	
+import java.io.File;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -59,6 +61,7 @@ public class MainMenu extends Application {
         Button saveToLocal = createNewButton("Save Current Questions to Local File");
         Button exit = createNewButton("Exit");
   
+        // the functionalities of the exit button
         exit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 Stage stage = new Stage();
