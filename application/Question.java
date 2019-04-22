@@ -1,12 +1,3 @@
-// Title: MyFirstJavaFX
-// Files: Main.java
-// Course: CS400 lec002
-//
-// Author: Bradley Mao
-// Email: jmao43@wisc.edu
-// Lecturer's Name: Debra Deppeler
-// Due date : April 11st
-// Known Bugs : none
 
 package application;
 
@@ -43,7 +34,7 @@ import javafx.stage.Stage;
  * @author bradley
  *
  */
-public class Main extends Application {
+public class Question extends Application {
   /**
    * This method constructs a user interface
    */
