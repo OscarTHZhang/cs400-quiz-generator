@@ -1,3 +1,12 @@
+/**
+ * Project: CS 400 Final Project
+ * Name:	Quiz Generator
+ * A-team:	#23
+ * 
+ * Credit:
+ * 
+ */
+
 package application;
 
 import javafx.application.Platform;
