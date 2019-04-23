@@ -16,16 +16,31 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
+/**
+ * This class represents the window to add new questions
+ * 
+ * @author Haochen Shi
+ *
+ */
 public class AddNewQuestionScene {
 	
-	private Stage stage;
-	private double hSpacing = 5;	
+	private Stage stage; // to get access to the current stage
+	private double hSpacing = 5; // specify the horizontal spacing between elements in HBox
 
+	/**
+	 * This constructor passes the primary stage into the scene
+	 * 
+	 * @param primaryStage is the primary stage
+	 */
 	public AddNewQuestionScene(Stage primaryStage) {
 		stage = primaryStage;
 	}
 	
+	/**
+	 * This method returns the add new question scene
+	 * 
+	 * @return the add new question scene
+	 */
 	public Scene getScene() {
 	  BorderPane root = setBorderPane();
       Scene scene = new Scene(root,400,400);
@@ -33,7 +48,13 @@ public class AddNewQuestionScene {
       return scene;
 	}
 	
+	/**
+	 * This helper method sets the elements and the layout in the border pane
+	 * 
+	 * @return the border pane
+	 */
 	private BorderPane setBorderPane() {
+		// labels
 		Label topicLabel = new Label("Topic: ");
 		Label enterNewTopicLabel = new Label("OR Enter a new topic: ");
 		Label questionLabel = new Label("Question: ");
@@ -43,6 +64,7 @@ public class AddNewQuestionScene {
 		Label choiceDLabel = new Label("Choice D: ");
 		Label choiceELabel = new Label("Choice E: ");
 		
+		// combo box
 		ObservableList<String> options = 
 				FXCollections.observableArrayList(
 			        "Option 1",
@@ -52,34 +74,41 @@ public class AddNewQuestionScene {
 		@SuppressWarnings({"rawtypes", "unchecked"})
 		ComboBox topicMenu = new ComboBox(options);
 		
+		// text fields and text area
 		TextField newTopicText = new TextField();
+		
 		TextArea questionArea = new TextArea("Descirbe your question here.");
 		questionArea.setPrefHeight(70);
 		questionArea.setPrefWidth(250);
+		
 		TextField choiceAText = new TextField();
 		TextField choiceBText = new TextField();
 		TextField choiceCText = new TextField();
 		TextField choiceDText = new TextField();
 		TextField choiceEText = new TextField();
 		
+		// check boxes
 		CheckBox choiceABox = new CheckBox("Correct?");
 		CheckBox choiceBBox = new CheckBox("Correct?");
 		CheckBox choiceCBox = new CheckBox("Correct?");
 		CheckBox choiceDBox = new CheckBox("Correct?");
 		CheckBox choiceEBox = new CheckBox("Correct?");
 		
+		// buttons
 		Button back = new Button();
 		back.setText("SAVE & BACK");
+		// create a new instance of MainMenuScene and set the button's action
 		MainMenuScene mainMenu = new MainMenuScene(stage);
     	back.setOnAction(e -> {stage.setScene(mainMenu.getScene()); stage.show();});
     	
 		Button addMore = new Button();
 		addMore.setText("SAVE & ADD MORE");
 		
+		// HBoxes
 		HBox existingTopic = new HBox();
 		existingTopic.getChildren().addAll(topicLabel, topicMenu);
-		existingTopic.setAlignment(Pos.CENTER_LEFT);
-		existingTopic.setSpacing(hSpacing);
+		existingTopic.setAlignment(Pos.CENTER_LEFT); // alignment
+		existingTopic.setSpacing(hSpacing); // horizontal spacing
 		
 		HBox newTopic = new HBox();
 		newTopic.getChildren().addAll(enterNewTopicLabel, newTopicText);
@@ -121,15 +150,17 @@ public class AddNewQuestionScene {
 		buttons.setAlignment(Pos.CENTER);
 		buttons.setSpacing(20);
 		
+		// VBox
 		VBox list = new VBox();
 		list.getChildren().addAll(existingTopic, newTopic, question, 
 				choiceA, choiceB, choiceC, choiceD, choiceE, buttons);
 		list.setAlignment(Pos.TOP_CENTER); 
-		list.setSpacing(7);
+		list.setSpacing(7); // vertical spacing
 		
+		// set the border pane
 		BorderPane root = new BorderPane();
 		root.setCenter(list);
-		root.setPadding(new Insets(15, 20, 10, 20));
+		root.setPadding(new Insets(15, 20, 10, 20)); // padding of the border pane
 		
 		return root;
 	}
