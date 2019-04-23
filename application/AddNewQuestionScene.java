@@ -1,11 +1,9 @@
 package application;
 	
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -16,26 +14,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
-public class AddNewQuestion extends Application {
+public class AddNewQuestionScene {
 	
+	private Stage stage;
 	private double hSpacing = 5;	
 
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = setBorderPane();
-			
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Add New Qestions");
-			primaryStage.show();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public AddNewQuestionScene(Stage primaryStage) {
+		stage = primaryStage;
+	}
+	
+	public Scene getScene() {
+	  BorderPane root = setBorderPane();
+      Scene scene = new Scene(root,400,400);
+      scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      return scene;
 	}
 	
 	private BorderPane setBorderPane() {
@@ -75,6 +70,9 @@ public class AddNewQuestion extends Application {
 		
 		Button back = new Button();
 		back.setText("SAVE & BACK");
+		MainMenuScene mainMenu = new MainMenuScene(stage);
+    	back.setOnAction(e -> {stage.setScene(mainMenu.getScene()); stage.show();});
+    	
 		Button addMore = new Button();
 		addMore.setText("SAVE & ADD MORE");
 		
@@ -136,7 +134,4 @@ public class AddNewQuestion extends Application {
 		return root;
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
 }

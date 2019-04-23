@@ -11,16 +11,13 @@
 
 package application;
 	
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,13 +26,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * This Application is the UI for Design Application
  * @author Oscar
  *
  */
-public class DesignTest extends Application {
+public class DesignTestScene{
+	
+	private Stage stage;
 	
 	private VBox planeElement; // the vertical box that contains all the elements
 	
@@ -46,54 +46,42 @@ public class DesignTest extends Application {
 	
 	private Set<String> chosenTopic; // the list of topics that the user has chosen
 	
-	public DesignTest() {
-		super();
+	public DesignTestScene(Stage primaryStage) {
+		stage = primaryStage;
 		chosenTopic = new HashSet<String>();
 	}
 	
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = new BorderPane();
-			setLayout();
-			
-			
-			root.setCenter(planeElement);
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Design Your Test");
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public Scene getScene() {
+		BorderPane root = new BorderPane();
+		setLayout();
+		root.setCenter(planeElement);
+		Scene scene = new Scene(root,400,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		return scene;
 	}
 	
 	/**
 	 * private helper that sets the layout plan
 	 * @throws Exception if there is an exception when initializing these boxes layout
 	 */
-	private void setLayout() throws Exception {
+	private void setLayout() {
 		planeElement = new VBox(); // contains all the HBox
 		planeElement.setAlignment(Pos.CENTER);
 		planeElement.setSpacing(50.0);
-		
 		
 		chooseTopic = new HBox();
 		chooseTopic.setSpacing(15.0);
 		chooseTopic.getChildren().add(new Label("Choosing the topic:"));
 		
+		// TODO: should not be able to add the same topic once again
 		// this should be imported from another array list in the back end topic class
 		ComboBox<String> topicList = new ComboBox<String>(
-				
-				FXCollections.observableArrayList(
-					
-					"topic 1",
-					"topic 2",
-					"topic 3",
-					"...."
-						
-				)
+			FXCollections.observableArrayList(
+				"topic 1",
+				"topic 2",
+				"topic 3",
+				"...."	
+			)
 		);
 		
 		chooseTopic.getChildren().add(topicList);
@@ -104,32 +92,32 @@ public class DesignTest extends Application {
 		// set up select button
 		Button add = new Button("+");
 		add.setOnAction(new EventHandler<ActionEvent>() {
-			
-			/**
-			 * 
-			 */
 			@Override
 			public void handle(ActionEvent event) {
-				
 				chosenTopic.add(topicList.getValue());	
-				showTopic.getChildren().add( new Label( topicList.getValue() ) );
-				
-			}
-			
-			
+				showTopic.getChildren().add( new Label( topicList.getValue() ) );	
+			}	
 		});
+		
 		chooseTopic.getChildren().add(add);
 		
 		numQuestion = new HBox();
 		numQuestion.setSpacing(15.0);
 		numQuestion.getChildren().add(new Label("Number of questions:"));
 		numQuestion.getChildren().add(new TextField());
-		
-		
+
 		options = new HBox();
 		options.setSpacing(50.0);
-		options.getChildren().add(new Button("CANCEL"));
-		options.getChildren().add(new Button("START"));
+		
+		Button cancel = new Button("CANCEL");
+		MainMenuScene mainMenu = new MainMenuScene(stage);
+		cancel.setOnAction(e -> {stage.setScene(mainMenu.getScene()); stage.show();});
+		options.getChildren().add(cancel);
+		
+		Button start = new Button("START");
+		QuestionScene question = new QuestionScene(stage);
+		start.setOnAction(e -> {stage.setScene(question.getScene()); stage.show();});
+		options.getChildren().add(start);
 		
 		// set the alignment of all the boxes
 		
@@ -145,7 +133,4 @@ public class DesignTest extends Application {
 		planeElement.getChildren().add(showTopic);
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
 }
