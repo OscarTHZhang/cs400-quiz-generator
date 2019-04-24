@@ -169,7 +169,7 @@ public class AddNewQuestionScene {
 		// set the border pane
 		BorderPane root = new BorderPane();
 		root.setCenter(list);
-		root.setPadding(new Insets(15, 20, 10, 20)); // padding of the border pane
+		root.setPadding(new Insets(15, 20, 15, 20)); // padding of the border pane
 		
 		return root;
 	}

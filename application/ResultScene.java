@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -46,7 +47,7 @@ public class ResultScene {
 	 */
 	public Scene getScene() {
 		BorderPane root = setBorderPane();	
-		Scene scene = new Scene(root,400,200);
+		Scene scene = new Scene(root,400,400);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		return scene;
 	}
@@ -60,8 +61,10 @@ public class ResultScene {
 		// texts indicating the number of answered and correct questions 
 		Text answeredQText = new Text("Number of Correct Questions: " + 
 				QuestionScene.correctQuestionCount + " / " + QuestionScene.questionCount);
+		answeredQText.setFont(new Font("Helvetica", 16));
 		Text correctQText = new Text("Number of Answered Questions: " +
 				QuestionScene.finishedQuestionCount + " / " + QuestionScene.questionCount);
+		correctQText.setFont(new Font("Helvetica", 16));
 		
 		// buttons
 		Button takeNewQuiz = new Button("Take New Quiz");

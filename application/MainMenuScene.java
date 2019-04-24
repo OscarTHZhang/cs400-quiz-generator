@@ -38,7 +38,7 @@ public class MainMenuScene {
     
 	public Scene getScene() {
 	    BorderPane root = setBorderPane();
-		Scene scene = new Scene(root,400,400);
+		Scene scene = new Scene(root,400,500);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		return scene;
 	}
@@ -47,10 +47,11 @@ public class MainMenuScene {
   	    BorderPane root = new BorderPane();
         
         Label title = new Label("Quiz Generator"); // set the main title
-        title.setFont(new Font("Helvetica", 30)); // make the main title looks bigger
+        title.setFont(new Font("Helvetica", 32)); // make the main title looks bigger
+        
         Label numQuestions = new Label("Available Questions: 13"); // display the number of available questions
         
-        Button startQuizButton = createNewButton("Start Quiz", 150, 100, new Font("Helvetiva", 20));
+        Button startQuizButton = createNewButton("Start Quiz", 150, 100, new Font("Helvetiva", 18));
         DesignTestScene design = new DesignTestScene(stage);
         startQuizButton.setOnAction(e -> {stage.setScene(design.getScene()); stage.show();});
         
@@ -77,7 +78,7 @@ public class MainMenuScene {
             public void handle(ActionEvent event) {
             	Stage popUpStage = new Stage();
                 BorderPane root = new BorderPane();
-                root.setMaxSize(200, 100);
+                root.setMaxSize(300, 100);
                 
                 Text warningMessage = new Text("Are you sure you want to quit?");
                 
@@ -107,9 +108,10 @@ public class MainMenuScene {
         VBox buttons = new VBox();
         buttons.getChildren().addAll(loadFile, addQuestion, saveToLocal, exit);
         buttons.setSpacing(10);
-        buttons.setPadding(new Insets(15, 20, 10, 10));
         buttons.setAlignment(Pos.CENTER);
+        
         root.setBottom(buttons);
+        root.setPadding(new Insets(20, 20, 30, 20));
         return root;
 	}
 	

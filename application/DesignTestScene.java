@@ -16,6 +16,7 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -62,7 +63,8 @@ public class DesignTestScene {
 		BorderPane root = new BorderPane();
 		setLayout();
 		root.setCenter(planeElement);
-		Scene scene = new Scene(root,400,400);
+		root.setPadding(new Insets(20, 20, 20, 20));
+		Scene scene = new Scene(root,400,250);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		return scene;
 	}
@@ -74,7 +76,7 @@ public class DesignTestScene {
 	private void setLayout() {
 		planeElement = new VBox(); // contains all the HBox
 		planeElement.setAlignment(Pos.CENTER);
-		planeElement.setSpacing(50.0);
+		planeElement.setSpacing(30.0);
 		
 		chooseTopic = new HBox();
 		chooseTopic.setSpacing(15.0);
@@ -100,7 +102,7 @@ public class DesignTestScene {
 		Button add = new Button("+");
 		// set the functionality using lambda expression
 		add.setOnAction(event -> {
-			if (!chosenTopic.contains(topicList.getValue())) {
+			if (topicList.getValue() != null && !chosenTopic.contains(topicList.getValue())) {
 				chosenTopic.add(topicList.getValue());	
 				showTopic.getChildren().add(new Label(chosenTopic.get(chosenTopic.size() - 1)));
 				// get the latest added topic to display on the screen
@@ -138,8 +140,8 @@ public class DesignTestScene {
 		// add the HBox into VBox
 		planeElement.getChildren().add(chooseTopic);
 		planeElement.getChildren().add(numQuestion);
-		planeElement.getChildren().add(options);
 		planeElement.getChildren().add(showTopic);
+		planeElement.getChildren().add(options);
 	}
 	
 	/**
