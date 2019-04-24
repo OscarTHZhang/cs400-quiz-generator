@@ -1,3 +1,6 @@
 ~/.DS_Store
 ~/build.fxbuild
 ~/application/*.class
+/Question.class
+/QuestionScene.class
+/Quiz.class
