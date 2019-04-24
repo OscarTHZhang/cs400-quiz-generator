@@ -47,7 +47,7 @@ public class ResultScene {
 	 */
 	public Scene getScene() {
 		BorderPane root = setBorderPane();	
-		Scene scene = new Scene(root,400,400);
+		Scene scene = new Scene(root,400,350);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		return scene;
 	}
@@ -71,10 +71,14 @@ public class ResultScene {
 		// create a new instance of MainMenuScene and set the button's action
 		MainMenuScene mainMenu = new MainMenuScene(stage);
 		takeNewQuiz.setOnAction(e -> {stage.setScene(mainMenu.getScene()); stage.show();});
+		takeNewQuiz.setMinSize(100, 40);
 		
 		Button saveAns = new Button("Save Answers to a JSON file");
+		saveAns.setMinSize(100, 40);
 		
 		Button exit = new Button("Exit without Saving");
+		exit.setMinSize(100, 40);
+		
 		// set the button's action to show a warning message
 		exit.setOnAction(e -> {
 			// a new stage aside from the primary stage
@@ -121,17 +125,17 @@ public class ResultScene {
 		VBox buttons = new VBox();
 		buttons.getChildren().addAll(takeNewQuiz, saveAns, exit);
 		buttons.setAlignment(Pos.CENTER);
-		buttons.setSpacing(10);
+		buttons.setSpacing(20);
 		
 		VBox list = new VBox();
 		list.getChildren().addAll(answeredQText, correctQText, buttons);
 		list.setAlignment(Pos.CENTER); 
-		list.setSpacing(20);
+		list.setSpacing(30);
 		
 		// the border pane
 		BorderPane root = new BorderPane();
 		root.setCenter(list);
-		root.setPadding(new Insets(15, 20, 10, 20));
+		root.setPadding(new Insets(20, 20, 20, 20));
 		
 		return root;
 	}
