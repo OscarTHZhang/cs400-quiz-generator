@@ -1,7 +1,7 @@
-.DS_Store
-.classpath
-.project
-build.fxbuild
-*.class
+/.DS_Store
+/.classpath
+/.project
+/build.fxbuild
+/application/*.class
 
 

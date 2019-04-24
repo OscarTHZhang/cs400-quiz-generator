@@ -10,7 +10,10 @@
 
 package application;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 import java.util.List;
 
 import javafx.scene.image.Image;
@@ -26,11 +29,17 @@ public class Question {
 	private String[] choices; // answer choices
 	private String topic; // the topic that this question is affiliated to
 	private List<String> keys; // the true answer for this question
+<<<<<<< HEAD
 	private List<Image> imgs; // a list of images that may be related to this question
 
 	
 
   /**
+=======
+	List<Image> imgs; // a list of images that may be related to this question
+
+	/**
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 	 * The constructor of the Question class that takes in the parameters
 	 * @param description of the question
 	 * @param choices of the question
@@ -67,22 +76,30 @@ public class Question {
 	 * A demo that is aimed to test the UI and functionality
 	 */
 	public void setDemo1() {
+<<<<<<< HEAD
 		// set description ,choices, and answers
+=======
+		// set description and choices
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 		this.description = "What is the name of the computer sciences professors in the picture on "
 				+ "the right? (Select one answer)";
 		
 		this.choices = new String[] { "Deb Deppeler", "Gary Dahl", "Jim Williams", "Marc Renault" };
+<<<<<<< HEAD
 	    this.keys=new ArrayList<>();
 	    this.keys.add("Deb Deppeler");
 	    this.imgs= new ArrayList<>();
 	    imgs.add(new Image("400fx.jpg"));
 	    
+=======
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 	}
 
 	/**
 	 * Another demo that is aimed to test the UI and functionality
 	 */
 	public void setDemo2() {
+<<<<<<< HEAD
       // set description ,choices, and answers
 		this.description = "Is Bradley the best rapper in UW-Madison?";
 		this.choices = new String[] { "Yes", "I bet", "he is" };
@@ -105,6 +122,20 @@ public class Question {
 	    this.keys.add("hell cold");
         this.imgs= new ArrayList<>();
         imgs.add(new Image("uwmadison.jpg"));
+=======
+		// set description and choices
+		this.description = "Is Bradley the best coder in UW-Madison?";
+		this.choices = new String[] { "Yes", "I bet", "he is" };
+	}
+
+	/**
+	 * 
+	 */
+	public void setDemo3() {
+		// set description and choices
+		this.description = "What do you think of the weather of Madison?";
+		this.choices = new String[] { "very cozy", "cold", "hell cold" };
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 	}
 
 	/**
@@ -116,28 +147,44 @@ public class Question {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * set the description of the question
 	 * @param description of the question
+=======
+	 * 
+	 * @param description
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
+<<<<<<< HEAD
 	 * return the choices of the question
 	 * @return the choices of the question
+=======
+	 * 
+	 * @return
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 	 */
 	public String[] getChoices() {
 		return choices;
 	}
 
 	/**
+<<<<<<< HEAD
 	 * set the choices of the question
 	 * @param choices of the question
+=======
+	 * 
+	 * @param choices
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 	 */
 	public void setChoices(String[] choices) {
 		this.choices = choices;
 	}
+<<<<<<< HEAD
 	
 	
 	public List<String> getKeys() {
@@ -150,4 +197,7 @@ public class Question {
 	public List<Image> getImgs() {
 	    return imgs;
 	  }
+=======
+
+>>>>>>> 1ce31109d93f498237c675db528b261bb1affca3
 }
