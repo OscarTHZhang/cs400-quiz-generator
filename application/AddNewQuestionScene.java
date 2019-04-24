@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class AddNewQuestionScene {
 	
 	private Stage stage; // to get access to the current stage
-	private double hSpacing = 5; // specify the horizontal spacing between elements in HBox
+	private double hSpacing = 10; // specify the horizontal spacing between elements in HBox
 
 	/**
 	 * This constructor passes the primary stage into the scene
@@ -52,7 +52,7 @@ public class AddNewQuestionScene {
 	 */
 	public Scene getScene() {
 	  BorderPane root = setBorderPane();
-      Scene scene = new Scene(root,400,400);
+      Scene scene = new Scene(root,400,450);
       scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
       return scene;
 	}
@@ -112,6 +112,8 @@ public class AddNewQuestionScene {
     	
 		Button addMore = new Button();
 		addMore.setText("SAVE & ADD MORE");
+		// create a new instance of AddNewQuestionScene and set the button's action
+		addMore.setOnAction(e -> {stage.setScene(this.getScene()); stage.show();});
 		
 		// HBoxes
 		HBox existingTopic = new HBox();
@@ -157,6 +159,7 @@ public class AddNewQuestionScene {
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(back, addMore);
 		buttons.setAlignment(Pos.CENTER);
+		buttons.setPadding(new Insets(20, 0, 0, 0));
 		buttons.setSpacing(20);
 		
 		// VBox
@@ -164,12 +167,12 @@ public class AddNewQuestionScene {
 		list.getChildren().addAll(existingTopic, newTopic, question, 
 				choiceA, choiceB, choiceC, choiceD, choiceE, buttons);
 		list.setAlignment(Pos.TOP_CENTER); 
-		list.setSpacing(7); // vertical spacing
+		list.setSpacing(15); // vertical spacing
 		
 		// set the border pane
 		BorderPane root = new BorderPane();
 		root.setCenter(list);
-		root.setPadding(new Insets(15, 20, 15, 20)); // padding of the border pane
+		root.setPadding(new Insets(20, 20, 20, 20)); // padding of the border pane
 		
 		return root;
 	}

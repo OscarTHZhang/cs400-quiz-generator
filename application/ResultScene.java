@@ -112,7 +112,7 @@ public class ResultScene {
             // padding of the border pane
             root.setPadding(new Insets(15, 20, 10, 20));
 
-            Scene warning = new Scene(root, 250, 200);
+            Scene warning = new Scene(root, 250, 100);
             popUpStage.setScene(warning);
             popUpStage.show();
 		});
