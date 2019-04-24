@@ -36,7 +36,7 @@ public class Main extends Application {
 			
 			primaryStage.setScene(mainMenu);
 			primaryStage.setTitle("Quiz Generator");
-			// set resizable to be false to make the layout more elegant
+			// disallow resizing to make the layout more elegant
 			primaryStage.setResizable(false); 
 			primaryStage.show();
 		} catch(Exception e) {
