@@ -10,12 +10,8 @@
 package application;
 	
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

@@ -9,11 +9,16 @@
 
 package application;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -100,7 +105,7 @@ public class MainMenuScene {
                 root.setCenter(list);
                 root.setPadding(new Insets(15, 20, 10, 20));
 
-                Scene warning = new Scene(root, 250, 200);
+                Scene warning = new Scene(root, 250, 100);
                 popUpStage.setScene(warning);
                 popUpStage.show();
             }
