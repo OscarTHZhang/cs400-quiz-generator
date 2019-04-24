@@ -27,17 +27,17 @@ public class Question {
 	}
 
 	public void setDemo1() {
-		this.description = "--What is the name of the computer sciences professors in the picture on the right? (Select one answer)";
+		this.description = "What is the name of the computer sciences professors in the picture on the right? (Select one answer)";
 		this.choices = new String[] { "Deb Deppeler", "Gary Dahl", "Jim Williams", "Marc Renault" };
 	}
 
 	public void setDemo2() {
-		this.description = "Is Bradley the best coder in UW-Madison ?";
+		this.description = "Is Bradley the best coder in UW-Madison?";
 		this.choices = new String[] { "Yes", "I bet", "he is" };
 	}
 
 	public void setDemo3() {
-		this.description = "What do you think of the weather of Madison ?";
+		this.description = "What do you think of the weather of Madison?";
 		this.choices = new String[] { "very cozy", "cold", "hell cold" };
 	}
 

@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  * This class uses JavaFx and creates a user interface
@@ -62,11 +66,22 @@ public class QuestionScene {
 	}
 
 	public Scene getScene() {
-		Pane root = new Pane();
+		BorderPane root = setBorderPane();
+		
+		Scene scene = new Scene(root, 400, 400); // set window size
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+		return scene;
+	}
+
+	private BorderPane setBorderPane() {
+		BorderPane root = new BorderPane();
+		
 		// set up in another place
-		Label questionLabel = new Label("Question " + (currentQuestionCount) + " out of " + questionCount);
-		questionLabel.setLayoutX(1);
-		questionLabel.setLayoutY(2);
+		Label questionLabel = new Label("Question " + (currentQuestionCount) + " out of " + questionCount + ": ");
+		questionLabel.setFont(new Font("Helvetiva", 12));
+		questionLabel.setAlignment(Pos.CENTER_LEFT);
+		
 		Question cur = quiz.getQuestions().get(currentQuestionCount - 1);
 
 		String question = cur.getDescription();
@@ -87,52 +102,31 @@ public class QuestionScene {
 
 		// process question title - End
 
+		HBox questionDescription = new HBox();
 		// question label
-		Label questionTitle = new Label(question);
-		questionTitle.setLayoutX(10);
-		questionTitle.setLayoutY(30);
+		Text questionTitle = new Text(question);
+		questionTitle.setFont(new Font("Helvetiva", 14));
+		questionDescription.getChildren().add(questionTitle);
+		questionDescription.setPadding(new Insets(10, 0, 0, 15));
+		
+		VBox choicesBox = new VBox();
 		// choice label
 		CheckBox[] allCheckBox = new CheckBox[choices.length];
 		for (int i = 0; i < choices.length; i++) {
 			CheckBox cb = new CheckBox(choices[i]);
-			cb.setLayoutX(30);
-			cb.setLayoutY(80 + (i + 1) * 30);
-			root.getChildren().add(cb);
+			choicesBox.getChildren().add(cb);
 			allCheckBox[i] = cb;
 		}
-		// function button
-		// submit button
-		Button submit = new Button("Submit Answer ");
-		submit.setLayoutX(130);
-		submit.setLayoutY(270);
-		submit.setMinSize(70, 70);
-		root.getChildren().add(submit);
-
-		// skip button
-		Button skip = new Button("skip this\n question >>");
-		skip.setOnAction(e -> {
-			currentQuestionCount++;
-			stage.setScene(QuestionScene.this.getScene());
-			stage.show();
-		});
-		skip.setLayoutX(300);
-		skip.setLayoutY(320);
-		root.getChildren().add(skip);
-
-		// next and prev
-		Button next = new Button("next -->");
-		next.setOnAction(e -> {
-			if (currentQuestionCount < questionCount) {
-				currentQuestionCount++;
-				stage.setScene(QuestionScene.this.getScene());
-				stage.show();
-			}
-		});
-		next.setLayoutX(320);
-		next.setLayoutY(370);
-		root.getChildren().add(next);
-
-		Button prev = new Button("<--previous");
+		choicesBox.setAlignment(Pos.CENTER_LEFT);
+		choicesBox.setSpacing(20);
+		
+		HBox buttons = new HBox();
+		buttons.setAlignment(Pos.CENTER);
+		buttons.setSpacing(30);
+		buttons.setPadding(new Insets(20, 0, 0, 0));
+		
+		// prev
+		Button prev = new Button("PREVIOUS");
 		prev.setOnAction(e -> {
 			if (currentQuestionCount > 1) {
 				currentQuestionCount--;
@@ -140,21 +134,10 @@ public class QuestionScene {
 				stage.show();
 			}
 		});
-		prev.setLayoutX(1);
-		prev.setLayoutY(370);
-		root.getChildren().add(prev);
+		buttons.getChildren().add(prev);
 
-		Image image = new Image("400fx.jpg");
-		ImageView iv = new ImageView(image);
-		iv.setFitHeight(150);
-		iv.setFitWidth(150);
-		iv.setLayoutX(200);
-		iv.setLayoutY(100);
-
-		root.getChildren().add(questionLabel);
-		root.getChildren().add(questionTitle);
-		root.getChildren().add(iv);
-
+		// submit
+		Button submit = new Button("SUBMIT");
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				Stage popUpStage = new Stage();
@@ -166,7 +149,7 @@ public class QuestionScene {
 				vBox.getChildren().addAll(label, label2, click);
 				vBox.setAlignment(Pos.CENTER);
 				pane.setCenter(vBox);
-				Scene page2 = new Scene(pane, 250, 200);
+				Scene page2 = new Scene(pane, 250, 100);
 				popUpStage.setScene(page2);
 				popUpStage.show();
 
@@ -188,11 +171,41 @@ public class QuestionScene {
 				});
 			}
 		});
+		submit.setMinSize(70, 40);
+		buttons.getChildren().add(submit);
 
-		Scene scene = new Scene(root, 400, 400); // set window size
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		// next
+		Button next = new Button("NEXT");
+		next.setOnAction(e -> {
+			if (currentQuestionCount < questionCount) {
+				currentQuestionCount++;
+				stage.setScene(QuestionScene.this.getScene());
+				stage.show();
+			}
+		});
+		buttons.getChildren().add(next);
 
-		return scene;
+		Image image = new Image("400fx.jpg");
+		ImageView iv = new ImageView(image);
+		iv.setFitHeight(150);
+		iv.setFitWidth(150);
+
+		HBox choicesAndImage = new HBox();
+		choicesAndImage.getChildren().addAll(choicesBox, iv);
+		choicesAndImage.setAlignment(Pos.CENTER_LEFT);
+		choicesAndImage.setSpacing(80);
+		choicesAndImage.setPadding(new Insets(10, 0, 0, 10));
+		
+		VBox list = new VBox();
+		list.getChildren().addAll(questionLabel, questionDescription);
+		list.setAlignment(Pos.TOP_LEFT);
+		list.setSpacing(15);
+		
+		root.setTop(list);
+		root.setCenter(choicesAndImage);
+		root.setBottom(buttons);
+		root.setPadding(new Insets(20, 30, 20, 30));
+		
+		return root;
 	}
-
 }
