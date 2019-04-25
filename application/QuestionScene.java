@@ -188,7 +188,7 @@ public class QuestionScene {
 					}
 					String correctnessPrompt;
 					if (correctness && !redundantChoice)
-						correctnessPrompt = "correct 鈭�";
+						correctnessPrompt = "correct :)";
 					else if (partiallCorrectness)
 						correctnessPrompt = "partially correct";
 					else
