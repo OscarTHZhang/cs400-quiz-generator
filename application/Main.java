@@ -8,7 +8,7 @@
  */
 
 package application;
-	
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -20,7 +20,7 @@ import javafx.scene.Scene;
  *
  */
 public class Main extends Application {
-	
+
 	/**
 	 * This method sets up the application with the main menu scene
 	 * 
@@ -33,25 +33,25 @@ public class Main extends Application {
 			MainMenuScene mainMenuWindow = new MainMenuScene(primaryStage);
 			Scene mainMenu = mainMenuWindow.getScene();
 			mainMenu.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
+
 			primaryStage.setScene(mainMenu);
 			primaryStage.setTitle("Quiz Generator");
 			// disallow resizing to make the layout more elegant
-			primaryStage.setResizable(false); 
+			primaryStage.setResizable(false);
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * The main method launches the application
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	    System.out.println("");
+		System.out.println("");
 		launch(args);
 	}
-	
+
 }
