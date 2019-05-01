@@ -9,11 +9,21 @@
 
 package application;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,8 +48,6 @@ import javafx.scene.text.Text;
 public class MainMenuScene {
 
 	private Stage stage;
-	public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to 
-	// manipulate throughout the application
 
 	public MainMenuScene(Stage primaryStage) {
 		stage = primaryStage;
@@ -136,14 +145,44 @@ public class MainMenuScene {
 	 * program. To be implemented.
 	 */
 	private void chooseFile() {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File"); // TODO: Where is the title displayed?
-		File selectedFile = fileChooser.showOpenDialog(stage);
-		if (selectedFile != null) {
-			// TODO: To be implemented in the next phase. Read in .JSON file and store
-			// the questions in the program.
-		}
-	}
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File"); // TODO: Where is the title displayed?
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            // TODO: To be implemented in the next phase. Read in .JSON file and store
+            // the questions in the program.
+            try {
+                Object obj = new JSONParser().parse(new FileReader(selectedFile.getPath()));
+                JSONObject jo = (JSONObject) obj;
+                JSONArray questions = (JSONArray) jo.get("questionArray");
+                List<Question> questionList = new ArrayList<Question>();
+                for (int i = 0; i < questions.size(); i++) {
+                    JSONObject jsonQuestion = (JSONObject) questions.get(i);
+                    String questionDescription = (String) jsonQuestion.get("questionText");
+                    String topic = (String) jsonQuestion.get("topic");
+                    String imagePath = (String) jsonQuestion.get("image");
+                    BufferedImage bImage = ImageIO.read(new File(imagePath));
+                    Image image = SwingFXUtils.toFXImage(bImage, null);
+                    JSONArray choiceArray = (JSONArray) jo.get("choiceArray");
+                    Choice[] choices = new Choice[5];
+                    
+                    for (int j = 0; j < 5; j++) {
+                        JSONObject jsonChoice = (JSONObject) choiceArray.get(j);
+                        String choiceDescription = (String) jsonChoice.get("choice");
+                        boolean isCorrect = jsonChoice.get("isCorrect").equals("T");
+                        Choice choice = new Choice(isCorrect, choiceDescription);
+                        choices[j] = choice;
+                    }
+                    
+                    // construct instance of Question
+                    Question newQuestion = new Question(questionDescription, choices, topic, image);
+                    // add question to questionList
+                    questionList.add(newQuestion);
+                }
+  
+            } catch (FileNotFoundException e) {} catch (IOException e) {} catch (ParseException e) {} 
+        }
+    }
 
 	/**
 	 * Save the current questions to a local .json file. To be implemented.
