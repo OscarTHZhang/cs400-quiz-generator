@@ -86,6 +86,7 @@ public class Quiz {
 	 * @return current question
 	 */
 	public Question currQuesiton() {
+		System.out.println("size:" + questions.size());
 		return questions.get(currentQuestionIndex);
 	}
 
@@ -121,7 +122,8 @@ public class Quiz {
 	 * @return user's answer for this question
 	 */
 	public List<String> checkAnswer() {
-		System.out.println(currentQuestionIndex);
+		System.out.println("current index " + currentQuestionIndex);
+		System.out.println("user answer size: " + userAnswer.size());
 		return userAnswer.get(currentQuestionIndex);
 	}
 
