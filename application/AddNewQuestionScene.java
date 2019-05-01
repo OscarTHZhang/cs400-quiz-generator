@@ -83,7 +83,7 @@ public class AddNewQuestionScene {
 		Label choiceELabel = new Label("Choice E: ");
 
 		// combo box
-		ObservableList<String> options = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
+		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.TOPIC);
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ComboBox topicMenu = new ComboBox(options);
 
