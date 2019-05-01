@@ -11,6 +11,11 @@ public class Choice {
 		choiceLabel = "";
 		choiceDescription = "";
 	}
+	
+	public Choice(boolean correct, String description) {
+	     isCorrect = correct;
+	     choiceDescription = description;
+	}
 
 	public boolean isCorrect() {
 		return isCorrect;
