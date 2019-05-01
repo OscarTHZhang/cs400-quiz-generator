@@ -193,7 +193,7 @@ public class MainMenuScene {
                     //String imagePath = (String) jsonQuestion.get("image");
                     //BufferedImage bImage = ImageIO.read(new File(imagePath));
                     //Image image = SwingFXUtils.toFXImage(bImage, null);
-                    JSONArray choiceArray = (JSONArray) jo.get("choiceArray");
+                    JSONArray choiceArray = (JSONArray) jsonQuestion.get("choiceArray");
                     Choice[] choices = new Choice[5];
                     
                     for (int j = 0; j < 5; j++) {
