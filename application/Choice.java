@@ -41,4 +41,10 @@ public class Choice {
 		this.choiceDescription = choiceDescription;
 	}
 	
+	public boolean equals(Choice choice) {
+	  if (this.getChoiceDescription().equals(choice.getChoiceDescription())) return true;
+    return false;
+	  
+	}
+	
 }

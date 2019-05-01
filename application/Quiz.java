@@ -21,7 +21,7 @@ import java.util.List;
 public class Quiz {
 	
 	private int questionCount; // number of questions in the quiz
-	private List<List<String>> userAnswer; // user's answer
+	private List<List<Choice>> userAnswer; // user's answer
 	private List<Question> questions;// all questions in the quiz
 	private List<String> allTopic; // topics that this quiz should cover
 	private int currentQuestionIndex = -1; // index of current question
@@ -45,9 +45,9 @@ public class Quiz {
 		this.allTopic = allTopic;
 	}
 
-	public void setUserAnswer(List<List<String>> userAnswer) {
-		this.userAnswer = userAnswer;
-	}
+//	public void setUserAnswer(List<List<String>> userAnswer) {
+//		this.userAnswer = userAnswer;
+//	}
 
 	public void setCurrentQuestionIndex(int currentQuestionIndex) {
 		this.currentQuestionIndex = currentQuestionIndex;
@@ -130,9 +130,9 @@ public class Quiz {
 	 * @param answer user's answer
 	 * @return true if it is already in the quiz
 	 */
-	public boolean answer(String answer) {
-		boolean answered = userAnswer.get(currentQuestionIndex).contains(answer);
-		userAnswer.get(currentQuestionIndex).add(answer);
+	public boolean answer(Choice choice) {
+		boolean answered = userAnswer.get(currentQuestionIndex).contains(choice);
+		userAnswer.get(currentQuestionIndex).add(choice);
 		return answered;
 	}
 
@@ -141,7 +141,7 @@ public class Quiz {
 	 * 
 	 * @return user's answer for this question
 	 */
-	public List<String> checkAnswer() {
+	public List<Choice> checkAnswer() {
 		System.out.println("current index " + currentQuestionIndex);
 		System.out.println("user answer size: " + userAnswer.size());
 		return userAnswer.get(currentQuestionIndex);
@@ -188,7 +188,7 @@ public class Quiz {
 	 * 
 	 * @return userAnswer
 	 */
-	public List<List<String>> getUserAnswer() {
+	public List<List<Choice>> getUserAnswer() {
 		return userAnswer;
 	}
 	
