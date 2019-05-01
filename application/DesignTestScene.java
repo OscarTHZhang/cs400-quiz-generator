@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -41,6 +42,8 @@ public class DesignTestScene {
 	private HBox options; // contains the options: cancel and start
 	private HBox showTopic; // contains the chosen topics
 
+	private TextField questionNum;
+	
 	private ArrayList<String> chosenTopic; // the list of topics that the user has chosen
 
 	/**
@@ -110,7 +113,8 @@ public class DesignTestScene {
 		numQuestion = new HBox();
 		numQuestion.setSpacing(15.0);
 		numQuestion.getChildren().add(new Label("Number of questions:"));
-		numQuestion.getChildren().add(new TextField());
+		questionNum = new TextField();
+		numQuestion.getChildren().add(questionNum);
 
 		options = new HBox();
 		options.setSpacing(50.0);
@@ -164,22 +168,64 @@ public class DesignTestScene {
 		Button start = new Button("START");
 		QuestionScene questionScene = new QuestionScene(stage);
 		
-		// generating quiz
-		if (chosenTopic.size() < 1) {
-			// TODO inform user to add topic
-		} else {
-			// set the Quiz
-			MainMenuScene.QUIZ.setTopic(chosenTopic);
-			MainMenuScene.QUIZ.generateQuestions();
-			questionScene.setQuiz(MainMenuScene.QUIZ);
-		}
-		
 		// set button function
 		start.setOnAction(e -> {
-			stage.setScene(questionScene.getScene());
-			stage.show();
+			String qNum = questionNum.getText();
+			if (!qNum.equals("") && !chosenTopic.isEmpty()) {
+				try {
+					MainMenuScene.QUIZ.setQuestionCount(Integer.parseInt(qNum));
+					MainMenuScene.QUIZ.setTopic(chosenTopic);
+					MainMenuScene.QUIZ.generateQuestions();
+					questionScene.setQuiz(MainMenuScene.QUIZ);
+					stage.setScene(questionScene.getScene());
+					stage.show();
+				} catch (NumberFormatException exception) {
+					
+				}
+				
+			} else if (chosenTopic.isEmpty()) {
+				showAlert("topic");
+			} else if (qNum.equals("")) {
+				showAlert("number");
+			}	
 		});
 		return start;
 	}
 
+	private void showAlert(String problem) {
+		Text warningMessage = new Text();
+		
+		switch(problem) {
+			case "topic":
+				warningMessage.setText("Please select at least one topic!");
+				break;
+			case "number":
+				warningMessage.setText("Please enter the number of questions!");
+				break;
+			default:
+				warningMessage.setText("Please!");
+		}
+		
+		Stage popUpStage = new Stage();
+		BorderPane root = new BorderPane();
+		root.setMaxSize(300, 100);
+
+		Button yes = new Button("GOT IT");
+		yes.setOnAction(e -> popUpStage.close());
+
+		HBox buttons = new HBox();
+		buttons.getChildren().addAll(yes);
+		buttons.setAlignment(Pos.CENTER);
+
+		VBox list = new VBox();
+		list.getChildren().addAll(warningMessage, buttons);
+		list.setAlignment(Pos.CENTER);
+		list.setSpacing(20);
+		root.setCenter(list);
+		root.setPadding(new Insets(15, 20, 10, 20));
+
+		Scene warning = new Scene(root, 300, 100);
+		popUpStage.setScene(warning);
+		popUpStage.show();
+	}
 }
