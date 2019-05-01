@@ -70,7 +70,11 @@ public class Quiz {
 	 * generate questions from the file system according to the topic
 	 */
 	public void generateQuestions() {
-		// TODO implement this 
+		// idea: traverse through the QUESTION_POOL to find the relevant topic 
+		for (Question q: MainMenuScene.QUESTION_POOL) {
+			if (this.allTopic.contains(q.getTopic()))
+				questions.add(q);
+		}
 	}
 	
 	/**

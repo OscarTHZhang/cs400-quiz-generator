@@ -51,6 +51,7 @@ public class MainMenuScene {
 
 	public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to 
 	// manipulate throughout the application
+	public static List<Question> QUESTION_POOL;
 
 
 	public MainMenuScene(Stage primaryStage) {
@@ -183,6 +184,8 @@ public class MainMenuScene {
                     // add question to questionList
                     questionList.add(newQuestion);
                 }
+                
+                QUESTION_POOL = questionList;
   
             } catch (FileNotFoundException e) {} catch (IOException e) {} catch (ParseException e) {} 
         }
