@@ -1,7 +1,5 @@
 /**
- * Project: CS 400 Final Project
- * Name:	Quiz Generator
- * A-team:	#23
+ * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
  * 
  * Credit:
  * 
@@ -47,270 +45,278 @@ import javafx.scene.text.Text;
  */
 public class MainMenuScene {
 
-	private Stage stage;
+  private Stage stage;
 
-	public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to 
-	// manipulate throughout the application
-	public static List<Question> QUESTION_POOL = new ArrayList<>(); // all questions
-	
-	public static List<String> TOPIC = new ArrayList<>(); // all topic
+  public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to
+  // manipulate throughout the application
+  public static List<Question> QUESTION_POOL = new ArrayList<>(); // all questions
 
-	/**
-	 * fill the all topic list with the given question pool
-	 */
-	public static void fillTopic() {
-		for (Question q: QUESTION_POOL) {
-			
-			// if this is a topic that is not in the TOPIC list, then add this topic 
-			if ( !TOPIC.contains(q.getTopic()) ) {
-				TOPIC.add(q.getTopic());
-			}
-		}
-	}
+  public static List<String> TOPIC = new ArrayList<>(); // all topic
 
-	/**
-	 * 
-	 * @param primaryStage
-	 */
-	public MainMenuScene(Stage primaryStage) {
-		stage = primaryStage;
-	}
+  /**
+   * fill the all topic list with the given question pool
+   */
+  public static void fillTopic() {
+    for (Question q : QUESTION_POOL) {
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Scene getScene() {
-		BorderPane root = setBorderPane();
-		Scene scene = new Scene(root, 400, 500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		return scene;
-	}
+      // if this is a topic that is not in the TOPIC list, then add this topic
+      if (!TOPIC.contains(q.getTopic())) {
+        TOPIC.add(q.getTopic());
+      }
+    }
+  }
 
-	/**
-	 * 
-	 * @return
-	 */
-	private BorderPane setBorderPane() {
-		BorderPane root = new BorderPane();
+  /**
+   * 
+   * @param primaryStage
+   */
+  public MainMenuScene(Stage primaryStage) {
+    stage = primaryStage;
+  }
 
-		Label title = new Label("Quiz Generator"); // set the main title
-		title.setFont(new Font("Helvetica", 32)); // make the main title looks bigger
+  /**
+   * 
+   * @return
+   */
+  public Scene getScene() {
+    BorderPane root = setBorderPane();
+    Scene scene = new Scene(root, 400, 500);
+    scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+    return scene;
+  }
 
-		Label numQuestions = new Label("Available Questions: 13"); // display the number of available questions
+  /**
+   * 
+   * @return
+   */
+  private BorderPane setBorderPane() {
+    BorderPane root = new BorderPane();
 
-		Button startQuizButton = createNewButton("Start Quiz", 150, 100, new Font("Helvetiva", 18));
-		DesignTestScene design = new DesignTestScene(stage);
-		startQuizButton.setOnAction(e -> {
-			stage.setScene(design.getScene());
-			stage.show();
-		});
+    Label title = new Label("Quiz Generator"); // set the main title
+    title.setFont(new Font("Helvetica", 32)); // make the main title looks bigger
 
-		// put the title, numQuestions and the start quiz button in a VBox, set the VBox
-		// in the
-		// center of the BorderPane
-		VBox start = new VBox();
-		start.getChildren().addAll(title, startQuizButton, numQuestions);
-		start.setAlignment(Pos.CENTER);
-		start.setSpacing(30);
-		root.setCenter(start);
+    Label numQuestions = new Label("Available Questions: 13"); // display the number of available
+                                                               // questions
 
-		// generate three buttons for different functions
-		Button loadFile = createNewButton("Load File");
-		loadFile.setOnAction(e -> chooseFile());
-		Button addQuestion = createNewButton("Add Questions");
-		AddNewQuestionScene add = new AddNewQuestionScene(stage);
-		addQuestion.setOnAction(e -> {
-			stage.setScene(add.getScene());
-			stage.show();
-		});
+    Button startQuizButton = createNewButton("Start Quiz", 150, 100, new Font("Helvetiva", 18));
+    DesignTestScene design = new DesignTestScene(stage);
+    startQuizButton.setOnAction(e -> {
+      stage.setScene(design.getScene());
+      stage.show();
+    });
 
-		Button saveToLocal = createNewButton("Save Current Questions to Local File");
-		saveToLocal.setOnAction(e -> saveFileToLocal());
-		Button exit = createNewButton("Exit");
+    // put the title, numQuestions and the start quiz button in a VBox, set the VBox
+    // in the
+    // center of the BorderPane
+    VBox start = new VBox();
+    start.getChildren().addAll(title, startQuizButton, numQuestions);
+    start.setAlignment(Pos.CENTER);
+    start.setSpacing(30);
+    root.setCenter(start);
 
-		// the functionalities of the exit button
-		exit.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				Stage popUpStage = new Stage();
-				BorderPane root = new BorderPane();
-				root.setMaxSize(300, 100);
+    // generate three buttons for different functions
+    Button loadFile = createNewButton("Load File");
+    loadFile.setOnAction(e -> chooseFile());
+    Button addQuestion = createNewButton("Add Questions");
+    AddNewQuestionScene add = new AddNewQuestionScene(stage);
+    addQuestion.setOnAction(e -> {
+      stage.setScene(add.getScene());
+      stage.show();
+    });
 
-				Text warningMessage = new Text("Are you sure you want to quit?");
+    Button saveToLocal = createNewButton("Save Current Questions to Local File");
+    saveToLocal.setOnAction(e -> saveFileToLocal());
+    Button exit = createNewButton("Exit");
 
-				Button no = new Button("NO");
-				no.setOnAction(e -> popUpStage.close());
-				Button yes = new Button("YES");
-				yes.setOnAction(e -> Platform.exit());
+    // the functionalities of the exit button
+    exit.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+        Stage popUpStage = new Stage();
+        BorderPane root = new BorderPane();
+        root.setMaxSize(300, 100);
 
-				HBox buttons = new HBox();
-				buttons.getChildren().addAll(no, yes);
-				buttons.setAlignment(Pos.CENTER);
-				buttons.setSpacing(20);
+        Text warningMessage = new Text("Are you sure you want to quit?");
 
-				VBox list = new VBox();
-				list.getChildren().addAll(warningMessage, buttons);
-				list.setAlignment(Pos.CENTER);
-				list.setSpacing(20);
-				root.setCenter(list);
-				root.setPadding(new Insets(15, 20, 10, 20));
+        Button no = new Button("NO");
+        no.setOnAction(e -> popUpStage.close());
+        Button yes = new Button("YES");
+        yes.setOnAction(e -> Platform.exit());
 
-				Scene warning = new Scene(root, 250, 100);
-				popUpStage.setScene(warning);
-				popUpStage.show();
-			}
-		});
+        HBox buttons = new HBox();
+        buttons.getChildren().addAll(no, yes);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setSpacing(20);
 
-		VBox buttons = new VBox();
-		buttons.getChildren().addAll(loadFile, addQuestion, saveToLocal, exit);
-		buttons.setSpacing(10);
-		buttons.setAlignment(Pos.CENTER);
+        VBox list = new VBox();
+        list.getChildren().addAll(warningMessage, buttons);
+        list.setAlignment(Pos.CENTER);
+        list.setSpacing(20);
+        root.setCenter(list);
+        root.setPadding(new Insets(15, 20, 10, 20));
 
-		root.setBottom(buttons);
-		root.setPadding(new Insets(20, 20, 30, 20));
-		return root;
-	}
+        Scene warning = new Scene(root, 250, 100);
+        popUpStage.setScene(warning);
+        popUpStage.show();
+      }
+    });
 
-	/**
-	 * Choose a file from local, read in .json file and store the questions in the
-	 * program. To be implemented.
-	 */
-	private void chooseFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File"); // TODO: Where is the title displayed?
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        if (selectedFile != null) {
-            // TODO: To be implemented in the next phase. Read in .JSON file and store
-            // the questions in the program.
-            try {
-                Object obj = new JSONParser().parse(new FileReader(selectedFile.getPath()));
-                JSONObject jo = (JSONObject) obj;
-                JSONArray questions = (JSONArray) jo.get("questionArray");
-                for (int i = 0; i < questions.size(); i++) {
-                    JSONObject jsonQuestion = (JSONObject) questions.get(i);
-                    String questionDescription = (String) jsonQuestion.get("questionText");
-                    String topic = (String) jsonQuestion.get("topic");
-                    //String imagePath = (String) jsonQuestion.get("image");
-                    //BufferedImage bImage = ImageIO.read(new File(imagePath));
-                    //Image image = SwingFXUtils.toFXImage(bImage, null);
-                    JSONArray choiceArray = (JSONArray) jsonQuestion.get("choiceArray");
-                    Choice[] choices = new Choice[5];
-                    
-                    for (int j = 0; j < 5; j++) {
-                        JSONObject jsonChoice = (JSONObject) choiceArray.get(j);
-                        String choiceDescription = (String) jsonChoice.get("choice");
-                        boolean isCorrect = jsonChoice.get("isCorrect").equals("T");
-                        Choice choice = new Choice(isCorrect, choiceDescription);
-                        choices[j] = choice;
-                    }
-                    
-                    // construct instance of Question
-                    Question newQuestion = new Question(questionDescription, choices, topic, null);
-                    // add question to questionList
-                    QUESTION_POOL.add(newQuestion);
-                }
-                System.out.print(QUESTION_POOL.size());
-                fillTopic(); // call fill topic to fill the topic list
-  
-            } catch (FileNotFoundException e) {} catch (IOException e) {} catch (ParseException e) {} 
+    VBox buttons = new VBox();
+    buttons.getChildren().addAll(loadFile, addQuestion, saveToLocal, exit);
+    buttons.setSpacing(10);
+    buttons.setAlignment(Pos.CENTER);
+
+    root.setBottom(buttons);
+    root.setPadding(new Insets(20, 20, 30, 20));
+    return root;
+  }
+
+  /**
+   * Choose a file from local, read in .json file and store the questions in the program. To be
+   * implemented.
+   */
+  private void chooseFile() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open Resource File"); // TODO: Where is the title displayed?
+    File selectedFile = fileChooser.showOpenDialog(stage);
+    if (selectedFile != null) {
+      try {
+        Object obj = new JSONParser().parse(new FileReader(selectedFile.getPath()));
+        JSONObject jo = (JSONObject) obj;
+        JSONArray questions = (JSONArray) jo.get("questionArray");
+        for (int i = 0; i < questions.size(); i++) {
+          Image image;
+          JSONObject jsonQuestion = (JSONObject) questions.get(i);
+          String questionDescription = (String) jsonQuestion.get("questionText");
+          String topic = (String) jsonQuestion.get("topic");
+           String imagePath = (String) jsonQuestion.get("image");
+           if (imagePath.equals("none")) {
+             image = null;
+           } else {
+             BufferedImage bImage = ImageIO.read(new File(imagePath));
+             image = SwingFXUtils.toFXImage(bImage, null);
+           }
+          JSONArray choiceArray = (JSONArray) jsonQuestion.get("choiceArray");
+          Choice[] choices = new Choice[5];
+
+          for (int j = 0; j < 5; j++) {
+            JSONObject jsonChoice = (JSONObject) choiceArray.get(j);
+            String choiceDescription = (String) jsonChoice.get("choice");
+            boolean isCorrect = jsonChoice.get("isCorrect").equals("T");
+            Choice choice = new Choice(isCorrect, choiceDescription);
+            choices[j] = choice;
+          }
+
+          // construct instance of Question
+          Question newQuestion = new Question(questionDescription, choices, topic, image);
+          // add question to questionList
+          QUESTION_POOL.add(newQuestion);
         }
+        System.out.print(QUESTION_POOL.size());
+        fillTopic(); // call fill topic to fill the topic list
+
+      } catch (FileNotFoundException e) {
+      } catch (IOException e) {
+      } catch (ParseException e) {
+      }
+    }
+  }
+
+  /**
+   * Save the current questions to a local .json file. To be implemented.
+   */
+  @SuppressWarnings("unchecked")
+  private void saveFileToLocal() {
+    FileChooser fileChooser = new FileChooser();
+
+    // Set extension filter
+    // Look up for the formal name
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
+
+    // Show save file dialog
+    File file = fileChooser.showSaveDialog(stage);
+
+    if (!file.getName().contains(".")) {
+      file = new File(file.getAbsolutePath() + ".txt");
     }
 
-	/**
-	 * Save the current questions to a local .json file. To be implemented.
-	 */
-	private void saveFileToLocal() {
-		FileChooser fileChooser = new FileChooser();
+    if (file != null) {
+      // saves this string to a file
+      JSONObject obj = new JSONObject();
+      JSONArray questions = new JSONArray();
 
-		// Set extension filter
-		// Look up for the formal name
-		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
-
-		// Show save file dialog
-		File file = fileChooser.showSaveDialog(stage);
-		
-        if(!file.getName().contains(".")) {
-          file = new File(file.getAbsolutePath() + ".txt");
+      for (Question question : QUESTION_POOL) {
+        JSONObject q = new JSONObject();
+        q.put("meta-data", "unused");
+        q.put("questionText", question.getDescription());
+        q.put("topic", question.getTopic());
+        // image TODO
+        // choices
+        JSONArray jsonChoices = new JSONArray();
+        Choice[] choices = question.getChoices();
+        for (int i = 0; i < choices.length; i++) {
+          JSONObject c = new JSONObject();
+          if (choices[i].isCorrect()) {
+            c.put("isCorrect", "T");
+          } else {
+            c.put("isCorrect", "F");
+          }
+          c.put("choice", choices[i].getChoiceDescription());
+          jsonChoices.add(c);
+          q.put("choiceArray", jsonChoices);
         }
-        
-		if (file != null) {
-			// saves this string to a file
-		    JSONObject obj = new JSONObject();
-		    JSONArray questions = new JSONArray();
+        questions.add(q);
+      }
 
-		    for (Question question : QUESTION_POOL) {
-		        JSONObject q = new JSONObject();
-		        q.put("meta-data", "unused");
-		        q.put("questionText", question.getDescription());
-                q.put("topic", question.getTopic());
-                // image TODO
-                // choices
-                JSONArray jsonChoices = new JSONArray();
-                Choice[] choices = question.getChoices();
-                for (int i = 0; i < choices.length; i++) {
-                    JSONObject c = new JSONObject();
-                    if (choices[i].isCorrect()) {
-                        c.put("isCorrect", "T");
-                    } else {
-                        c.put("isCorrect", "F");
-                    }
-                    c.put("choice", choices[i].getChoiceDescription());
-                    jsonChoices.add(c);
-                    q.put("choiceArray", jsonChoices);
-                }
-                questions.add(q);
-		    }
-		    
-		    obj.put("questionArray", questions);
+      obj.put("questionArray", questions);
 
-			SaveFile(obj.toJSONString(), file);
-		}
-	}
+      SaveFile(obj.toJSONString(), file);
+    }
+  }
 
-	/**
-	 * Writes the String content to a file
-	 * 
-	 * @param content is the content string
-	 * @param file    is the file that is going to store the content
-	 */
-	private void SaveFile(String content, File file) {
-		FileWriter fileWriter = null;
-		try {
-			fileWriter = new FileWriter(file);
-			fileWriter.write(content);
-			fileWriter.close();
-		} catch (IOException e) {
-			// TODO: Figure out what is IOException and how to handle it.
-			e.printStackTrace();
-		}
-	}
+  /**
+   * Writes the String content to a file
+   * 
+   * @param content is the content string
+   * @param file is the file that is going to store the content
+   */
+  private void SaveFile(String content, File file) {
+    FileWriter fileWriter = null;
+    try {
+      fileWriter = new FileWriter(file);
+      fileWriter.write(content);
+      fileWriter.close();
+    } catch (IOException e) {
+      // TODO: Figure out what is IOException and how to handle it.
+      e.printStackTrace();
+    }
+  }
 
-	/**
-	 * Returns a new Button with width 275, height 40, font Helvetica and font size
-	 * 15.
-	 * 
-	 * @param text is the text of the button
-	 * @return a button
-	 */
-	private Button createNewButton(String text) {
-		return createNewButton(text, 275, 40, new Font("Helvetica", 15));
-	}
+  /**
+   * Returns a new Button with width 275, height 40, font Helvetica and font size 15.
+   * 
+   * @param text is the text of the button
+   * @return a button
+   */
+  private Button createNewButton(String text) {
+    return createNewButton(text, 275, 40, new Font("Helvetica", 15));
+  }
 
-	/**
-	 * Returns a reference to a new Button with certain size and font.
-	 * 
-	 * @param text   is the text of the button
-	 * @param width  is the preferred width
-	 * @param height is the preferred height
-	 * @param font   is the specified font
-	 * @return a button
-	 */
-	private Button createNewButton(String text, double width, double height, Font font) {
-		Button newButton = new Button(text);
-		newButton.setPrefWidth(width);
-		newButton.setPrefHeight(height);
-		newButton.setFont(font);
-		return newButton;
-	}
+  /**
+   * Returns a reference to a new Button with certain size and font.
+   * 
+   * @param text is the text of the button
+   * @param width is the preferred width
+   * @param height is the preferred height
+   * @param font is the specified font
+   * @return a button
+   */
+  private Button createNewButton(String text, double width, double height, Font font) {
+    Button newButton = new Button(text);
+    newButton.setPrefWidth(width);
+    newButton.setPrefHeight(height);
+    newButton.setFont(font);
+    return newButton;
+  }
 
 }

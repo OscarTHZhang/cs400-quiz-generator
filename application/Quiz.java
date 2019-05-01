@@ -37,6 +37,22 @@ public class Quiz {
 			userAnswer.add(new ArrayList<>());
 	}
 	
+	public List<String> getAllTopic() {
+		return allTopic;
+	}
+
+	public void setAllTopic(List<String> allTopic) {
+		this.allTopic = allTopic;
+	}
+
+	public void setUserAnswer(List<List<String>> userAnswer) {
+		this.userAnswer = userAnswer;
+	}
+
+	public void setCurrentQuestionIndex(int currentQuestionIndex) {
+		this.currentQuestionIndex = currentQuestionIndex;
+	}
+
 	/**
 	 * Constructor of Quiz class
 	 * 
@@ -74,9 +90,13 @@ public class Quiz {
 	 */
 	public void generateQuestions() {
 		// idea: traverse through the QUESTION_POOL to find the relevant topic 
+		int newQCount = 0;
+		
 		for (Question q: MainMenuScene.QUESTION_POOL) {
-			if (this.allTopic.contains(q.getTopic()))
+			if (newQCount < questionCount && this.allTopic.contains(q.getTopic())) {
 				questions.add(q);
+				newQCount++;
+			}	
 		}
 	}
 	
