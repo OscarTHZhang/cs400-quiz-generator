@@ -255,11 +255,14 @@ public class MainMenuScene {
                         c.put("isCorrect", "F");
                     }
                     c.put("choice", choices[i].getChoiceDescription());
+                    jsonChoices.add(c);
+                    q.put("choiceArray", jsonChoices);
                 }
+                questions.add(q);
 		    }
 		    
 		    obj.put("questionArray", questions);
-		    
+
 			SaveFile(obj.toJSONString(), file);
 		}
 	}
