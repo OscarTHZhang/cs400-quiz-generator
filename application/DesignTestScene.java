@@ -12,6 +12,7 @@ package application;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -89,7 +90,7 @@ public class DesignTestScene {
 		// TODO: should not be able to add the same topic once again
 		// this should be imported from another array list in the back end topic class
 		ComboBox<String> topicList = new ComboBox<String>(
-				FXCollections.observableArrayList("topic 1", "topic 2", "topic 3", "...."));
+				FXCollections.observableArrayList(MainMenuScene.TOPIC));
 		chooseTopic.getChildren().add(topicList);
 
 		// a new HBox for showing the topic
@@ -173,12 +174,18 @@ public class DesignTestScene {
 			String qNum = questionNum.getText();
 			if (!qNum.equals("") && !chosenTopic.isEmpty()) {
 				try {
-					MainMenuScene.QUIZ.setQuestionCount(Integer.parseInt(qNum));
-					MainMenuScene.QUIZ.setTopic(chosenTopic);
-					MainMenuScene.QUIZ.generateQuestions();
-					questionScene.setQuiz(MainMenuScene.QUIZ);
-					stage.setScene(questionScene.getScene());
-					stage.show();
+					int num = Integer.parseInt(qNum);
+					if (num < 1) {
+						showAlert("numberTooSmall");
+					} else {
+						MainMenuScene.QUIZ.setQuestionCount(num);
+						MainMenuScene.QUIZ.setTopic(chosenTopic);
+						MainMenuScene.QUIZ.generateQuestions();
+						questionScene.setQuiz(MainMenuScene.QUIZ);
+						stage.setScene(questionScene.getScene());
+						stage.show();
+					}
+					
 				} catch (NumberFormatException exception) {
 					
 				}
@@ -192,6 +199,10 @@ public class DesignTestScene {
 		return start;
 	}
 
+	/**
+	 * 
+	 * @param problem
+	 */
 	private void showAlert(String problem) {
 		Text warningMessage = new Text();
 		
@@ -201,6 +212,9 @@ public class DesignTestScene {
 				break;
 			case "number":
 				warningMessage.setText("Please enter the number of questions!");
+				break;
+			case "numberTooSmall":
+				warningMessage.setText("Please enter a positive number!");
 				break;
 			default:
 				warningMessage.setText("Please!");

@@ -30,7 +30,11 @@ public class Quiz {
 	 * Empty constructor of quiz class
 	 */
 	public Quiz() {
-		
+		questions = new ArrayList<Question>();
+		this.currentQuestionIndex = 0;
+		this.userAnswer = new ArrayList<>();
+		for (int i = 0; i < questionCount; i++)
+			userAnswer.add(new ArrayList<>());
 	}
 	
 	/**
@@ -117,6 +121,7 @@ public class Quiz {
 	 * @return user's answer for this question
 	 */
 	public List<String> checkAnswer() {
+		System.out.println(currentQuestionIndex);
 		return userAnswer.get(currentQuestionIndex);
 	}
 
