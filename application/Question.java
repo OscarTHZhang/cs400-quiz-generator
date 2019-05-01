@@ -9,7 +9,6 @@
 
 package application;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
@@ -23,11 +22,9 @@ import javafx.scene.image.Image;
 public class Question {
 
 	private String description; // description of the question
-	private String[] choices; // answer choices
-	@SuppressWarnings("unused")
+	private Choice[] choices; // answer choices
 	private String topic; // the topic that this question is affiliated to
-	private List<String> keys; // the true answer for this question
-	private List<Image> imgs; // a list of images that may be related to this question
+	private Image img; // a list of images that may be related to this question
 
 	/**
 	 * The constructor of the Question class that takes in the parameters
@@ -37,123 +34,49 @@ public class Question {
 	 * @param topic       that the question is affiliated to
 	 * @param keys        true answer for this question
 	 */
-	public Question(String description, String[] choices, String topic, List<String> keys, List<Image> imgs) {
+	public Question(String description, Choice[] choices, String topic, List<String> keys, Image img) {
 
 		// assign the parameters to the class attributes
 		this.description = description;
 		this.choices = choices;
 		this.topic = topic;
-		this.keys = keys;
-		this.imgs = imgs;
+		this.img = img;
 	}
 
-	/**
-	 * The non-parameter constructor of the class
-	 */
 	public Question() {
-
+		
 	}
-
-	/**
-	 * Set the images that are related to this question
-	 * 
-	 * @param imgs that are related to this question
-	 */
-	public void addImages(List<Image> imgs) {
-		this.imgs = imgs;
-	}
-
-	/**
-	 * A demo that is aimed to test the UI and functionality
-	 */
-	public void setDemo1() {
-		// set description ,choices, and answers
-		this.description = "What is the name of the computer sciences professors in the picture on "
-				+ "the right? (Select one answer)";
-
-		this.choices = new String[] { "Deb Deppeler", "Gary Dahl", "Jim Williams", "Marc Renault" };
-		this.keys = new ArrayList<>();
-		this.keys.add("Deb Deppeler");
-		this.imgs = new ArrayList<>();
-		imgs.add(new Image("application/400fx.jpg"));
-
-	}
-
-	/**
-	 * Another demo that is aimed to test the UI and functionality
-	 */
-	public void setDemo2() {
-		// set description ,choices, and answers
-		this.description = "Is Bradley the best rapper in UW-Madison?";
-		this.choices = new String[] { "Yes", "I bet", "he is" };
-		this.keys = new ArrayList<>();
-		this.keys.add("Yes");
-		this.keys.add("I bet");
-		this.keys.add("he is");
-		this.imgs = new ArrayList<>();
-	}
-
-	/**
-	 * Another demo that is aimed to test the UI and functionality
-	 */
-	public void setDemo3() {
-		// set description ,choices, and answers
-		this.description = "What do you think of the weather of Madison?";
-		this.choices = new String[] { "very cozy", "cold", "hell cold" };
-		this.keys = new ArrayList<>();
-		this.keys.add("cold");
-		this.keys.add("hell cold");
-		this.imgs = new ArrayList<>();
-		imgs.add(new Image("application/uwmadison.jpg"));
-	}
-
-	/**
-	 * return the description of the question
-	 * 
-	 * @return the description of the question
-	 */
+	
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * set the description of the question
-	 * 
-	 * @param description of the question
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * return the choices of the question
-	 * 
-	 * @return the choices of the question
-	 */
-	public String[] getChoices() {
+	public Choice[] getChoices() {
 		return choices;
 	}
 
-	/**
-	 * set the choices of the question
-	 * 
-	 * @param choices of the question
-	 */
-	public void setChoices(String[] choices) {
+	public void setChoices(Choice[] choices) {
 		this.choices = choices;
 	}
 
-	public List<String> getKeys() {
-		return keys;
+	public String getTopic() {
+		return topic;
 	}
 
-	/**
-	 * return the list of images
-	 * 
-	 * @return the list of images
-	 */
-	public List<Image> getImgs() {
-		return imgs;
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
-	
+
+	public Image getImg() {
+		return img;
+	}
+
+	public void setImg(Image img) {
+		this.img = img;
+	}
+
 }

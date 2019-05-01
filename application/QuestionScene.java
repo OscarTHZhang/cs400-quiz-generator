@@ -79,15 +79,6 @@ public class QuestionScene {
 		int questionCount = 3;
 		this.quiz = new Quiz(topics, questionCount);
 		List<Question> allQuestions = new ArrayList<>();
-		Question q1 = new Question();
-		q1.setDemo1();
-		Question q2 = new Question();
-		q2.setDemo2();
-		Question q3 = new Question();
-		q3.setDemo3();
-		allQuestions.add(q1);
-		allQuestions.add(q2);
-		allQuestions.add(q3);
 		quiz.setQuestions(allQuestions); // all this are added for demo. quiz will take different parameter after
 											// completion
 		QuestionScene.questionCount = quiz.getQuestionCount();
@@ -114,7 +105,7 @@ public class QuestionScene {
 		BorderPane root = new BorderPane();
 		Question cur = quiz.currQuesiton(); // get current question
 		String question = cur.getDescription(); // get question title
-		String[] choices = cur.getChoices(); // get choices
+		Choice[] choices = cur.getChoices(); // get choices
 
 		// process question title - Start
 		int tmpLength = question.length();
@@ -145,7 +136,7 @@ public class QuestionScene {
 		VBox choicesBox = new VBox();
 		CheckBox[] allCheckBox = new CheckBox[choices.length];
 		for (int i = 0; i < choices.length; i++) {
-			CheckBox cb = new CheckBox(choices[i]);
+			CheckBox cb = new CheckBox(choices[i].getChoiceDescription());
 			if (quiz.checkAnswer().size() != 0) { // if the question has been answered, show last answer
 				if (quiz.checkAnswer().contains(choices[i])) {
 					cb.setSelected(true);
@@ -185,23 +176,23 @@ public class QuestionScene {
 					boolean partiallCorrectness = false;
 					boolean redundantChoice = false;
 					choiceCount += allCheckBox.length;
-					List<String> keys = cur.getKeys();
-					for (int i = 0; i < allCheckBox.length; i++) {
-						if (allCheckBox[i].isSelected()) {
-							quiz.answer(choices[i]);
-							if (keys.contains(choices[i])) {
-								partiallCorrectness = true;
-								keys.remove(choices[i]);
-								correctChoiceCount++;
-							} else {
-								redundantChoice = true; // check if it is completely correct or partially correct
-							}
-						}
-					}
-					if (keys.isEmpty()) {
-						correctness = true;
-						correctQuestionCount++;
-					}
+//					List<String> keys = cur.getKeys();
+//					for (int i = 0; i < allCheckBox.length; i++) {
+//						if (allCheckBox[i].isSelected()) {
+//							quiz.answer(choices[i]);
+//							if (keys.contains(choices[i])) {
+//								partiallCorrectness = true;
+//								keys.remove(choices[i]);
+//								correctChoiceCount++;
+//							} else {
+//								redundantChoice = true; // check if it is completely correct or partially correct
+//							}
+//						}
+//					}
+//					if (keys.isEmpty()) {
+//						correctness = true;
+//						correctQuestionCount++;
+//					}
 					String correctnessPrompt;
 					if (correctness && !redundantChoice)
 						correctnessPrompt = "correct :)";
@@ -266,8 +257,8 @@ public class QuestionScene {
 		choicesAndImage.setPadding(new Insets(10, 0, 0, 10));
 		choicesAndImage.getChildren().addAll(choicesBox);
 		// if has images
-		if (!cur.getImgs().isEmpty()) {
-			Image image = cur.getImgs().get(0);
+		if (cur.getImg() != null) {
+			Image image = cur.getImg();
 			ImageView iv = new ImageView(image);
 			iv.setFitHeight(150);
 			iv.setFitWidth(150);

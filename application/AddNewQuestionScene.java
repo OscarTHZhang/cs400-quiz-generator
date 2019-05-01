@@ -9,6 +9,9 @@
 
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -20,9 +23,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -63,6 +68,8 @@ public class AddNewQuestionScene {
 	 * @return the border pane
 	 */
 	private BorderPane setBorderPane() {
+		Question newQ = new Question();
+		
 		// labels
 		Label topicLabel = new Label("Topic: ");
 		Label enterNewTopicLabel = new Label("OR Enter a new topic: ");
@@ -169,6 +176,16 @@ public class AddNewQuestionScene {
 				choiceA, choiceB, choiceC, choiceD, choiceE, buttons);
 		list.setAlignment(Pos.TOP_CENTER);
 		list.setSpacing(15); // vertical spacing
+		
+		Button uploadPic = new Button();
+		uploadPic.setText("UPLOAD YOUR PICTURE HERE");
+		uploadPic.setOnAction(e -> {
+			Image newImage = chooseImage();
+			if (newImage != null) {
+				newQ.setImg(newImage);
+			}
+		});
+		
 
 		// set the border pane
 		BorderPane root = new BorderPane();
@@ -178,4 +195,21 @@ public class AddNewQuestionScene {
 		return root;
 	}
 
+	/**
+	 * Choose a file from local, read in .json file and store the questions in the
+	 * program. To be implemented.
+	 * @throws FileNotFoundException 
+	 */
+	private Image chooseImage() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Upload your picture"); // TODO: Where is the title displayed?
+		File selectedPic = fileChooser.showOpenDialog(stage);
+		if (selectedPic == null) {
+			//throw new FileNotFoundException();
+			return null;
+		} else {
+			return new Image(selectedPic.toURI().toString());
+		}
+	}
+	
 }
