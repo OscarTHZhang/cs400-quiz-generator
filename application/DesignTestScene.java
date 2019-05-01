@@ -76,7 +76,7 @@ public class DesignTestScene {
 	 * private helper that sets the layout plan
 	 * 
 	 * @throws Exception if there is an exception when initializing these boxes
-	 *                   layout
+	 *         layout
 	 */
 	private void setLayout() {
 		planeElement = new VBox(); // contains all the HBox
@@ -184,10 +184,9 @@ public class DesignTestScene {
 						questionScene.setQuiz(MainMenuScene.QUIZ);
 						stage.setScene(questionScene.getScene());
 						stage.show();
-					}
-					
+					}					
 				} catch (NumberFormatException exception) {
-					
+					showAlert("numberFormat");
 				}
 				
 			} else if (chosenTopic.isEmpty()) {
@@ -215,6 +214,9 @@ public class DesignTestScene {
 				break;
 			case "numberTooSmall":
 				warningMessage.setText("Please enter a positive number!");
+				break;
+			case "numberFormat":
+				warningMessage.setText("Please enter a valid number!");
 				break;
 			default:
 				warningMessage.setText("Please!");

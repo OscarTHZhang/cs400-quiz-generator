@@ -64,11 +64,11 @@ public class Quiz {
 		this.questionCount = questionCount;
 		this.currentQuestionIndex = 0;
 		this.userAnswer = new ArrayList<>();
-		for (int i = 0; i < questionCount; i++)
+		for (int i = 0; i < questionCount; i++) {
 			userAnswer.add(new ArrayList<>());
+		}	
 	}
-	
-	
+		
 	/**
 	 * set the topic list of this quiz
 	 * @param list of topics
