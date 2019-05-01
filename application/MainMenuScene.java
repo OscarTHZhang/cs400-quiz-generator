@@ -186,14 +186,13 @@ public class MainMenuScene {
                 Object obj = new JSONParser().parse(new FileReader(selectedFile.getPath()));
                 JSONObject jo = (JSONObject) obj;
                 JSONArray questions = (JSONArray) jo.get("questionArray");
-                List<Question> questionList = new ArrayList<Question>();
                 for (int i = 0; i < questions.size(); i++) {
                     JSONObject jsonQuestion = (JSONObject) questions.get(i);
                     String questionDescription = (String) jsonQuestion.get("questionText");
                     String topic = (String) jsonQuestion.get("topic");
-                    String imagePath = (String) jsonQuestion.get("image");
-                    BufferedImage bImage = ImageIO.read(new File(imagePath));
-                    Image image = SwingFXUtils.toFXImage(bImage, null);
+                    //String imagePath = (String) jsonQuestion.get("image");
+                    //BufferedImage bImage = ImageIO.read(new File(imagePath));
+                    //Image image = SwingFXUtils.toFXImage(bImage, null);
                     JSONArray choiceArray = (JSONArray) jo.get("choiceArray");
                     Choice[] choices = new Choice[5];
                     
@@ -206,12 +205,11 @@ public class MainMenuScene {
                     }
                     
                     // construct instance of Question
-                    Question newQuestion = new Question(questionDescription, choices, topic, image);
+                    Question newQuestion = new Question(questionDescription, choices, topic, null);
                     // add question to questionList
-                    questionList.add(newQuestion);
+                    QUESTION_POOL.add(newQuestion);
                 }
-                
-                QUESTION_POOL = questionList;
+                System.out.print(QUESTION_POOL.size());
                 fillTopic(); // call fill topic to fill the topic list
   
             } catch (FileNotFoundException e) {} catch (IOException e) {} catch (ParseException e) {} 
