@@ -76,11 +76,8 @@ public class QuestionScene {
 	public void setScene() {
 		List<String> topics = new ArrayList<>();
 		topics.add("courseInfo");
-		int questionCount = 3;
-		this.quiz = new Quiz(topics, questionCount);
-		List<Question> allQuestions = new ArrayList<>();
-		quiz.setQuestions(allQuestions); // all this are added for demo. quiz will take different parameter after
-											// completion
+		List<Question> allQuestions = quiz.getQuestions();
+//        int questionCount = allQuestions.size(); 
 		QuestionScene.questionCount = quiz.getQuestionCount();
 	}
 
@@ -138,7 +135,7 @@ public class QuestionScene {
 		for (int i = 0; i < choices.length; i++) {
 			CheckBox cb = new CheckBox(choices[i].getChoiceDescription());
 			if (quiz.checkAnswer().size() != 0) { // if the question has been answered, show last answer
-				if (quiz.checkAnswer().contains(choices[i])) {
+				if (quiz.checkAnswer().contains(choices[i].getChoiceDescription())) {
 					cb.setSelected(true);
 				}
 			}
@@ -176,6 +173,7 @@ public class QuestionScene {
 					boolean partiallCorrectness = false;
 					boolean redundantChoice = false;
 					choiceCount += allCheckBox.length;
+					
 //					List<String> keys = cur.getKeys();
 //					for (int i = 0; i < allCheckBox.length; i++) {
 //						if (allCheckBox[i].isSelected()) {
