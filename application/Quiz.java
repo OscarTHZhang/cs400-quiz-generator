@@ -23,7 +23,6 @@ public class Quiz {
 	private int questionCount; // number of questions in the quiz
 	private List<List<String>> userAnswer; // user's answer
 	private List<Question> questions;// all questions in the quiz
-	@SuppressWarnings("unused")
 	private List<String> allTopic; // topics that this quiz should cover
 	private int currentQuestionIndex = -1; // index of current question
 	

@@ -131,6 +131,7 @@ public class AddNewQuestionScene {
 			if (getQTopic(newQ, topicMenu, newTopicText) && 
 					getQDescription(newQ, questionArea) && 
 					getChoices(newQ, choices, choiceTexts, choiceBoxes)) {
+				MainMenuScene.QUESTION_POOL.add(newQ);
 				stage.setScene(mainMenu.getScene());
 				stage.show();
 			}	
@@ -143,6 +144,7 @@ public class AddNewQuestionScene {
 			if (getQTopic(newQ, topicMenu, newTopicText) && 
 					getQDescription(newQ, questionArea) && 
 					getChoices(newQ, choices, choiceTexts, choiceBoxes)) {
+				MainMenuScene.QUESTION_POOL.add(newQ);
 				stage.setScene(mainMenu.getScene());
 				stage.show();
 			}	
