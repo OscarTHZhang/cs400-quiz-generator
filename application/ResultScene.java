@@ -152,7 +152,8 @@ public class ResultScene {
 	/**
      * Save the current questions to a local .json file. To be implemented.
      */
-    	private void saveFileToLocal() {
+    @SuppressWarnings("unchecked")
+    private void saveFileToLocal() {
       FileChooser fileChooser = new FileChooser();
 
       // Set extension filter
