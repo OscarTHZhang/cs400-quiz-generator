@@ -51,13 +51,35 @@ public class MainMenuScene {
 
 	public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to 
 	// manipulate throughout the application
-	public static List<Question> QUESTION_POOL;
+	public static List<Question> QUESTION_POOL = new ArrayList<>(); // all questions
+	
+	public static List<String> TOPIC = new ArrayList<>(); // all topic
 
+	/**
+	 * fill the all topic list with the given question pool
+	 */
+	public static void fillTopic() {
+		for (Question q: QUESTION_POOL) {
+			
+			// if this is a topic that is not in the TOPIC list, then add this topic 
+			if ( !TOPIC.contains(q.getTopic()) ) {
+				TOPIC.add(q.getTopic());
+			}
+		}
+	}
 
+	/**
+	 * 
+	 * @param primaryStage
+	 */
 	public MainMenuScene(Stage primaryStage) {
 		stage = primaryStage;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Scene getScene() {
 		BorderPane root = setBorderPane();
 		Scene scene = new Scene(root, 400, 500);
@@ -65,6 +87,10 @@ public class MainMenuScene {
 		return scene;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private BorderPane setBorderPane() {
 		BorderPane root = new BorderPane();
 
@@ -186,6 +212,7 @@ public class MainMenuScene {
                 }
                 
                 QUESTION_POOL = questionList;
+                fillTopic(); // call fill topic to fill the topic list
   
             } catch (FileNotFoundException e) {} catch (IOException e) {} catch (ParseException e) {} 
         }
