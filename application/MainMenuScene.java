@@ -37,6 +37,8 @@ import javafx.scene.text.Text;
 public class MainMenuScene {
 
 	private Stage stage;
+	public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to 
+	// manipulate throughout the application
 
 	public MainMenuScene(Stage primaryStage) {
 		stage = primaryStage;

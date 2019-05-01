@@ -53,6 +53,22 @@ public class QuestionScene {
 		stage = primaryStage;
 		setScene();
 	}
+	
+	/**
+	 * set the quiz for this quiz
+	 * @param newQuiz the new Quiz that is set to be created
+	 * @return true if successfully created the quiz
+	 */
+	public boolean setQuiz(Quiz newQuiz) {
+		try {
+			quiz = newQuiz;
+			return true;
+		} catch (Exception e) {	
+			// print error message when creating quiz failed
+			System.out.print("setting quiz failed.");
+			return false;
+		}
+	}
 
 	/**
 	 * initialize scene by initializing quiz and a few important static parameters

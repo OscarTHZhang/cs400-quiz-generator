@@ -162,10 +162,21 @@ public class DesignTestScene {
 	 */
 	private Button createButtStart() {
 		Button start = new Button("START");
-		QuestionScene question = new QuestionScene(stage);
+		QuestionScene questionScene = new QuestionScene(stage);
+		
+		// generating quiz
+		if (chosenTopic.size() < 1) {
+			// TODO inform user to add topic
+		} else {
+			// set the Quiz
+			MainMenuScene.QUIZ.setTopic(chosenTopic);
+			MainMenuScene.QUIZ.generateQuestions();
+			questionScene.setQuiz(MainMenuScene.QUIZ);
+		}
+		
 		// set button function
 		start.setOnAction(e -> {
-			stage.setScene(question.getScene());
+			stage.setScene(questionScene.getScene());
 			stage.show();
 		});
 		return start;

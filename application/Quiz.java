@@ -19,13 +19,21 @@ import java.util.List;
  *
  */
 public class Quiz {
+	
 	private int questionCount; // number of questions in the quiz
 	private List<List<String>> userAnswer; // user's answer
 	private List<Question> questions;// all questions in the quiz
 	@SuppressWarnings("unused")
 	private List<String> allTopic; // topics that this quiz should cover
 	private int currentQuestionIndex = -1; // index of current question
-
+	
+	/**
+	 * Empty constructor of quiz class
+	 */
+	public Quiz() {
+		
+	}
+	
 	/**
 	 * Constructor of Quiz class
 	 * 
@@ -40,11 +48,35 @@ public class Quiz {
 		for (int i = 0; i < questionCount; i++)
 			userAnswer.add(new ArrayList<>());
 	}
-
+	
+	
+	/**
+	 * set the topic list of this quiz
+	 * @param list of topics
+	 */
+	public void setTopic(List<String> topics) {
+		allTopic = topics;
+	}
+	
+	/**
+	 * set the question count
+	 * @param the number of question in the quiz
+	 */
+	public void setQuestionCount(int num) {
+		questionCount = num;
+	}
+	
+	/**
+	 * generate questions from the file system according to the topic
+	 */
+	public void generateQuestions() {
+		// TODO implement this 
+	}
+	
 	/**
 	 * getter of current question
 	 * 
-	 * @return urrent question
+	 * @return current question
 	 */
 	public Question currQuesiton() {
 		return questions.get(currentQuestionIndex);
