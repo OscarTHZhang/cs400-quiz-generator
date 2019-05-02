@@ -7,7 +7,6 @@
 
 package application;
 
-import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -79,6 +78,7 @@ public class QuestionScene {
 	/**
 	 * initialize scene by initializing quiz and a few important static parameters
 	 */
+	@SuppressWarnings("unused")
 	public void setScene() {
 		List<String> topics = MainMenuScene.TOPIC;
 		List<Question> allQuestions = MainMenuScene.QUIZ.getQuestions();
