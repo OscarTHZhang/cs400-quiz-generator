@@ -280,8 +280,13 @@ public class AddNewQuestionScene {
 			newQ.setTopic(existingQTopic);
 			return true;
 		} else {
-			newQ.setTopic(newQTopic);
-			return true;
+			if (!MainMenuScene.TOPIC.contains(newQTopic)) {
+				newQ.setTopic(newQTopic);
+				return true;
+			} else {
+				showAlert("topicExisting");
+				return false;
+			}
 		}
 	}
 
@@ -340,6 +345,9 @@ public class AddNewQuestionScene {
 			case "choicesAllFalse" :
 				warningMessage
 						.setText("Please select at least one correct answer!");
+				break;
+			case "topicExisting" :
+				warningMessage.setText("The topic already exists!");
 				break;
 			default :
 				warningMessage.setText("Please!");
