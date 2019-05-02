@@ -125,6 +125,7 @@ public class MainMenuScene {
       stage.show();
     });
 
+    // functionalities of saveFile are in saveFileToLocal().
     Button saveToLocal = createNewButton("Save Current Questions to Local File");
     saveToLocal.setOnAction(e -> saveFileToLocal());
     Button exit = createNewButton("Exit");
@@ -179,20 +180,22 @@ public class MainMenuScene {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open Resource File"); // TODO: Where is the title displayed?
     File selectedFile = fileChooser.showOpenDialog(stage);
-    if (selectedFile != null) {
-      try {
+    if (selectedFile != null) { // user selected a file
+      try { // parse the .json file
         Object obj = new JSONParser().parse(new FileReader(selectedFile.getPath()));
         JSONObject jo = (JSONObject) obj;
         JSONArray questions = (JSONArray) jo.get("questionArray");
         for (int i = 0; i < questions.size(); i++) {
           Image image;
           JSONObject jsonQuestion = (JSONObject) questions.get(i);
+          // add description, topic and image path properties to the question
           String questionDescription = (String) jsonQuestion.get("questionText");
           String topic = (String) jsonQuestion.get("topic");
           String imagePath = (String) jsonQuestion.get("image");
           JSONArray choiceArray = (JSONArray) jsonQuestion.get("choiceArray");
           Choice[] choices = new Choice[choiceArray.size()];
 
+          // add the choices to the question
           for (int j = 0; j < choiceArray.size(); j++) {
             JSONObject jsonChoice = (JSONObject) choiceArray.get(j);
             String choiceDescription = (String) jsonChoice.get("choice");
@@ -216,14 +219,15 @@ public class MainMenuScene {
   }
 
   /**
-   * Save the current questions to a local .json file. To be implemented.
+   * Save the current questions to a local .json file.
    */
   @SuppressWarnings("unchecked")
   private void saveFileToLocal() {
+    // TODO: The json file doesn't contain "\n" so it's difficult for humans to read, but the file
+    // can be parsed without errors.
     FileChooser fileChooser = new FileChooser();
 
     // Set extension filter
-    // Look up for the formal name
     fileChooser.getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
 
@@ -231,7 +235,7 @@ public class MainMenuScene {
     File file = fileChooser.showSaveDialog(stage);
 
     if (!file.getName().contains(".")) {
-      file = new File(file.getAbsolutePath() + ".txt");
+      file = new File(file.getAbsolutePath() + ".json");
     }
 
     if (file != null) {
@@ -240,6 +244,7 @@ public class MainMenuScene {
       JSONArray questions = new JSONArray();
 
       for (Question question : QUESTION_POOL) {
+        // for each question, make a new json object and add that object to the json array
         JSONObject q = new JSONObject();
         q.put("meta-data", "unused");
         q.put("questionText", question.getDescription());
