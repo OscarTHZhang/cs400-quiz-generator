@@ -210,7 +210,7 @@ public class QuestionScene {
 				  else {
 				    
                     correctnessPrompt = "correct :)";
-                    correctChoiceCount++;
+                    correctQuestionCount++;
                     score+=1;
                     }
 				}
