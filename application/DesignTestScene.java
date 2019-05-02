@@ -192,11 +192,13 @@ public class DesignTestScene {
 					} else if (num > maxQNum) {
 						showAlert("numberTooLarge");
 					} else {
+						System.out.println("freezing");
 						MainMenuScene.QUIZ.setQuestionCount(num);
 						MainMenuScene.QUIZ.setTopic(chosenTopic);
 						MainMenuScene.QUIZ.generateQuestions();
 						
 						questionScene.setQuiz(MainMenuScene.QUIZ);
+						System.out.println("freezing ---");
 						stage.setScene(questionScene.getScene());
 						stage.show();
 					}

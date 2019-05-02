@@ -77,13 +77,18 @@ public class ResultScene {
 		// buttons
 		Button takeNewQuiz = new Button("Take New Quiz");
 		// create a new instance of MainMenuScene and set the button's action
+		
+		// TODO fix the bug here !!!
+		/////////////////////////////////////////////////////
 		MainMenuScene mainMenu = new MainMenuScene(stage);
 		takeNewQuiz.setOnAction(e -> {
+			MainMenuScene.QUIZ = new Quiz();
 			stage.setScene(mainMenu.getScene());
 			stage.show();
 		});
 		takeNewQuiz.setMinSize(100, 40);
-
+		/////////////////////////////////////////////////////
+		
 		Button saveAns = new Button("Save Questions to a JSON file");
 		saveAns.setMinSize(100, 40);
 		saveAns.setOnAction(e -> saveFileToLocal());

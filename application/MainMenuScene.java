@@ -43,11 +43,18 @@ public class MainMenuScene {
 
 	private Stage stage;
 
-	public static Quiz QUIZ = new Quiz(); // a quiz object. See Quiz.java
-	public static List<Question> QUESTION_POOL = new ArrayList<>(); // all
+	public static Quiz QUIZ =  new Quiz();// a quiz object. See Quiz.java
+	public static List<Question> QUESTION_POOL = new ArrayList<Question>(); // all
 																	// questions
-	public static List<String> TOPIC = new ArrayList<>(); // all topics
+	public static List<String> TOPIC = new ArrayList<String>();// all topics
 
+	public static void setPool() {
+		// initialize these statics
+		QUIZ = new Quiz();
+		QUESTION_POOL = new ArrayList<Question>();
+		TOPIC = new ArrayList<String>();
+	}
+	
 	/**
 	 * Add new topics to the topic list if there are questions in the question
 	 * pool with a new topic.
@@ -69,6 +76,7 @@ public class MainMenuScene {
 	 *            is the primary stage
 	 */
 	public MainMenuScene(Stage primaryStage) {
+		//setPool();
 		stage = primaryStage;
 	}
 
