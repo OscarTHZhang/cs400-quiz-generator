@@ -69,7 +69,7 @@ public class AddNewQuestionScene {
   private BorderPane setBorderPane() {
     Question newQ = new Question();
 
-    // labels
+    // labels for the questions
     Label topicLabel = new Label("Topic: ");
     Label enterNewTopicLabel = new Label("OR Enter a new topic: ");
     Label questionLabel = new Label("Question: ");
@@ -84,7 +84,7 @@ public class AddNewQuestionScene {
     @SuppressWarnings({"rawtypes", "unchecked"})
     ComboBox topicMenu = new ComboBox(options);
 
-    // text fields and text area
+    // text fields and text area for entering question and answer choice
     TextField newTopicText = new TextField();
 
     TextArea questionArea = new TextArea();
@@ -162,41 +162,49 @@ public class AddNewQuestionScene {
     existingTopic.setAlignment(Pos.CENTER_LEFT); // alignment
     existingTopic.setSpacing(hSpacing); // horizontal spacing
 
+    // layout component for entering new topic 
     HBox newTopic = new HBox();
     newTopic.getChildren().addAll(enterNewTopicLabel, newTopicText);
     newTopic.setAlignment(Pos.CENTER_LEFT);
     newTopic.setSpacing(hSpacing);
 
+    // layout component for questions
     HBox question = new HBox();
     question.getChildren().addAll(questionLabel, questionArea);
     question.setAlignment(Pos.CENTER_LEFT);
     question.setSpacing(hSpacing);
 
+    // layout component for question choice A
     HBox choiceAHBox = new HBox();
     choiceAHBox.getChildren().addAll(choiceALabel, choiceAText, choiceABox);
     choiceAHBox.setAlignment(Pos.CENTER_LEFT);
     choiceAHBox.setSpacing(hSpacing);
 
+    // layout component for question choice B
     HBox choiceBHBox = new HBox();
     choiceBHBox.getChildren().addAll(choiceBLabel, choiceBText, choiceBBox);
     choiceBHBox.setAlignment(Pos.CENTER_LEFT);
     choiceBHBox.setSpacing(hSpacing);
 
+    // layout component for question choice C
     HBox choiceCHBox = new HBox();
     choiceCHBox.getChildren().addAll(choiceCLabel, choiceCText, choiceCBox);
     choiceCHBox.setAlignment(Pos.CENTER_LEFT);
     choiceCHBox.setSpacing(hSpacing);
 
+    // layout component for question choice D
     HBox choiceDHBox = new HBox();
     choiceDHBox.getChildren().addAll(choiceDLabel, choiceDText, choiceDBox);
     choiceDHBox.setAlignment(Pos.CENTER_LEFT);
     choiceDHBox.setSpacing(hSpacing);
 
+    // layout component for question choice E
     HBox choiceEHBox = new HBox();
     choiceEHBox.getChildren().addAll(choiceELabel, choiceEText, choiceEBox);
     choiceEHBox.setAlignment(Pos.CENTER_LEFT);
     choiceEHBox.setSpacing(hSpacing);
 
+    // layout component for back and add more buttons
     HBox buttons = new HBox();
     buttons.getChildren().addAll(back, addMore);
     buttons.setAlignment(Pos.CENTER);
