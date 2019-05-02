@@ -249,6 +249,7 @@ public class MainMenuScene {
         q.put("meta-data", "unused");
         q.put("questionText", question.getDescription());
         q.put("topic", question.getTopic());
+        q.put("image", question.getImgPath());
         JSONArray jsonChoices = new JSONArray();
         Choice[] choices = question.getChoices();
         for (int i = 0; i < choices.length; i++) {
