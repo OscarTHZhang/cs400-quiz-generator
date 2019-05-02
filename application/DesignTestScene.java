@@ -12,7 +12,6 @@ package application;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,12 +38,13 @@ public class DesignTestScene {
 	private VBox planeElement; // the vertical box that contains all the elements
 
 	private HBox chooseTopic; // contains choosing list of all the topic options
-	private HBox numQuestion; // contains the text field that shows number of questions you want to have
+	private HBox numQuestion; // contains the text field that shows number of
+								// questions you want to have
 	private HBox options; // contains the options: cancel and start
 	private HBox showTopic; // contains the chosen topics
 
 	private TextField questionNum;
-	
+
 	private ArrayList<String> chosenTopic; // the list of topics that the user has chosen
 
 	/**
@@ -68,15 +68,15 @@ public class DesignTestScene {
 		root.setCenter(planeElement);
 		root.setPadding(new Insets(20, 20, 20, 20));
 		Scene scene = new Scene(root, 400, 250);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(
+				getClass().getResource("application.css").toExternalForm());
 		return scene;
 	}
 
 	/**
 	 * private helper that sets the layout plan
 	 * 
-	 * @throws Exception if there is an exception when initializing these boxes
-	 *         layout
+	 * @throws Exception if there is an exception when initializing these boxes layout
 	 */
 	private void setLayout() {
 		planeElement = new VBox(); // contains all the HBox
@@ -88,7 +88,8 @@ public class DesignTestScene {
 		chooseTopic.getChildren().add(new Label("Choosing the topic:"));
 
 		// TODO: should not be able to add the same topic once again
-		// this should be imported from another array list in the back end topic class
+		// this should be imported from another array list in the back end topic
+		// class
 		ComboBox<String> topicList = new ComboBox<String>(
 				FXCollections.observableArrayList(MainMenuScene.TOPIC));
 		chooseTopic.getChildren().add(topicList);
@@ -101,9 +102,11 @@ public class DesignTestScene {
 		Button add = new Button("+");
 		// set the functionality using lambda expression
 		add.setOnAction(event -> {
-			if (topicList.getValue() != null && !chosenTopic.contains(topicList.getValue())) {
+			if (topicList.getValue() != null
+					&& !chosenTopic.contains(topicList.getValue())) {
 				chosenTopic.add(topicList.getValue());
-				showTopic.getChildren().add(new Label(chosenTopic.get(chosenTopic.size() - 1)));
+				showTopic.getChildren().add(
+						new Label(chosenTopic.get(chosenTopic.size() - 1)));
 				// get the latest added topic to display on the screen
 			}
 		});
@@ -128,7 +131,8 @@ public class DesignTestScene {
 	}
 
 	/**
-	 * set the layout and containment of the VBoxes and HBoxes used in this scene
+	 * set the layout and containment of the VBoxes and HBoxes used in this
+	 * scene
 	 */
 	private void setBoxLayout() {
 		// set the alignment of all the boxes
@@ -168,7 +172,7 @@ public class DesignTestScene {
 	private Button createButtStart() {
 		Button start = new Button("START");
 		QuestionScene questionScene = new QuestionScene(stage);
-		
+
 		// set button function
 		start.setOnAction(e -> {
 			String qNum = questionNum.getText();
@@ -184,16 +188,16 @@ public class DesignTestScene {
 						questionScene.setQuiz(MainMenuScene.QUIZ);
 						stage.setScene(questionScene.getScene());
 						stage.show();
-					}					
+					}
 				} catch (NumberFormatException exception) {
 					showAlert("numberFormat");
 				}
-				
+
 			} else if (chosenTopic.isEmpty()) {
 				showAlert("topic");
 			} else if (qNum.equals("")) {
 				showAlert("number");
-			}	
+			}
 		});
 		return start;
 	}
@@ -204,24 +208,24 @@ public class DesignTestScene {
 	 */
 	private void showAlert(String problem) {
 		Text warningMessage = new Text();
-		
-		switch(problem) {
-			case "topic":
+
+		switch (problem) {
+			case "topic" :
 				warningMessage.setText("Please select at least one topic!");
 				break;
-			case "number":
+			case "number" :
 				warningMessage.setText("Please enter the number of questions!");
 				break;
-			case "numberTooSmall":
+			case "numberTooSmall" :
 				warningMessage.setText("Please enter a positive number!");
 				break;
-			case "numberFormat":
+			case "numberFormat" :
 				warningMessage.setText("Please enter a valid number!");
 				break;
-			default:
+			default :
 				warningMessage.setText("Please!");
 		}
-		
+
 		Stage popUpStage = new Stage();
 		BorderPane root = new BorderPane();
 		root.setMaxSize(300, 100);
