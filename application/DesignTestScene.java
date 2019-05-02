@@ -175,12 +175,21 @@ public class DesignTestScene {
 		// set button function
 		start.setOnAction(e -> {
 			String qNum = questionNum.getText();
+			int maxQNum = 0;
+			for (int i = 0; i < MainMenuScene.QUESTION_POOL.size(); i++) {
+				for (int j = 0; j < chosenTopic.size(); j++) {
+					if (MainMenuScene.QUESTION_POOL.get(i).getTopic().equals(chosenTopic.get(j))) {
+						maxQNum++;
+					}
+				}
+			}
+			System.out.print(maxQNum);
 			if (!qNum.equals("") && !chosenTopic.isEmpty()) {
 				try {
 					int num = Integer.parseInt(qNum);
 					if (num < 1) {
 						showAlert("numberTooSmall");
-					} else if (num > MainMenuScene.QUESTION_POOL.size()) {
+					} else if (num > maxQNum) {
 						showAlert("numberTooLarge");
 					} else {
 						MainMenuScene.QUIZ.setQuestionCount(num);
