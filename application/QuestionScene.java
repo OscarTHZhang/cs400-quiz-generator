@@ -111,7 +111,7 @@ public class QuestionScene {
 		// process question title - Start
 		int tmpLength = question.length();
 		int tmpCount = 1;
-		int lengthLimit = 80;
+		int lengthLimit = 60;
 		while (tmpLength > lengthLimit) {
 			question = question.substring(0,
 					lengthLimit * tmpCount + question.substring(lengthLimit * tmpCount).indexOf(" ")) + "\n"
