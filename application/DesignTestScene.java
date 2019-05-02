@@ -181,6 +181,7 @@ public class DesignTestScene {
 						MainMenuScene.QUIZ.setQuestionCount(num);
 						MainMenuScene.QUIZ.setTopic(chosenTopic);
 						MainMenuScene.QUIZ.generateQuestions();
+						
 						questionScene.setQuiz(MainMenuScene.QUIZ);
 						stage.setScene(questionScene.getScene());
 						stage.show();
