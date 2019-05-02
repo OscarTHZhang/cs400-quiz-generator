@@ -80,7 +80,7 @@ public class Question {
 	}
 
 	public Image getImg() {
-		if (imgPath.equals("none")) {
+		if (imgPath == null || imgPath.equals("none")) {
 			return null;
 		} else {
 			BufferedImage bImage;

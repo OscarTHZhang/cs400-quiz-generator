@@ -87,7 +87,6 @@ public class DesignTestScene {
 		chooseTopic.setSpacing(15.0);
 		chooseTopic.getChildren().add(new Label("Choosing the topic:"));
 
-		// TODO: should not be able to add the same topic once again
 		// this should be imported from another array list in the back end topic
 		// class
 		ComboBox<String> topicList = new ComboBox<String>(
@@ -106,7 +105,7 @@ public class DesignTestScene {
 					&& !chosenTopic.contains(topicList.getValue())) {
 				chosenTopic.add(topicList.getValue());
 				showTopic.getChildren().add(
-						new Label(chosenTopic.get(chosenTopic.size() - 1)));
+						new Label(chosenTopic.get(chosenTopic.size() - 1) + ";"));
 				// get the latest added topic to display on the screen
 			}
 		});
