@@ -148,6 +148,13 @@ public class AddNewQuestionScene {
 			}	
 		});
 		
+		Button cancel = new Button();
+		cancel.setText("CANCEL");
+		cancel.setOnAction(e -> {
+			stage.setScene(mainMenu.getScene());
+			stage.show();
+		});
+		
 		// This is the button to upload the picture
 		Button uploadPic = new Button();
 		uploadPic.setText("UPLOAD YOUR PICTURE HERE");
@@ -200,7 +207,7 @@ public class AddNewQuestionScene {
 		choiceEHBox.setSpacing(hSpacing);
 
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(back, addMore);
+		buttons.getChildren().addAll(cancel, back, addMore);
 		buttons.setAlignment(Pos.CENTER);
 		buttons.setPadding(new Insets(20, 0, 0, 0));
 		buttons.setSpacing(20);
