@@ -180,6 +180,8 @@ public class DesignTestScene {
 					int num = Integer.parseInt(qNum);
 					if (num < 1) {
 						showAlert("numberTooSmall");
+					} else if (num > MainMenuScene.QUESTION_POOL.size()) {
+						showAlert("numberTooLarge");
 					} else {
 						MainMenuScene.QUIZ.setQuestionCount(num);
 						MainMenuScene.QUIZ.setTopic(chosenTopic);
@@ -219,6 +221,9 @@ public class DesignTestScene {
 			case "numberTooSmall" :
 				warningMessage.setText("Please enter a positive number!");
 				break;
+			case "numberTooLarge" :
+				warningMessage.setText("The number is too large!");
+				break;
 			case "numberFormat" :
 				warningMessage.setText("Please enter a valid number!");
 				break;
@@ -228,7 +233,6 @@ public class DesignTestScene {
 
 		Stage popUpStage = new Stage();
 		BorderPane root = new BorderPane();
-		root.setMaxSize(300, 100);
 
 		Button yes = new Button("GOT IT");
 		yes.setOnAction(e -> popUpStage.close());
