@@ -43,12 +43,12 @@ public class MainMenuScene {
 
 	private Stage stage;
 
-	public static Quiz overallQuiz =  new Quiz();// a quiz object. See Quiz.java
-	public static List<Question> questionPool = new ArrayList<Question>(); // all
+	protected static Quiz overallQuiz =  new Quiz();// a quiz object. See Quiz.java
+	protected static List<Question> questionPool = new ArrayList<Question>(); // all
 																	// questions
-	public static List<String> allallTopics = new ArrayList<String>();// all topics
+	protected static List<String> allallTopics = new ArrayList<String>();// all topics
 
-	public static void setPool() {
+	protected static void setPool() {
 		// initialize these statics
 		overallQuiz = new Quiz();
 		questionPool = new ArrayList<Question>();
@@ -59,7 +59,7 @@ public class MainMenuScene {
 	 * Add new topics to the topic list if there are questions in the question
 	 * pool with a new topic.
 	 */
-	public static void fillTopic() {
+	protected static void fillTopic() {
 		for (Question q : questionPool) {
 			// if this is a topic that is not in the TOPIC list, then add this
 			// topic

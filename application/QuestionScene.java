@@ -65,6 +65,7 @@ public class QuestionScene {
       finishedQuestionCount = 0;
       correctChoiceCount = 0;
       choiceCount = 0; 
+      score = 0.0;
       quiz = newQuiz;
       return true;
     } catch (Exception e) {
