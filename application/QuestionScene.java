@@ -136,8 +136,10 @@ public class QuestionScene {
 		// set choice label
 		VBox choicesBox = new VBox();
 		CheckBox[] allCheckBox = new CheckBox[choices.length];
+		
+		// traverse to get the choice description
 		for (int i = 0; i < choices.length; i++) {
-		    System.out.println(choices.length+"  choice "+i);
+		    
 			CheckBox cb = new CheckBox(choices[i].getChoiceDescription());
 			if (quiz.checkAnswer().size() != 0) { // if the question has been answered, show last answer
 			    for(Choice choice : quiz.checkAnswer()) {
