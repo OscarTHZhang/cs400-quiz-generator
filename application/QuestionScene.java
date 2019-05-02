@@ -189,10 +189,21 @@ public class QuestionScene {
 				
 				if(!quiz.checkAnswer().isEmpty()) finishedQuestionCount++;
 				
+				int numShouldSelected = 0;
+				for (Choice c: choices) {
+					if ( c.isCorrect() )
+						numShouldSelected++;
+				}
+				
 				for (int i = 0; i < allCheckBox.length; i++) {
+					
 					if (allCheckBox[i].isSelected()) {
+						// add in to answer
 						quiz.answer(choices[i]);
+						
+						
 						if(choices[i].isCorrect()) { 
+						  System.out.println(correctChoiceCount);
 						  correctChoiceCount++;
 						  correctness=true;
 						}
@@ -201,6 +212,15 @@ public class QuestionScene {
 						}
 					}
 				}
+				
+				if (correctChoiceCount<numShouldSelected) redundantChoice=true;
+				
+				// check for answering all current but lack of choices
+				// TODO check for all 
+//				for (Choice c: choices) {
+//					if (c.isCorrect())
+//				}
+//				
 				String correctnessPrompt;
 				if(correctness) {
 				  if(redundantChoice) {
