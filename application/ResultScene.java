@@ -81,7 +81,7 @@ public class ResultScene {
     });
     takeNewQuiz.setMinSize(100, 40);
 
-    Button saveAns = new Button("Save Answers to a JSON file");
+    Button saveAns = new Button("Save Questions to a JSON file");
     saveAns.setMinSize(100, 40);
     saveAns.setOnAction(e -> saveFileToLocal());
 
