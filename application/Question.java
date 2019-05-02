@@ -20,8 +20,7 @@ public class Question {
 	private String description; // description of the question
 	private Choice[] choices; // answer choices
 	private String topic; // the topic that this question is affiliated to
-	private String imgPath; // a list of images that may be related to this
-							// question
+	private String imgPath; // a list of images that may be related to this question
 
 	/**
 	 * The constructor of the Question class that takes in the parameters

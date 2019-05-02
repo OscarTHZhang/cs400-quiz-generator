@@ -43,16 +43,16 @@ public class MainMenuScene {
 
 	private Stage stage;
 
-	public static Quiz QUIZ =  new Quiz();// a quiz object. See Quiz.java
-	public static List<Question> QUESTION_POOL = new ArrayList<Question>(); // all
+	public static Quiz overallQuiz =  new Quiz();// a quiz object. See Quiz.java
+	public static List<Question> questionPool = new ArrayList<Question>(); // all
 																	// questions
-	public static List<String> TOPIC = new ArrayList<String>();// all topics
+	public static List<String> allallTopics = new ArrayList<String>();// all topics
 
 	public static void setPool() {
 		// initialize these statics
-		QUIZ = new Quiz();
-		QUESTION_POOL = new ArrayList<Question>();
-		TOPIC = new ArrayList<String>();
+		overallQuiz = new Quiz();
+		questionPool = new ArrayList<Question>();
+		allallTopics = new ArrayList<String>();
 	}
 	
 	/**
@@ -60,11 +60,11 @@ public class MainMenuScene {
 	 * pool with a new topic.
 	 */
 	public static void fillTopic() {
-		for (Question q : QUESTION_POOL) {
+		for (Question q : questionPool) {
 			// if this is a topic that is not in the TOPIC list, then add this
 			// topic
-			if (!TOPIC.contains(q.getTopic())) {
-				TOPIC.add(q.getTopic());
+			if (!allallTopics.contains(q.getTopic())) {
+				allallTopics.add(q.getTopic());
 			}
 		}
 	}
@@ -105,7 +105,7 @@ public class MainMenuScene {
 		title.setFont(new Font("Helvetica", 32)); // make the main title looks
 													// bigger
 
-		int numQ = QUESTION_POOL.size();
+		int numQ = questionPool.size();
 
 		Label numQuestions = new Label("Available Questions: " + numQ); // display
 																		// the
@@ -233,7 +233,7 @@ public class MainMenuScene {
 					Question newQuestion = new Question(questionDescription,
 							choices, topic, imagePath);
 					// add question to questionList
-					QUESTION_POOL.add(newQuestion);
+					questionPool.add(newQuestion);
 				}
 				fillTopic(); // call fill topic to fill the topic list
 				stage.setScene(this.getScene()); // Update number of questions
@@ -271,7 +271,7 @@ public class MainMenuScene {
 			JSONObject obj = new JSONObject();
 			JSONArray questions = new JSONArray();
 
-			for (Question question : QUESTION_POOL) {
+			for (Question question : questionPool) {
 				// for each question, make a new json object and add that object
 				// to the json array
 				JSONObject q = new JSONObject();

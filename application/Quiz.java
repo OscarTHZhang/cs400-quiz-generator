@@ -98,8 +98,8 @@ public class Quiz {
 		int newQCount = 0;
 		Random rdm = new Random();
 		while (newQCount < questionCount) {
-			int index = rdm.nextInt(MainMenuScene.QUESTION_POOL.size());
-			Question q = MainMenuScene.QUESTION_POOL.get(index);
+			int index = rdm.nextInt(MainMenuScene.questionPool.size());
+			Question q = MainMenuScene.questionPool.get(index);
 			if (this.allTopic.contains(q.getTopic()) && !this.questions.contains(q)) {
 				questions.add(q);
 				newQCount++;

@@ -82,7 +82,7 @@ public class ResultScene {
 		/////////////////////////////////////////////////////
 		MainMenuScene mainMenu = new MainMenuScene(stage);
 		takeNewQuiz.setOnAction(e -> {
-			MainMenuScene.QUIZ = new Quiz();
+			MainMenuScene.overallQuiz = new Quiz();
 			stage.setScene(mainMenu.getScene());
 			stage.show();
 		});
@@ -180,7 +180,7 @@ public class ResultScene {
 			JSONObject obj = new JSONObject();
 			JSONArray questions = new JSONArray();
 
-			for (Question question : MainMenuScene.QUESTION_POOL) {
+			for (Question question : MainMenuScene.questionPool) {
 				// write information into the .json file
 				JSONObject q = new JSONObject();
 				q.put("meta-data", "unused");

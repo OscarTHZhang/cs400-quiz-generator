@@ -90,7 +90,7 @@ public class DesignTestScene {
 		// this should be imported from another array list in the back end topic
 		// class
 		ComboBox<String> topicList = new ComboBox<String>(
-				FXCollections.observableArrayList(MainMenuScene.TOPIC));
+				FXCollections.observableArrayList(MainMenuScene.allallTopics));
 		chooseTopic.getChildren().add(topicList);
 
 		// a new HBox for showing the topic
@@ -176,9 +176,9 @@ public class DesignTestScene {
 		start.setOnAction(e -> {
 			String qNum = questionNum.getText();
 			int maxQNum = 0;
-			for (int i = 0; i < MainMenuScene.QUESTION_POOL.size(); i++) {
+			for (int i = 0; i < MainMenuScene.questionPool.size(); i++) {
 				for (int j = 0; j < chosenTopic.size(); j++) {
-					if (MainMenuScene.QUESTION_POOL.get(i).getTopic().equals(chosenTopic.get(j))) {
+					if (MainMenuScene.questionPool.get(i).getTopic().equals(chosenTopic.get(j))) {
 						maxQNum++;
 					}
 				}
@@ -193,11 +193,11 @@ public class DesignTestScene {
 						showAlert("numberTooLarge");
 					} else {
 						System.out.println("freezing");
-						MainMenuScene.QUIZ.setQuestionCount(num);
-						MainMenuScene.QUIZ.setTopic(chosenTopic);
-						MainMenuScene.QUIZ.generateQuestions();
+						MainMenuScene.overallQuiz.setQuestionCount(num);
+						MainMenuScene.overallQuiz.setTopic(chosenTopic);
+						MainMenuScene.overallQuiz.generateQuestions();
 						
-						questionScene.setQuiz(MainMenuScene.QUIZ);
+						questionScene.setQuiz(MainMenuScene.overallQuiz);
 						System.out.println("freezing ---");
 						stage.setScene(questionScene.getScene());
 						stage.show();

@@ -77,7 +77,7 @@ public class AddNewQuestionScene {
 		Label choiceELabel = new Label("Choice E: ");
 
 		// combo box
-		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.TOPIC);
+		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.allallTopics);
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ComboBox topicMenu = new ComboBox(options);
 
@@ -122,8 +122,8 @@ public class AddNewQuestionScene {
 		back.setOnAction(e -> {
 			if (getQTopic(newQ, topicMenu, newTopicText) && getQDescription(newQ, questionArea)
 					&& getChoices(newQ, choices, choiceTexts, choiceBoxes)) {
-				MainMenuScene.QUESTION_POOL.add(newQ); // update question pool
-				MainMenuScene.TOPIC.add(newQ.getTopic()); // update topic list
+				MainMenuScene.questionPool.add(newQ); // update question pool
+				MainMenuScene.allallTopics.add(newQ.getTopic()); // update topic list
 				stage.setScene(mainMenu.getScene());
 				stage.show();
 			}
@@ -135,8 +135,8 @@ public class AddNewQuestionScene {
 		addMore.setOnAction(e -> {
 			if (getQTopic(newQ, topicMenu, newTopicText) && getQDescription(newQ, questionArea)
 					&& getChoices(newQ, choices, choiceTexts, choiceBoxes)) {
-				MainMenuScene.QUESTION_POOL.add(newQ);
-				MainMenuScene.TOPIC.add(newQ.getTopic()); // update topic list
+				MainMenuScene.questionPool.add(newQ);
+				MainMenuScene.allallTopics.add(newQ.getTopic()); // update topic list
 				stage.setScene(this.getScene());
 				stage.show();
 			}
@@ -282,7 +282,7 @@ public class AddNewQuestionScene {
 			newQ.setTopic(existingQTopic);
 			return true;
 		} else {
-			if (!MainMenuScene.TOPIC.contains(newQTopic)) {
+			if (!MainMenuScene.allallTopics.contains(newQTopic)) {
 				newQ.setTopic(newQTopic);
 				return true;
 			} else {
@@ -315,11 +315,14 @@ public class AddNewQuestionScene {
 		for (int i = 0; i < choices.length; i++) {
 			if (!choices[i].getChoiceDescription().equals("")) {
 				choicesCount++;
+			} else if (choicesCount < 2) {
+				showAlert("choices");
+				return false;
 			}
 		}
-		if (choicesCount < 2) {
-			showAlert("choices");
-			return false;
+		Choice[] finalChoices = new Choice[choicesCount];
+		for (int j = 0; j < choicesCount; j++) {
+			finalChoices[j] = choices[j];
 		}
 
 		// at least one correct answer has to be entered
@@ -335,7 +338,12 @@ public class AddNewQuestionScene {
 			return false;
 		}
 
-		newQ.setChoices(choices);
+		for (int i = 0; i < choices.length; i++) {
+			if (choices[i].getChoiceDescription().equals("")) {
+				
+			}
+		}
+		newQ.setChoices(finalChoices);
 		return true;
 	}
 

@@ -80,9 +80,9 @@ public class QuestionScene {
 	 */
 	@SuppressWarnings("unused")
 	public void setScene() {
-		List<String> topics = MainMenuScene.TOPIC;
-		List<Question> allQuestions = MainMenuScene.QUIZ.getQuestions();
-		QuestionScene.questionCount = MainMenuScene.QUIZ.getQuestionCount();
+		List<String> topics = MainMenuScene.allallTopics;
+		List<Question> allQuestions = MainMenuScene.overallQuiz.getQuestions();
+		QuestionScene.questionCount = MainMenuScene.overallQuiz.getQuestionCount();
 	}
   /**
 	 * set scene attributes
