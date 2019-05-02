@@ -1,20 +1,20 @@
 package application;
 
 public class Choice {
-	
-	private boolean isCorrect ;
+
+	private boolean isCorrect;
 	private String choiceLabel;
 	private String choiceDescription;
-	
+
 	public Choice() {
 		isCorrect = false;
 		choiceLabel = "";
 		choiceDescription = "";
 	}
-	
+
 	public Choice(boolean correct, String description) {
-	     isCorrect = correct;
-	     choiceDescription = description;
+		isCorrect = correct;
+		choiceDescription = description;
 	}
 
 	public boolean isCorrect() {
@@ -40,11 +40,11 @@ public class Choice {
 	public void setChoiceDescription(String choiceDescription) {
 		this.choiceDescription = choiceDescription;
 	}
-	
+
 	public boolean equals(Choice choice) {
-	  if (this.getChoiceDescription().equals(choice.getChoiceDescription())) return true;
-    return false;
-	  
+		if (this.getChoiceDescription().equals(choice.getChoiceDescription()))
+			return true;
+		return false;
 	}
-	
+
 }
