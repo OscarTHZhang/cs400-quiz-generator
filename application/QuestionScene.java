@@ -1,7 +1,5 @@
 /**
- * Project: CS 400 Final Project
- * Name:    Quiz Generator
- * A-team:  #23
+ * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
  * 
  * Credit:
  * 
@@ -27,61 +25,68 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- * Graphics interface for a quiz. Containing a question , selection box, and
- * options to move to next question or back to last question
+ * Graphics interface for a quiz. Containing a question , selection box, and options to move to next
+ * question or back to last question
  * 
  * @author Bradley
  *
  */
 public class QuestionScene {
 
-	private Stage stage; // graphics stage
-	private Quiz quiz; // quiz
+  private Stage stage; // graphics stage
+  private Quiz quiz; // quiz
 
-	protected static int questionCount = 0; // question count of the quiz
-	protected static int correctQuestionCount = 0; // number of correct questions
-	protected static int finishedQuestionCount = 0; // number of finished questions
-	protected static int correctChoiceCount = 0; // number of correct choices
-	protected static int choiceCount = 0; // number of all choices
+  protected static int questionCount = 0; // question count of the quiz
+  protected static int correctQuestionCount = 0; // number of correct questions
+  protected static int finishedQuestionCount = 0; // number of finished questions
+  protected static int correctChoiceCount = 0; // number of correct choices
+  protected static int choiceCount = 0; // number of all choices
+  
+  protected static double score=0.0;
 
-	/**
-	 * constructor of QuestionScence
-	 * 
-	 * @param primaryStage
-	 */
-	public QuestionScene(Stage primaryStage) {
-		stage = primaryStage;
-		setScene();
-	}
-	
-	/**
-	 * set the quiz for this quiz
-	 * @param newQuiz the new Quiz that is set to be created
-	 * @return true if successfully created the quiz
-	 */
-	public boolean setQuiz(Quiz newQuiz) {
-		try {
-			quiz = newQuiz;
-			return true;
-		} catch (Exception e) {	
-			// print error message when creating quiz failed
-			System.out.print("setting quiz failed.");
-			return false;
-		}
-	}
+  /**
+   * constructor of QuestionScence
+   * 
+   * @param primaryStage
+   */
+  public QuestionScene(Stage primaryStage) {
+    stage = primaryStage;
+  }
 
-	/**
-	 * initialize scene by initializing quiz and a few important static parameters
-	 */
-	public void setScene() {
-		List<String> topics = new ArrayList<>();
-		topics.add("courseInfo");
-		List<Question> allQuestions = quiz.getQuestions();
-//        int questionCount = allQuestions.size(); 
-		QuestionScene.questionCount = quiz.getQuestionCount();
-	}
+  /**
+   * set the quiz for this quiz
+   * 
+   * @param newQuiz the new Quiz that is set to be created
+   * @return true if successfully created the quiz
+   */
+  public boolean setQuiz(Quiz newQuiz) {
+    try {
+      questionCount = 0;
+      correctQuestionCount = 0;
+      finishedQuestionCount = 0;
+      correctChoiceCount = 0;
+      choiceCount = 0; 
+      quiz = newQuiz;
+      return true;
+    } catch (Exception e) {
+      // print error message when creating quiz failed
+      System.out.print("setting quiz failed.");
+      return false;
+    }
+  }
 
-	/**
+  /**
+   * initialize scene by initializing quiz and a few important static parameters
+   */
+  public void setScene() {
+    List<String> topics = new ArrayList<>();
+    topics.add("courseInfo");
+    // int questionCount = allQuestions.size();
+    if(quiz==null) System.out.println("fuck");
+    QuestionScene.questionCount = quiz.getQuestionCount();
+  }
+
+  /**
 	 * set scene attributes
 	 * 
 	 * @return scene
@@ -93,12 +98,13 @@ public class QuestionScene {
 		return scene;
 	}
 
-	/**
+  /**
 	 * set interface's borderPane
 	 * 
 	 * @return BorderPane
 	 */
 	private BorderPane setBorderPane() {
+	    setScene();
 		BorderPane root = new BorderPane();
 		Question cur = quiz.currQuesiton(); // get current question
 		String question = cur.getDescription(); // get question title
@@ -121,7 +127,7 @@ public class QuestionScene {
 				"Question " + (quiz.getCurrentQuestionIndex() + 1) + " out of " + questionCount + ": ");
 		questionLabel.setFont(new Font("Helvetiva", 12));
 		questionLabel.setAlignment(Pos.CENTER_LEFT);
-
+		
 		// set question label
 		HBox questionDescription = new HBox();
 		Text questionTitle = new Text(question);
@@ -133,6 +139,7 @@ public class QuestionScene {
 		VBox choicesBox = new VBox();
 		CheckBox[] allCheckBox = new CheckBox[choices.length];
 		for (int i = 0; i < choices.length; i++) {
+		    System.out.println(choices.length+"  choice "+i);
 			CheckBox cb = new CheckBox(choices[i].getChoiceDescription());
 			if (quiz.checkAnswer().size() != 0) { // if the question has been answered, show last answer
 			    for(Choice choice : quiz.checkAnswer()) {
@@ -166,41 +173,47 @@ public class QuestionScene {
 		// set submit button
 		Button submit = new Button("SUBMIT");
 		// if user hits submit button
-		if (quiz.checkAnswer().size() == 0) {
+		
 			submit.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
 
 					// check user's answer
-					boolean correctness = false;
-					boolean partiallCorrectness = false;
+					boolean correctness = false; 
 					boolean redundantChoice = false;
-					choiceCount += allCheckBox.length;
+					for(Choice choice : cur.getChoices()) {
+					  if(choice.isCorrect()) choiceCount++;
+					}
 					
-//					List<String> keys = cur.getKeys();
-//					for (int i = 0; i < allCheckBox.length; i++) {
-//						if (allCheckBox[i].isSelected()) {
-//							quiz.answer(choices[i]);
-//							if (keys.contains(choices[i])) {
-//								partiallCorrectness = true;
-//								keys.remove(choices[i]);
-//								correctChoiceCount++;
-//							} else {
-//								redundantChoice = true; // check if it is completely correct or partially correct
-//							}
-//						}
-//					}
-//					if (keys.isEmpty()) {
-//						correctness = true;
-//						correctQuestionCount++;
-//					}
+					if(!quiz.checkAnswer().isEmpty()) finishedQuestionCount++;
+					
+					for (int i = 0; i < allCheckBox.length; i++) {
+						if (allCheckBox[i].isSelected()) {
+							quiz.answer(choices[i]);
+							if(choices[i].isCorrect()) { 
+							  correctChoiceCount++;
+							  correctness=true;
+							}
+							else {
+							  redundantChoice=true;
+							}
+						}
+					}
 					String correctnessPrompt;
-					if (correctness && !redundantChoice)
-						correctnessPrompt = "correct :)";
-					else if (partiallCorrectness)
-						correctnessPrompt = "partially correct";
+					if(correctness) {
+					  if(redundantChoice) {
+                        correctnessPrompt = "partially correct";
+                        score+=0.5;
+					  }
+					  else {
+					    
+                        correctnessPrompt = "correct :)";
+                        correctChoiceCount++;
+                        score+=1;
+                        }
+					}
 					else
 						correctnessPrompt = "incorrect :("; // prepare prompt for each result
-
+					
 					// set popup window after user hits submit
 					Stage popUpStage = new Stage();
 					BorderPane pane = new BorderPane();
@@ -227,15 +240,18 @@ public class QuestionScene {
 								stage.setScene(QuestionScene.this.getScene());
 								stage.show();
 							} else { // prepare result scene
+							    
 								ResultScene result = new ResultScene(stage);
 								stage.setScene(result.getScene());
 								stage.show();
 							}
 						}
 					});
+					
 				}
 			});
-		}
+		
+				
 		submit.setMinSize(70, 40);
 		buttons.getChildren().add(submit);
 

@@ -83,6 +83,9 @@ public class Quiz {
 	 */
 	public void setQuestionCount(int num) {
 		questionCount = num;
+        this.userAnswer = new ArrayList<>();
+        for (int i = 0; i < questionCount; i++)
+            userAnswer.add(new ArrayList<>());
 	}
 	
 	/**
