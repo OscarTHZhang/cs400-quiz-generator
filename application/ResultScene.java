@@ -17,7 +17,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,10 +66,15 @@ public class ResultScene {
     Text answeredQText = new Text("Number of Correct Questions: "
         + QuestionScene.correctQuestionCount + " / " + QuestionScene.questionCount);
     answeredQText.setFont(new Font("Helvetica", 16));
+    
     Text correctQText = new Text("Number of Answered Questions: "
         + QuestionScene.finishedQuestionCount + " / " + QuestionScene.questionCount);
     correctQText.setFont(new Font("Helvetica", 16));
 
+    Text scoreText = new Text("Score: "
+            + QuestionScene.score + " / " + QuestionScene.questionCount);
+        scoreText.setFont(new Font("Helvetica", 16));
+        
     // buttons
     Button takeNewQuiz = new Button("Take New Quiz");
     // create a new instance of MainMenuScene and set the button's action
@@ -137,7 +141,7 @@ public class ResultScene {
     buttons.setSpacing(20);
 
     VBox list = new VBox();
-    list.getChildren().addAll(answeredQText, correctQText, buttons);
+    list.getChildren().addAll(answeredQText, correctQText, scoreText, buttons);
     list.setAlignment(Pos.CENTER);
     list.setSpacing(30);
 

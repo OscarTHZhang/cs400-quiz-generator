@@ -9,7 +9,6 @@ package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -21,7 +20,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -266,6 +264,7 @@ public class AddNewQuestionScene {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private boolean getQTopic(Question newQ, ComboBox topicMenu,
 			TextField newTopicText) {
 		String existingQTopic = (String) topicMenu.getValue();
@@ -281,8 +280,13 @@ public class AddNewQuestionScene {
 			newQ.setTopic(existingQTopic);
 			return true;
 		} else {
-			newQ.setTopic(newQTopic);
-			return true;
+			if (!MainMenuScene.TOPIC.contains(newQTopic)) {
+				newQ.setTopic(newQTopic);
+				return true;
+			} else {
+				showAlert("topicExisting");
+				return false;
+			}
 		}
 	}
 
@@ -341,6 +345,9 @@ public class AddNewQuestionScene {
 			case "choicesAllFalse" :
 				warningMessage
 						.setText("Please select at least one correct answer!");
+				break;
+			case "topicExisting" :
+				warningMessage.setText("The topic already exists!");
 				break;
 			default :
 				warningMessage.setText("Please!");

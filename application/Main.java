@@ -12,6 +12,7 @@ package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 /**
  * This class works as a scene controller of the GUI
@@ -38,6 +39,7 @@ public class Main extends Application {
 			primaryStage.setTitle("Quiz Generator");
 			// disallow resizing to make the layout more elegant
 			primaryStage.setResizable(false);
+			primaryStage.getIcons().add(new Image("file:icon.png"));
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

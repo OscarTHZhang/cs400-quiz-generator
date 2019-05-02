@@ -7,12 +7,6 @@
 
 package application;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import javax.imageio.ImageIO;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 /**
@@ -83,15 +77,8 @@ public class Question {
 		if (imgPath == null || imgPath.equals("none")) {
 			return null;
 		} else {
-			BufferedImage bImage;
-			try {
-				bImage = ImageIO.read(new File(imgPath));
-				return (SwingFXUtils.toFXImage(bImage, null));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			return new Image(imgPath, true);
 		}
-		return null; // not going to happen
 	}
 
 	public String getImgPath() {
