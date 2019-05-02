@@ -9,7 +9,6 @@ package application;
 
 import java.io.File;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -21,7 +20,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -154,9 +152,9 @@ public class AddNewQuestionScene {
 		Button uploadPic = new Button();
 		uploadPic.setText("UPLOAD YOUR PICTURE HERE");
 		uploadPic.setOnAction(e -> {
-			Image newImage = chooseImage();
-			if (newImage != null) {
-				newQ.setImg(newImage);
+			String newImagePath = chooseImage();
+			if (newImagePath != null) {
+				newQ.setImgPath(newImagePath);
 			}
 		});
 
@@ -228,7 +226,7 @@ public class AddNewQuestionScene {
 	 * 
 	 * @return an image object that is uploaded from the local
 	 */
-	private Image chooseImage() {
+	private String chooseImage() {
 		// a FileChooser to select the picture
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Upload your picture");
@@ -237,7 +235,7 @@ public class AddNewQuestionScene {
 			//throw new FileNotFoundException();
 			return null;
 		} else {
-			return new Image(selectedPic.toURI().toString());
+			return selectedPic.toURI().toString();
 		}
 	}
 	
