@@ -133,9 +133,11 @@ public class QuestionScene {
 		for (int i = 0; i < choices.length; i++) {
 			CheckBox cb = new CheckBox(choices[i].getChoiceDescription());
 			if (quiz.checkAnswer().size() != 0) { // if the question has been answered, show last answer
-				if (quiz.checkAnswer().contains(choices[i].getChoiceDescription())) {
-					cb.setSelected(true);
-				}
+			    for(Choice choice : quiz.checkAnswer()) {
+    				if (choice.equals(choices[i])) {
+    					cb.setSelected(true);
+    				}
+			    }
 			}
 			choicesBox.getChildren().add(cb);
 			allCheckBox[i] = cb;

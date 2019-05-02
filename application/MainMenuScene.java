@@ -188,13 +188,7 @@ public class MainMenuScene {
           JSONObject jsonQuestion = (JSONObject) questions.get(i);
           String questionDescription = (String) jsonQuestion.get("questionText");
           String topic = (String) jsonQuestion.get("topic");
-           String imagePath = (String) jsonQuestion.get("image");
-           if (imagePath.equals("none")) {
-             image = null;
-           } else {
-             BufferedImage bImage = ImageIO.read(new File(imagePath));
-             image = SwingFXUtils.toFXImage(bImage, null);
-           }
+          String imagePath = (String) jsonQuestion.get("image");
           JSONArray choiceArray = (JSONArray) jsonQuestion.get("choiceArray");
           Choice[] choices = new Choice[5];
 
@@ -207,7 +201,7 @@ public class MainMenuScene {
           }
 
           // construct instance of Question
-          Question newQuestion = new Question(questionDescription, choices, topic, image);
+          Question newQuestion = new Question(questionDescription, choices, topic, imagePath);
           // add question to questionList
           QUESTION_POOL.add(newQuestion);
         }

@@ -1,7 +1,5 @@
 /**
- * Project: CS 400 Final Project
- * Name:	Quiz Generator
- * A-team:	#23
+ * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
  * 
  * Credit:
  * 
@@ -11,6 +9,7 @@ package application;
 
 import java.io.File;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
