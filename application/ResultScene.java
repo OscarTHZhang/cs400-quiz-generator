@@ -33,194 +33,196 @@ import javafx.stage.Stage;
  */
 public class ResultScene {
 
-  private Stage stage; // to get access to the current stage
+	private Stage stage; // to get access to the current stage
 
-  /**
-   * This constructor passes the primary stage into the scene
-   * 
-   * @param primaryStage is the primary stage
-   */
-  public ResultScene(Stage primaryStage) {
-    stage = primaryStage;
-  }
+	/**
+	 * This constructor passes the primary stage into the scene
+	 * 
+	 * @param primaryStage is the primary stage
+	 */
+	public ResultScene(Stage primaryStage) {
+		stage = primaryStage;
+	}
 
-  /**
-   * This method returns the result scene
-   * 
-   * @return the result scene
-   */
-  public Scene getScene() {
-    BorderPane root = setBorderPane();
-    Scene scene = new Scene(root, 400, 350);
-    scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-    return scene;
-  }
+	/**
+	 * This method returns the result scene
+	 * 
+	 * @return the result scene
+	 */
+	public Scene getScene() {
+		BorderPane root = setBorderPane();
+		Scene scene = new Scene(root, 400, 350);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		return scene;
+	}
 
-  /**
-   * This helper method sets the elements and the layout in the border pane
-   * 
-   * @return the border pane
-   */
-  private BorderPane setBorderPane() {
-    // texts indicating the number of answered and correct questions
-    Text answeredQText = new Text("Number of Correct Questions: "
-        + QuestionScene.correctQuestionCount + " / " + QuestionScene.questionCount);
-    answeredQText.setFont(new Font("Helvetica", 16));
-    
-    Text correctQText = new Text("Number of Answered Questions: "
-        + QuestionScene.finishedQuestionCount + " / " + QuestionScene.questionCount);
-    correctQText.setFont(new Font("Helvetica", 16));
+	/**
+	 * This helper method sets the elements and the layout in the border pane
+	 * 
+	 * @return the border pane
+	 */
+	private BorderPane setBorderPane() {
+		// texts indicating the number of answered and correct questions and the final score
+		Text answeredQText = new Text("Number of Correct Questions: " + QuestionScene.correctQuestionCount + " / "
+				+ QuestionScene.questionCount);
+		answeredQText.setFont(new Font("Helvetica", 16));
 
-    Text scoreText = new Text("Score: "
-            + QuestionScene.score + " / " + QuestionScene.questionCount);
-        scoreText.setFont(new Font("Helvetica", 16));
-        
-    // buttons
-    Button takeNewQuiz = new Button("Take New Quiz");
-    // create a new instance of MainMenuScene and set the button's action
-    MainMenuScene mainMenu = new MainMenuScene(stage);
-    takeNewQuiz.setOnAction(e -> {
-      stage.setScene(mainMenu.getScene());
-      stage.show();
-    });
-    takeNewQuiz.setMinSize(100, 40);
+		Text correctQText = new Text("Number of Answered Questions: " + QuestionScene.finishedQuestionCount + " / "
+				+ QuestionScene.questionCount);
+		correctQText.setFont(new Font("Helvetica", 16));
 
-    Button saveAns = new Button("Save Questions to a JSON file");
-    saveAns.setMinSize(100, 40);
-    saveAns.setOnAction(e -> saveFileToLocal());
+		Text scoreText = new Text("Score: " + QuestionScene.score + " / " + QuestionScene.questionCount);
+		scoreText.setFont(new Font("Helvetica", 16));
 
-    Button exit = new Button("Exit without Saving");
-    exit.setMinSize(100, 40);
+		// buttons
+		Button takeNewQuiz = new Button("Take New Quiz");
+		// create a new instance of MainMenuScene and set the button's action
+		MainMenuScene mainMenu = new MainMenuScene(stage);
+		takeNewQuiz.setOnAction(e -> {
+			stage.setScene(mainMenu.getScene());
+			stage.show();
+		});
+		takeNewQuiz.setMinSize(100, 40);
 
-    // set the button's action to show a warning message
-    exit.setOnAction(e -> {
-      // a new stage aside from the primary stage
-      Stage popUpStage = new Stage();
+		Button saveAns = new Button("Save Questions to a JSON file");
+		saveAns.setMinSize(100, 40);
+		saveAns.setOnAction(e -> saveFileToLocal());
 
-      // a border pane to organize the elements
-      BorderPane root = new BorderPane();
-      root.setMaxSize(200, 100);
+		Button exit = new Button("Exit without Saving");
+		exit.setMinSize(100, 40);
 
-      // text of the warning message
-      Text warningMessage = new Text("Are you sure you want to quit?");
+		// set the button's action to show a warning message
+		exit.setOnAction(e -> {
+			// a new stage aside from the primary stage
+			Stage popUpStage = new Stage();
 
-      // buttons
-      Button no = new Button("NO");
-      // close the warning window
-      no.setOnAction(e2 -> popUpStage.close());
+			// a border pane to organize the elements
+			BorderPane root = new BorderPane();
+			root.setMaxSize(200, 100);
 
-      // terminate the program
-      Button yes = new Button("YES");
-      yes.setOnAction(e2 -> Platform.exit());
+			// text of the warning message
+			Text warningMessage = new Text("Are you sure you want to quit?");
 
-      // HBoxs
-      HBox buttons = new HBox();
-      buttons.getChildren().addAll(no, yes);
-      buttons.setAlignment(Pos.CENTER);
-      buttons.setSpacing(20);
+			// buttons
+			Button no = new Button("NO");
+			// close the warning window
+			no.setOnAction(e2 -> popUpStage.close());
 
-      // VBox
-      VBox list = new VBox();
-      list.getChildren().addAll(warningMessage, buttons);
-      list.setAlignment(Pos.CENTER);
-      list.setSpacing(20);
+			// terminate the program
+			Button yes = new Button("YES");
+			yes.setOnAction(e2 -> Platform.exit());
 
-      root.setCenter(list);
-      // padding of the border pane
-      root.setPadding(new Insets(15, 20, 10, 20));
+			// HBoxs
+			HBox buttons = new HBox();
+			buttons.getChildren().addAll(no, yes);
+			buttons.setAlignment(Pos.CENTER);
+			buttons.setSpacing(20);
 
-      Scene warning = new Scene(root, 250, 100);
-      popUpStage.setScene(warning);
-      popUpStage.show();
-    });
+			// VBox
+			VBox list = new VBox();
+			list.getChildren().addAll(warningMessage, buttons);
+			list.setAlignment(Pos.CENTER);
+			list.setSpacing(20);
 
-    // VBoxes
-    VBox buttons = new VBox();
-    buttons.getChildren().addAll(takeNewQuiz, saveAns, exit);
-    buttons.setAlignment(Pos.CENTER);
-    buttons.setSpacing(20);
+			root.setCenter(list);
+			// padding of the border pane
+			root.setPadding(new Insets(15, 20, 10, 20));
 
-    VBox list = new VBox();
-    list.getChildren().addAll(answeredQText, correctQText, scoreText, buttons);
-    list.setAlignment(Pos.CENTER);
-    list.setSpacing(30);
+			Scene warning = new Scene(root, 250, 100);
+			popUpStage.setScene(warning);
+			popUpStage.show();
+		});
 
-    // the border pane
-    BorderPane root = new BorderPane();
-    root.setCenter(list);
-    root.setPadding(new Insets(20, 20, 20, 20));
+		// VBoxes
+		VBox buttons = new VBox();
+		buttons.getChildren().addAll(takeNewQuiz, saveAns, exit);
+		buttons.setAlignment(Pos.CENTER);
+		buttons.setSpacing(20);
 
-    return root;
-  }
+		VBox list = new VBox();
+		list.getChildren().addAll(answeredQText, correctQText, scoreText, buttons);
+		list.setAlignment(Pos.CENTER);
+		list.setSpacing(30);
 
-  /**
-   * Save the current questions to a local .json file. To be implemented.
-   */
-  @SuppressWarnings("unchecked")
-  private void saveFileToLocal() {
-    FileChooser fileChooser = new FileChooser();
+		// the border pane
+		BorderPane root = new BorderPane();
+		root.setCenter(list);
+		root.setPadding(new Insets(20, 20, 20, 20));
 
-    // Set extension filter
-    // Look up for the formal name
-    fileChooser.getExtensionFilters()
-        .add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
+		return root;
+	}
 
-    // Show save file dialog
-    File file = fileChooser.showSaveDialog(stage);
+	/**
+	 * This method saves the current questions to a local .json file.
+	 */
+	@SuppressWarnings("unchecked")
+	private void saveFileToLocal() {
+		FileChooser fileChooser = new FileChooser();
 
-    if (!file.getName().contains(".")) {
-      file = new File(file.getAbsolutePath() + ".txt");
-    }
+		// Set extension filter
+		// Look up for the formal name
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
 
-    if (file != null) {
-      // saves this string to a file
-      JSONObject obj = new JSONObject();
-      JSONArray questions = new JSONArray();
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog(stage);
 
-      for (Question question : MainMenuScene.QUESTION_POOL) {
-        JSONObject q = new JSONObject();
-        q.put("meta-data", "unused");
-        q.put("questionText", question.getDescription());
-        q.put("topic", question.getTopic());
-        q.put("image", question.getImgPath());
-        JSONArray jsonChoices = new JSONArray();
-        Choice[] choices = question.getChoices();
-        for (int i = 0; i < choices.length; i++) {
-          JSONObject c = new JSONObject();
-          if (choices[i].isCorrect()) {
-            c.put("isCorrect", "T");
-          } else {
-            c.put("isCorrect", "F");
-          }
-          c.put("choice", choices[i].getChoiceDescription());
-          jsonChoices.add(c);
-          q.put("choiceArray", jsonChoices);
-        }
-        questions.add(q);
-      }
+		if (!file.getName().contains(".")) {
+			file = new File(file.getAbsolutePath() + ".txt");
+		}
 
-      obj.put("questionArray", questions);
+		if (file != null) {
+			// saves this string to a file
+			JSONObject obj = new JSONObject();
+			JSONArray questions = new JSONArray();
 
-      SaveFile(obj.toJSONString(), file);
-    }
-  }
+			for (Question question : MainMenuScene.QUESTION_POOL) {
+				// write information into the .json file
+				JSONObject q = new JSONObject();
+				q.put("meta-data", "unused");
+				q.put("questionText", question.getDescription());
+				q.put("topic", question.getTopic());
+				q.put("image", question.getImgPath());
+				
+				// choices of the question
+				JSONArray jsonChoices = new JSONArray();
+				Choice[] choices = question.getChoices();
 
-  /**
-   * Writes the String content to a file
-   * 
-   * @param content
-   * @param file
-   */
-  private void SaveFile(String content, File file) {
-    FileWriter fileWriter = null;
-    try {
-      fileWriter = new FileWriter(file);
-      fileWriter.write(content);
-      fileWriter.close();
-    } catch (IOException e) {
-      // TODO: Figure out what is IOException and how to handle it.
-      e.printStackTrace();
-    }
-  }
+				for (int i = 0; i < choices.length; i++) {
+					JSONObject c = new JSONObject();
+					if (choices[i].isCorrect()) {
+						c.put("isCorrect", "T");
+					} else {
+						c.put("isCorrect", "F");
+					}
+					c.put("choice", choices[i].getChoiceDescription());
+					jsonChoices.add(c);
+					q.put("choiceArray", jsonChoices);
+				}
+				questions.add(q);
+			}
+
+			obj.put("questionArray", questions);
+
+			SaveFile(obj.toJSONString(), file);
+		}
+	}
+
+	/**
+	 * This method stores the .json file in the local
+	 * 
+	 * @param content is the content of the file
+	 * @param file is the .json file
+	 */
+	private void SaveFile(String content, File file) {
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(file);
+			fileWriter.write(content);
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO: Figure out what is IOException and how to handle it.
+			e.printStackTrace();
+		}
+	}
 
 }

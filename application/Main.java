@@ -39,6 +39,7 @@ public class Main extends Application {
 			primaryStage.setTitle("Quiz Generator");
 			// disallow resizing to make the layout more elegant
 			primaryStage.setResizable(false);
+			// set the icon of the program
 			primaryStage.getIcons().add(new Image("file:icon.png"));
 			primaryStage.show();
 		} catch (Exception e) {
