@@ -47,18 +47,15 @@ public class MainMenuScene {
 
   private Stage stage;
 
-  public static Quiz QUIZ = new Quiz(); // the quiz object that we are going to
-  // manipulate throughout the application
+  public static Quiz QUIZ = new Quiz(); // a quiz object. See Quiz.java
   public static List<Question> QUESTION_POOL = new ArrayList<>(); // all questions
-
-  public static List<String> TOPIC = new ArrayList<>(); // all topic
+  public static List<String> TOPIC = new ArrayList<>(); // all topics
 
   /**
-   * fill the all topic list with the given question pool
+   * Add new topics to the topic list if there are questions in the question pool with a new topic.
    */
   public static void fillTopic() {
     for (Question q : QUESTION_POOL) {
-
       // if this is a topic that is not in the TOPIC list, then add this topic
       if (!TOPIC.contains(q.getTopic())) {
         TOPIC.add(q.getTopic());
@@ -67,16 +64,18 @@ public class MainMenuScene {
   }
 
   /**
+   * This constructor passes the primary stage into the scene
    * 
-   * @param primaryStage
+   * @param primaryStage is the primary stage
    */
   public MainMenuScene(Stage primaryStage) {
     stage = primaryStage;
   }
 
   /**
+   * This method returns the result scene
    * 
-   * @return
+   * @return the result scene
    */
   public Scene getScene() {
     BorderPane root = setBorderPane();
@@ -86,8 +85,9 @@ public class MainMenuScene {
   }
 
   /**
+   * This helper method sets the elements and the layout in the border pane
    * 
-   * @return
+   * @return the border pane
    */
   private BorderPane setBorderPane() {
     BorderPane root = new BorderPane();
@@ -95,7 +95,9 @@ public class MainMenuScene {
     Label title = new Label("Quiz Generator"); // set the main title
     title.setFont(new Font("Helvetica", 32)); // make the main title looks bigger
 
-    Label numQuestions = new Label("Available Questions: 13"); // display the number of available
+    int numQ = QUESTION_POOL.size();
+    
+    Label numQuestions = new Label("Available Questions: "+numQ); // display the number of available
                                                                // questions
 
     Button startQuizButton = createNewButton("Start Quiz", 150, 100, new Font("Helvetiva", 18));
@@ -106,8 +108,7 @@ public class MainMenuScene {
     });
 
     // put the title, numQuestions and the start quiz button in a VBox, set the VBox
-    // in the
-    // center of the BorderPane
+    // in the center of the BorderPane
     VBox start = new VBox();
     start.getChildren().addAll(title, startQuizButton, numQuestions);
     start.setAlignment(Pos.CENTER);
@@ -124,11 +125,12 @@ public class MainMenuScene {
       stage.show();
     });
 
+    // functionalities of saveFile are in saveFileToLocal().
     Button saveToLocal = createNewButton("Save Current Questions to Local File");
     saveToLocal.setOnAction(e -> saveFileToLocal());
     Button exit = createNewButton("Exit");
 
-    // the functionalities of the exit button
+    // The implementation of the functionalities of the exit button.
     exit.setOnAction(new EventHandler<ActionEvent>() {
       public void handle(ActionEvent event) {
         Stage popUpStage = new Stage();
@@ -178,21 +180,23 @@ public class MainMenuScene {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open Resource File"); // TODO: Where is the title displayed?
     File selectedFile = fileChooser.showOpenDialog(stage);
-    if (selectedFile != null) {
-      try {
+    if (selectedFile != null) { // user selected a file
+      try { // parse the .json file
         Object obj = new JSONParser().parse(new FileReader(selectedFile.getPath()));
         JSONObject jo = (JSONObject) obj;
         JSONArray questions = (JSONArray) jo.get("questionArray");
         for (int i = 0; i < questions.size(); i++) {
           Image image;
           JSONObject jsonQuestion = (JSONObject) questions.get(i);
+          // add description, topic and image path properties to the question
           String questionDescription = (String) jsonQuestion.get("questionText");
           String topic = (String) jsonQuestion.get("topic");
           String imagePath = (String) jsonQuestion.get("image");
           JSONArray choiceArray = (JSONArray) jsonQuestion.get("choiceArray");
-          Choice[] choices = new Choice[5];
+          Choice[] choices = new Choice[choiceArray.size()];
 
-          for (int j = 0; j < 5; j++) {
+          // add the choices to the question
+          for (int j = 0; j < choiceArray.size(); j++) {
             JSONObject jsonChoice = (JSONObject) choiceArray.get(j);
             String choiceDescription = (String) jsonChoice.get("choice");
             boolean isCorrect = jsonChoice.get("isCorrect").equals("T");
@@ -205,9 +209,8 @@ public class MainMenuScene {
           // add question to questionList
           QUESTION_POOL.add(newQuestion);
         }
-        System.out.print(QUESTION_POOL.size());
         fillTopic(); // call fill topic to fill the topic list
-
+        stage.setScene(this.getScene()); // Update number of questions shown in the main menu
       } catch (FileNotFoundException e) {
       } catch (IOException e) {
       } catch (ParseException e) {
@@ -216,14 +219,15 @@ public class MainMenuScene {
   }
 
   /**
-   * Save the current questions to a local .json file. To be implemented.
+   * Save the current questions to a local .json file.
    */
   @SuppressWarnings("unchecked")
   private void saveFileToLocal() {
+    // TODO: The json file doesn't contain "\n" so it's difficult for humans to read, but the file
+    // can be parsed without errors.
     FileChooser fileChooser = new FileChooser();
 
     // Set extension filter
-    // Look up for the formal name
     fileChooser.getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
 
@@ -231,7 +235,7 @@ public class MainMenuScene {
     File file = fileChooser.showSaveDialog(stage);
 
     if (!file.getName().contains(".")) {
-      file = new File(file.getAbsolutePath() + ".txt");
+      file = new File(file.getAbsolutePath() + ".json");
     }
 
     if (file != null) {
@@ -240,12 +244,11 @@ public class MainMenuScene {
       JSONArray questions = new JSONArray();
 
       for (Question question : QUESTION_POOL) {
+        // for each question, make a new json object and add that object to the json array
         JSONObject q = new JSONObject();
         q.put("meta-data", "unused");
         q.put("questionText", question.getDescription());
         q.put("topic", question.getTopic());
-        // image TODO
-        // choices
         JSONArray jsonChoices = new JSONArray();
         Choice[] choices = question.getChoices();
         for (int i = 0; i < choices.length; i++) {
@@ -281,7 +284,6 @@ public class MainMenuScene {
       fileWriter.write(content);
       fileWriter.close();
     } catch (IOException e) {
-      // TODO: Figure out what is IOException and how to handle it.
       e.printStackTrace();
     }
   }
