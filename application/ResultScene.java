@@ -17,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -177,8 +178,7 @@ public class ResultScene {
         q.put("meta-data", "unused");
         q.put("questionText", question.getDescription());
         q.put("topic", question.getTopic());
-        q.put("image", question.getImg());
-        // TODO: put(String, Image) or put(String, String)?
+        q.put("image", question.getImgPath());
         JSONArray jsonChoices = new JSONArray();
         Choice[] choices = question.getChoices();
         for (int i = 0; i < choices.length; i++) {

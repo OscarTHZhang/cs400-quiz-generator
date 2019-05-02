@@ -1,7 +1,5 @@
 /**
- * Project: CS 400 Final Project
- * Name:	Quiz Generator
- * A-team:	#23
+ * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
  * 
  * Credit:
  * 
@@ -10,9 +8,7 @@
 package application;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -24,7 +20,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -84,6 +79,7 @@ public class AddNewQuestionScene {
 
 		// combo box
 		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.TOPIC);
+		options.add(""); // add a empty string to the options
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ComboBox topicMenu = new ComboBox(options);
 
@@ -94,17 +90,15 @@ public class AddNewQuestionScene {
 		questionArea.setPrefHeight(70);
 		questionArea.setPrefWidth(250);
 
-		TextField choiceAText = new TextField();
-
+		// choice texts
+		TextField choiceAText = new TextField(); 
 		TextField choiceBText = new TextField();
-
 		TextField choiceCText = new TextField();
-
 		TextField choiceDText = new TextField();
-
 		TextField choiceEText = new TextField();
 		
 		TextField[] choiceTexts = {choiceAText, choiceBText, choiceCText, choiceDText, choiceEText};
+		
 		// check boxes
 		CheckBox choiceABox = new CheckBox("Correct?");
 		CheckBox choiceBBox = new CheckBox("Correct?");
@@ -114,6 +108,7 @@ public class AddNewQuestionScene {
 		
 		CheckBox[] choiceBoxes = {choiceABox, choiceBBox, choiceCBox, choiceDBox, choiceEBox};
 		
+		// Choice objects
 		Choice choiceA = new Choice();
 		Choice choiceB = new Choice();
 		Choice choiceC = new Choice();
@@ -122,7 +117,7 @@ public class AddNewQuestionScene {
 		
 		Choice[] choices = {choiceA, choiceB, choiceC, choiceD, choiceE};
 						
-		// buttons
+		// Buttons
 		Button back = new Button();
 		back.setText("SAVE & BACK");
 		// create a new instance of MainMenuScene and set the button's action
@@ -137,7 +132,7 @@ public class AddNewQuestionScene {
 				stage.show();
 			}	
 		});
-
+		// This is the button to add more new questions
 		Button addMore = new Button();
 		addMore.setText("SAVE & ADD MORE");
 		// create a new instance of AddNewQuestionScene and set the button's action
@@ -145,19 +140,28 @@ public class AddNewQuestionScene {
 			if (getQTopic(newQ, topicMenu, newTopicText) && 
 					getQDescription(newQ, questionArea) && 
 					getChoices(newQ, choices, choiceTexts, choiceBoxes)) {
-				MainMenuScene.QUESTION_POOL.add(newQ);
+				// add a new question to the question pool
+				MainMenuScene.QUESTION_POOL.add(newQ); 
 				MainMenuScene.TOPIC.add(newQ.getTopic()); // update topic list
 				stage.setScene(this.getScene());
 				stage.show();
 			}	
 		});
 		
+		Button cancel = new Button();
+		cancel.setText("CANCEL");
+		cancel.setOnAction(e -> {
+			stage.setScene(mainMenu.getScene());
+			stage.show();
+		});
+		
+		// This is the button to upload the picture
 		Button uploadPic = new Button();
 		uploadPic.setText("UPLOAD YOUR PICTURE HERE");
 		uploadPic.setOnAction(e -> {
-			Image newImage = chooseImage();
-			if (newImage != null) {
-				newQ.setImg(newImage);
+			String newImagePath = chooseImage();
+			if (newImagePath != null) {
+				newQ.setImgPath(newImagePath);
 			}
 		});
 
@@ -203,7 +207,7 @@ public class AddNewQuestionScene {
 		choiceEHBox.setSpacing(hSpacing);
 
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(back, addMore);
+		buttons.getChildren().addAll(cancel, back, addMore);
 		buttons.setAlignment(Pos.CENTER);
 		buttons.setPadding(new Insets(20, 0, 0, 0));
 		buttons.setSpacing(20);
@@ -226,21 +230,31 @@ public class AddNewQuestionScene {
 	/**
 	 * Choose a file from local, read in .json file and store the questions in the
 	 * program. To be implemented.
-	 * @throws FileNotFoundException 
+	 * 
+	 * @return an image object that is uploaded from the local
 	 */
-	private Image chooseImage() {
+	private String chooseImage() {
+		// a FileChooser to select the picture
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Upload your picture"); // TODO: Where is the title displayed?
+		fileChooser.setTitle("Upload your picture");
 		File selectedPic = fileChooser.showOpenDialog(stage);
 		if (selectedPic == null) {
 			//throw new FileNotFoundException();
 			return null;
 		} else {
-			return new Image(selectedPic.toURI().toString());
+			return selectedPic.toURI().toString();
 		}
 	}
 	
+	/**
+	 * Get the description of the question
+	 * 
+	 * @param newQ is the targeted question
+	 * @param questionArea is the TextArea to enter the question description
+	 * @return true if the description exists, false otherwise
+	 */
 	private boolean getQDescription(Question newQ, TextArea questionArea) {
+		
 		String newQDescription = questionArea.getText();
 		if (newQDescription == null || newQDescription.equals("")) {
 			showAlert("description");
@@ -251,15 +265,24 @@ public class AddNewQuestionScene {
 		}
 	}
 	
+	/**
+	 * Get the topic of the question
+	 * 
+	 * @param newQ is the targeted question
+	 * @param topicMenu is the ComboBox to select the topics
+	 * @param newTopicText is the TextField to enter a new topic
+	 * @return true if the topic exists, false otherwise
+	 */
+	@SuppressWarnings("rawtypes")
 	private boolean getQTopic(Question newQ, ComboBox topicMenu, TextField newTopicText) {
-		String existingQTopic = (String) topicMenu.getValue();
-		String newQTopic = newTopicText.getText();
+		String existingQTopic = (String) topicMenu.getValue(); // an existing topic
+		String newQTopic = newTopicText.getText(); // a new topic
 		
 		if (existingQTopic == null && newQTopic.equals("")) {
-			showAlert("topic");
+			showAlert("topic"); // at least one topic is required
 			return false;
 		} else if (existingQTopic != null && !newQTopic.equals("")) {
-			showAlert("topicDuplicate");
+			showAlert("topicDuplicate"); // only one topic is allowed
 			return false;
 		} else if (existingQTopic != null) {
 			newQ.setTopic(existingQTopic);
@@ -270,13 +293,25 @@ public class AddNewQuestionScene {
 		}
 	}
 	
-	private boolean getChoices(Question newQ, Choice[] choices, TextField[] choiceTexts, CheckBox[] choiceBoxes) {	
+	/**
+	 * Get the choices of the question
+	 * 
+	 * @param newQ is the targeted question
+	 * @param choices is the array of choices
+	 * @param choiceTexts is the array of TextFields to represent the choices
+	 * @param choiceBoxes is the array of CheckBoxes to represent the correct answer
+	 * @return true if the topics exist, false otherwise
+	 */
+	private boolean getChoices(Question newQ, Choice[] choices, 
+			TextField[] choiceTexts, CheckBox[] choiceBoxes) {
+		// set the basic information of the choices
 		for (int i = 0; i < choices.length; i++) {
 			String newQChoice = choiceTexts[i].getText();
 			choices[i].setChoiceDescription(newQChoice);
 			choices[i].setCorrect(choiceBoxes[i].isSelected());
 		}
 		
+		// at least two choices are needed
 		int choicesCount = 0;
 		for (int i = 0; i < choices.length; i++) {
 			if (!choices[i].getChoiceDescription().equals("")) {
@@ -288,6 +323,7 @@ public class AddNewQuestionScene {
 			return false;
 		} 
 		
+		// at least one correct answer is correct
 		boolean allFalse = true;
 		for (int i = 0; i < choices.length; i++) {
 			if (choices[i].isCorrect()) {
@@ -304,9 +340,15 @@ public class AddNewQuestionScene {
 		return true;
 	}
 	
+	/**
+	 * This method shows alerts to prompt user to do right behaviors
+	 * 
+	 * @param problem is the string that indicates the problem
+	 */
 	private void showAlert(String problem) {
 		Text warningMessage = new Text();
 		
+		// judge which problem is existing
 		switch(problem) {
 			case "topic":
 				warningMessage.setText("Please select at least one topic!");
@@ -327,17 +369,21 @@ public class AddNewQuestionScene {
 				warningMessage.setText("Please!");
 		}
 		
+		// set up a warning window
 		Stage popUpStage = new Stage();
 		BorderPane root = new BorderPane();
 		root.setMaxSize(300, 100);
 
+		// button "GOT IT"
 		Button yes = new Button("GOT IT");
 		yes.setOnAction(e -> popUpStage.close());
 
+		// HBox to organize the layout
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(yes);
 		buttons.setAlignment(Pos.CENTER);
 
+		// VBox to organize the layout
 		VBox list = new VBox();
 		list.getChildren().addAll(warningMessage, buttons);
 		list.setAlignment(Pos.CENTER);
