@@ -1,7 +1,5 @@
 /**
- * Project: CS 400 Final Project
- * Name:	Quiz Generator
- * A-team:	#23
+ * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
  * 
  * Credit:
  * 
@@ -9,8 +7,12 @@
 
 package application;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
-
+import javax.imageio.ImageIO;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 /**
@@ -24,29 +26,35 @@ public class Question {
 	private String description; // description of the question
 	private Choice[] choices; // answer choices
 	private String topic; // the topic that this question is affiliated to
-	private Image img; // a list of images that may be related to this question
+	private String imgPath; // a list of images that may be related to this
+							// question
 
 	/**
 	 * The constructor of the Question class that takes in the parameters
 	 * 
-	 * @param description of the question
-	 * @param choices     of the question
-	 * @param topic       that the question is affiliated to
-	 * @param keys        true answer for this question
+	 * @param description
+	 *            of the question
+	 * @param choices
+	 *            of the question
+	 * @param topic
+	 *            that the question is affiliated to
+	 * @param keys
+	 *            true answer for this question
 	 */
-	public Question(String description, Choice[] choices, String topic, Image img) {
+	public Question(String description, Choice[] choices, String topic,
+			String imgPath) {
 
 		// assign the parameters to the class attributes
 		this.description = description;
 		this.choices = choices;
 		this.topic = topic;
-		this.img = img;
+		this.imgPath = imgPath;
 	}
 
 	public Question() {
-		
+
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -72,11 +80,26 @@ public class Question {
 	}
 
 	public Image getImg() {
-		return img;
+		if (imgPath.equals("none")) {
+			return null;
+		} else {
+			BufferedImage bImage;
+			try {
+				bImage = ImageIO.read(new File(imgPath));
+				return (SwingFXUtils.toFXImage(bImage, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null; // not going to happen
 	}
 
-	public void setImg(Image img) {
-		this.img = img;
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 }

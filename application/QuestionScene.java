@@ -75,17 +75,15 @@ public class QuestionScene {
     }
   }
 
-  /**
-   * initialize scene by initializing quiz and a few important static parameters
-   */
-  public void setScene() {
-    List<String> topics = new ArrayList<>();
-    topics.add("courseInfo");
-    // int questionCount = allQuestions.size();
-    if(quiz==null) System.out.println("fuck");
-    QuestionScene.questionCount = quiz.getQuestionCount();
-  }
-
+ 
+	/**
+	 * initialize scene by initializing quiz and a few important static parameters
+	 */
+	public void setScene() {
+		List<String> topics = MainMenuScene.TOPIC;
+		List<Question> allQuestions = MainMenuScene.QUIZ.getQuestions();
+		QuestionScene.questionCount = MainMenuScene.QUIZ.getQuestionCount();
+	}
   /**
 	 * set scene attributes
 	 * 
