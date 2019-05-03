@@ -11,6 +11,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The Quiz class that holds all questions in the quiz generator application
@@ -84,8 +85,9 @@ public class Quiz {
 	public void setQuestionCount(int num) {
 		questionCount = num;
         this.userAnswer = new ArrayList<>();
-        for (int i = 0; i < questionCount; i++)
+        for (int i = 0; i < questionCount; i++) {
             userAnswer.add(new ArrayList<>());
+        }
 	}
 	
 	/**
@@ -94,9 +96,11 @@ public class Quiz {
 	public void generateQuestions() {
 		// idea: traverse through the QUESTION_POOL to find the relevant topic 
 		int newQCount = 0;
-		
-		for (Question q: MainMenuScene.QUESTION_POOL) {
-			if (newQCount < questionCount && this.allTopic.contains(q.getTopic())) {
+		Random rdm = new Random();
+		while (newQCount < questionCount) {
+			int index = rdm.nextInt(MainMenuScene.questionPool.size());
+			Question q = MainMenuScene.questionPool.get(index);
+			if (this.allTopic.contains(q.getTopic()) && !this.questions.contains(q)) {
 				questions.add(q);
 				newQCount++;
 			}	
@@ -109,7 +113,6 @@ public class Quiz {
 	 * @return current question
 	 */
 	public Question currQuesiton() {
-		System.out.println("size:" + questions.size());
 		return questions.get(currentQuestionIndex);
 	}
 
@@ -145,8 +148,6 @@ public class Quiz {
 	 * @return user's answer for this question
 	 */
 	public List<Choice> checkAnswer() {
-		System.out.println("current index " + currentQuestionIndex);
-		System.out.println("user answer size: " + userAnswer.size());
 		return userAnswer.get(currentQuestionIndex);
 	}
 

@@ -87,11 +87,10 @@ public class DesignTestScene {
 		chooseTopic.setSpacing(15.0);
 		chooseTopic.getChildren().add(new Label("Choosing the topic:"));
 
-		// TODO: should not be able to add the same topic once again
 		// this should be imported from another array list in the back end topic
 		// class
 		ComboBox<String> topicList = new ComboBox<String>(
-				FXCollections.observableArrayList(MainMenuScene.TOPIC));
+				FXCollections.observableArrayList(MainMenuScene.allallTopics));
 		chooseTopic.getChildren().add(topicList);
 
 		// a new HBox for showing the topic
@@ -106,7 +105,7 @@ public class DesignTestScene {
 					&& !chosenTopic.contains(topicList.getValue())) {
 				chosenTopic.add(topicList.getValue());
 				showTopic.getChildren().add(
-						new Label(chosenTopic.get(chosenTopic.size() - 1)));
+						new Label(chosenTopic.get(chosenTopic.size() - 1) + ";"));
 				// get the latest added topic to display on the screen
 			}
 		});
@@ -176,17 +175,30 @@ public class DesignTestScene {
 		// set button function
 		start.setOnAction(e -> {
 			String qNum = questionNum.getText();
+			int maxQNum = 0;
+			for (int i = 0; i < MainMenuScene.questionPool.size(); i++) {
+				for (int j = 0; j < chosenTopic.size(); j++) {
+					if (MainMenuScene.questionPool.get(i).getTopic().equals(chosenTopic.get(j))) {
+						maxQNum++;
+					}
+				}
+			}
+			System.out.print(maxQNum);
 			if (!qNum.equals("") && !chosenTopic.isEmpty()) {
 				try {
 					int num = Integer.parseInt(qNum);
 					if (num < 1) {
 						showAlert("numberTooSmall");
+					} else if (num > maxQNum) {
+						showAlert("numberTooLarge");
 					} else {
-						MainMenuScene.QUIZ.setQuestionCount(num);
-						MainMenuScene.QUIZ.setTopic(chosenTopic);
-						MainMenuScene.QUIZ.generateQuestions();
+						System.out.println("freezing");
+						MainMenuScene.overallQuiz.setQuestionCount(num);
+						MainMenuScene.overallQuiz.setTopic(chosenTopic);
+						MainMenuScene.overallQuiz.generateQuestions();
 						
-						questionScene.setQuiz(MainMenuScene.QUIZ);
+						questionScene.setQuiz(MainMenuScene.overallQuiz);
+						System.out.println("freezing ---");
 						stage.setScene(questionScene.getScene());
 						stage.show();
 					}
@@ -220,6 +232,9 @@ public class DesignTestScene {
 			case "numberTooSmall" :
 				warningMessage.setText("Please enter a positive number!");
 				break;
+			case "numberTooLarge" :
+				warningMessage.setText("The number is too large!");
+				break;
 			case "numberFormat" :
 				warningMessage.setText("Please enter a valid number!");
 				break;
@@ -229,7 +244,6 @@ public class DesignTestScene {
 
 		Stage popUpStage = new Stage();
 		BorderPane root = new BorderPane();
-		root.setMaxSize(300, 100);
 
 		Button yes = new Button("GOT IT");
 		yes.setOnAction(e -> popUpStage.close());
