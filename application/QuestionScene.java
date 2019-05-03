@@ -39,8 +39,8 @@ import javafx.scene.text.Text;
  */
 public class QuestionScene {
 
-	private Stage stage; // graphics stage
-	private Quiz quiz; // quiz
+	private Stage stage; // graphics stage in the session
+	private Quiz quiz; // quiz in the session
 
 	protected static int questionCount = 0; // question count of the quiz
 	protected static int correctQuestionCount = 0; // number of correct questions
@@ -48,25 +48,26 @@ public class QuestionScene {
 	protected static int correctChoiceCount = 0; // number of correct choices
 	protected static int choiceCount = 0; // number of all choices
 
-	protected static double score = 0.0;
+	protected static double score = 0.0; // current score
 
 	/**
-	 * constructor of QuestionScence
+	 * constructor of QuestionScence; setting the stage to the primary stage
 	 * 
-	 * @param primaryStage
+	 * @param primaryStage is the primary stage
 	 */
 	public QuestionScene(Stage primaryStage) {
 		stage = primaryStage;
 	}
 
 	/**
-	 * set the quiz for this quiz
+	 * set the quiz for this quiz by setting relevant parameters
 	 * 
 	 * @param newQuiz the new Quiz that is set to be created
 	 * @return true if successfully created the quiz
 	 */
 	public boolean setQuiz(Quiz newQuiz) {
 		try {
+			// setting the relevant parameters
 			questionCount = 0;
 			correctQuestionCount = 0;
 			finishedQuestionCount = 0;
@@ -87,27 +88,29 @@ public class QuestionScene {
 	 */
 	@SuppressWarnings("unused")
 	public void setScene() {
+		// passing the static parameters to the attributes
 		List<String> topics = MainMenuScene.allallTopics;
 		List<Question> allQuestions = MainMenuScene.overallQuiz.getQuestions();
 		QuestionScene.questionCount = MainMenuScene.overallQuiz.getQuestionCount();
 	}
 
 	/**
-	 * set scene attributes
+	 * set scene attributes to prepare the showing of UI
 	 * 
-	 * @return scene
+	 * @return scene the scene that is set up
 	 */
 	public Scene getScene() {
 		BorderPane root = setBorderPane();
 		Scene scene = new Scene(root, 700, 450); // set window size
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		// render with CSS file
 		return scene;
 	}
 
 	/**
 	 * set interface's borderPane
 	 * 
-	 * @return BorderPane
+	 * @return BorderPane the border pane that is set 
 	 */
 	private BorderPane setBorderPane() {
 		setScene();
@@ -121,23 +124,27 @@ public class QuestionScene {
 		int tmpLength = question.length();
 		int tmpIndex = 1;
 		int lengthLimit = 55;
+		// traverse the line
 		while (tmpLength - 1 > tmpIndex) {
 			if (tmpIndex % lengthLimit == 0) {
+				// find the right place to add a line breaker
 				while (!question.substring(tmpIndex, tmpIndex + 1).equals(" ")) {
 					if (tmpIndex == tmpLength - 1)
 						break;
 					tmpIndex++;
 				}
+				// add the line breaker
 				question = question.substring(0, tmpIndex + 1) + "\n" + question.substring(tmpIndex + 1);
 				tmpIndex++;
 			}
 			tmpIndex++;
 		}
-
 		// process question title - End
 
-		Label questionLabel = new Label(
-				"Question " + (quiz.getCurrentQuestionIndex() + 1) + " out of " + questionCount + ": ");
+		// question label with paging number
+		Label questionLabel = new Label("Question " + (quiz.getCurrentQuestionIndex() + 1) + 
+				" out of " + questionCount + ": ");
+		
 		questionLabel.setFont(new Font("Helvetiva", 12));
 		questionLabel.setAlignment(Pos.CENTER_LEFT);
 
@@ -159,7 +166,8 @@ public class QuestionScene {
 		for (int i = 0; i < choices.length; i++) {
 
 			CheckBox cb = new CheckBox(choices[i].getChoiceDescription());
-			if (quiz.checkAnswer().size() != 0) { // if the question has been answered, show last answer
+			if (quiz.checkAnswer().size() != 0) { 
+				// if the question has been answered, show last answer
 				for (Choice choice : quiz.checkAnswer()) {
 					if (choice.equals(choices[i])) {
 						cb.setSelected(true);
@@ -170,15 +178,17 @@ public class QuestionScene {
 			allCheckBox[i] = cb;
 		}
 
+		// layout of boxes for buttons 
 		HBox buttons = new HBox();
 		buttons.setAlignment(Pos.CENTER);
 		buttons.setSpacing(30);
 
+		// spacing and placing for choice boxes
 		choicesBox.setPadding(new Insets(0, 0, 0, 10));
 		choicesBox.setAlignment(Pos.CENTER_LEFT);
 		choicesBox.setSpacing(20);
 
-		// set prev button
+		// set previous button
 		Button prev = new Button("PREVIOUS");
 		prev.setOnAction(e -> {
 			if (quiz.getCurrentQuestionIndex() > 0) {
@@ -194,6 +204,11 @@ public class QuestionScene {
 		// if user hits submit button
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
+			/**
+			 * set up the functionality of submit button
+			 * @param event the event of the control
+			 */
+			@Override
 			public void handle(ActionEvent event) {
 				if (!cur.isAnswered()) {
 					// check user's answer
@@ -204,6 +219,7 @@ public class QuestionScene {
 							choiceCount++;
 					}
 
+					// check finished questions
 					if (!quiz.checkAnswer().isEmpty())
 						finishedQuestionCount++;
 
@@ -213,14 +229,16 @@ public class QuestionScene {
 							numShouldSelected++;
 					}
 
+					// traverse to compare answers with the key
 					for (int i = 0; i < allCheckBox.length; i++) {
 
 						if (allCheckBox[i].isSelected()) {
 							// add in to answer
 							quiz.answer(choices[i]);
 
+							// check the case where user select both correct and incorrect answers
 							if (choices[i].isCorrect()) {
-								System.out.println(correctChoiceCount);
+								//System.out.println(correctChoiceCount);
 								correctChoiceCount++;
 								correctness = true;
 							} else {
@@ -230,24 +248,29 @@ public class QuestionScene {
 					}
 
 					if (correctChoiceCount < numShouldSelected)
+						// check the case where user does not select enough correct answers
 						redundantChoice = true;
 
+					// setting up the prompt for result of current question
 					String correctnessPrompt;
 					if (correctness) {
+						// correct case
 						if (redundantChoice) {
+							// partially correct case
 							correctnessPrompt = "partially correct";
 							score += 0.5;
 						} else {
-
+							// all correct
 							correctnessPrompt = "correct :)";
 							correctQuestionCount++;
 							score += 1;
 						}
 					} else {
+						// non of them is correct
 						correctnessPrompt = "incorrect :("; // prepare prompt for each result
 					}
 
-					// set popup window after user hits submit
+					// set pop-up window after user hits submit
 					Stage popUpStage = new Stage();
 					BorderPane pane = new BorderPane();
 					VBox vBox = new VBox();
@@ -263,26 +286,33 @@ public class QuestionScene {
 
 					// if user clicks on next question
 					click.setOnAction(new EventHandler<ActionEvent>() {
+						/**
+						 * set up the functionality of the button "next"
+						 * @param event that is going to start the function of this button
+						 */
 						@Override
 						public void handle(ActionEvent event) {
 							popUpStage.close();
-							if (!quiz.checkAnswer().isEmpty()) // check if user answered this question
+							if (!quiz.checkAnswer().isEmpty()) 
+								// check if user answered this question
 								finishedQuestionCount++;
-							if (quiz.getCurrentQuestionIndex() + 1 < questionCount) { // if not the last question
+							if (quiz.getCurrentQuestionIndex() + 1 < questionCount) { 
+								// if not the last question
 								quiz.next();
 								stage.setScene(QuestionScene.this.getScene());
 								stage.show();
-							} else { // prepare result scene
+							} else { 
+								// prepare result scene
 								ResultScene result = new ResultScene(stage);
 								stage.setScene(result.getScene());
 								stage.show();
 							}
 						}
 					});
-					
 					cur.setAnswered(true);
 					
 				} else {
+					// setting up the pop-up for showing the quesion is answered
 					Stage popUpStage = new Stage();
 					BorderPane pane = new BorderPane();
 					VBox vBox = new VBox();
@@ -298,14 +328,20 @@ public class QuestionScene {
 
 					// if user clicks on next question
 					click.setOnAction(new EventHandler<ActionEvent>() {
+						/**
+						 * set up the functionality of next button in this stage
+						 * @param event that is going to trigger the function of this button
+						 */
 						@Override
 						public void handle(ActionEvent event) {
 							 // prepare result scene
-							if (quiz.getCurrentQuestionIndex() + 1 >= questionCount) { // if not the last question
+							if (quiz.getCurrentQuestionIndex() + 1 >= questionCount) { 
+								// if not the last question
 								ResultScene result = new ResultScene(stage);
 								stage.setScene(result.getScene());
 								stage.show();
 							} else {
+								// close the current pop-up if it is not last question
 								popUpStage.close();
 							}
 						}
@@ -314,12 +350,13 @@ public class QuestionScene {
 			}
 		});
 
-		submit.setMinSize(70, 40);
-		buttons.getChildren().add(submit);
+		submit.setMinSize(70, 40); // set the size of the button
+		buttons.getChildren().add(submit); // add the button submit
 
-		// set next button
+		// set next button for skipping
 		Button next = new Button("SKIP");
 		next.setOnAction(e -> {
+			// go the the next question
 			if (quiz.getCurrentQuestionIndex() + 1 < questionCount) {
 				quiz.next();
 				stage.setScene(QuestionScene.this.getScene());
@@ -343,6 +380,7 @@ public class QuestionScene {
 			choicesAndImage.getChildren().addAll(iv);
 		}
 
+		// 
 		VBox list = new VBox();
 		list.getChildren().addAll(questionLabel, questionDescription);
 		list.setAlignment(Pos.TOP_LEFT);
