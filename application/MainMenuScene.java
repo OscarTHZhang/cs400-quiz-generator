@@ -1,7 +1,14 @@
 /**
- * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
+ * Project: CS 400 Final Project 
+ * Name: Quiz Generator 
+ * A-team: #23
+ * Members: Oscar Zhang, lec 002, tzhang383@wisc.edu
+ * 			Haochen Shi, lec 001, hshi74@wisc.edu
+ * 			Bradley Mao, lec 002, jmao43@wisc.edu
+ * 			Peter Pan,	 lec 002, rpan33@wisc.edu
  * 
  * Credit:
+ * for most of the implementation of java-fx -> http://www.java2s.com/example/java/javafx/
  * 
  */
 
@@ -41,13 +48,16 @@ import javafx.scene.text.Text;
  */
 public class MainMenuScene {
 
-	private Stage stage;
+	private Stage stage; // the stage of the scene
 
 	protected static Quiz overallQuiz =  new Quiz();// a quiz object. See Quiz.java
 	protected static List<Question> questionPool = new ArrayList<Question>(); // all
 																	// questions
 	protected static List<String> allallTopics = new ArrayList<String>();// all topics
 
+	/**
+	 * set the pool of the static fields whenever needed, such as ending of another scene
+	 */
 	protected static void setPool() {
 		// initialize these statics
 		overallQuiz = new Quiz();
@@ -72,8 +82,7 @@ public class MainMenuScene {
 	/**
 	 * This constructor passes the primary stage into the scene
 	 * 
-	 * @param primaryStage
-	 *            is the primary stage
+	 * @param primaryStage is the primary stage
 	 */
 	public MainMenuScene(Stage primaryStage) {
 		//setPool();
@@ -102,20 +111,14 @@ public class MainMenuScene {
 		BorderPane root = new BorderPane();
 
 		Label title = new Label("Quiz Generator"); // set the main title
-		title.setFont(new Font("Helvetica", 32)); // make the main title looks
-													// bigger
+		title.setFont(new Font("Helvetica", 32)); // make the main title looks bigger
 
 		int numQ = questionPool.size();
 
-		Label numQuestions = new Label("Available Questions: " + numQ); // display
-																		// the
-																		// number
-																		// of
-																		// available
-																		// questions
+		Label numQuestions = new Label("Available Questions: " + numQ); 
+		// display the number of available questions
 
-		Button startQuizButton = createNewButton("Start Quiz", 150, 100,
-				new Font("Helvetiva", 18));
+		Button startQuizButton = createNewButt("Start Quiz", 150, 100, new Font("Helvetiva", 18));
 		DesignTestScene design = new DesignTestScene(stage);
 		startQuizButton.setOnAction(e -> {
 			stage.setScene(design.getScene());
@@ -150,23 +153,27 @@ public class MainMenuScene {
 		// The implementation of the functionalities of the exit button.
 		exit.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				// set a pop-up to remind user does he really want to quit the program
 				Stage popUpStage = new Stage();
 				BorderPane root = new BorderPane();
 				root.setMaxSize(300, 100);
 
-				Text warningMessage = new Text(
-						"Are you sure you want to quit?");
+				// the display message
+				Text warningMessage = new Text("Are you sure you want to quit?");
 
+				// individual button set up
 				Button no = new Button("NO");
 				no.setOnAction(e -> popUpStage.close());
 				Button yes = new Button("YES");
 				yes.setOnAction(e -> Platform.exit());
 
+				// buttons for yes or no
 				HBox buttons = new HBox();
 				buttons.getChildren().addAll(no, yes);
 				buttons.setAlignment(Pos.CENTER);
 				buttons.setSpacing(20);
 
+				// wrapper for all the UI controls
 				VBox list = new VBox();
 				list.getChildren().addAll(warningMessage, buttons);
 				list.setAlignment(Pos.CENTER);
@@ -174,17 +181,20 @@ public class MainMenuScene {
 				root.setCenter(list);
 				root.setPadding(new Insets(15, 20, 10, 20));
 
+				// show the pop-up
 				Scene warning = new Scene(root, 250, 100);
 				popUpStage.setScene(warning);
 				popUpStage.show();
 			}
 		});
 
+		// wrapper for all the UI controls for the main scene
 		VBox buttons = new VBox();
 		buttons.getChildren().addAll(loadFile, addQuestion, saveToLocal, exit);
 		buttons.setSpacing(10);
 		buttons.setAlignment(Pos.CENTER);
 
+		// set the root
 		root.setBottom(buttons);
 		root.setPadding(new Insets(20, 20, 30, 20));
 		return root;
@@ -236,12 +246,10 @@ public class MainMenuScene {
 					questionPool.add(newQuestion);
 				}
 				fillTopic(); // call fill topic to fill the topic list
-				stage.setScene(this.getScene()); // Update number of questions
-													// shown in the main menu
-			} catch (FileNotFoundException e) {
-			} catch (IOException e) {
-			} catch (ParseException e) {
-			}
+				stage.setScene(this.getScene());// Update number of questions shown in the main menu
+			} catch (Exception e) {
+				// catch any exception that is thrown for file IO
+			} 
 		}
 	}
 
@@ -281,8 +289,12 @@ public class MainMenuScene {
 				q.put("image", question.getImgPath());
 				JSONArray jsonChoices = new JSONArray();
 				Choice[] choices = question.getChoices();
+				
+				// iteratively put the JSON pairs
 				for (int i = 0; i < choices.length; i++) {
 					JSONObject c = new JSONObject();
+					
+					// correctness information
 					if (choices[i].isCorrect()) {
 						c.put("isCorrect", "T");
 					} else {
@@ -295,27 +307,28 @@ public class MainMenuScene {
 				questions.add(q);
 			}
 
-			obj.put("questionArray", questions);
+			obj.put("questionArray", questions); // put the out-most JSON pair
 
-			SaveFile(obj.toJSONString(), file);
+			SaveFile(obj.toJSONString(), file); // save the file
 		}
 	}
 
 	/**
 	 * Writes the String content to a file
 	 * 
-	 * @param content
-	 *            is the content string
-	 * @param file
-	 *            is the file that is going to store the content
+	 * @param content is the content string
+	 * @param file is the file that is going to store the content
 	 */
 	private void SaveFile(String content, File file) {
 		FileWriter fileWriter = null;
 		try {
+			// save the file to the system
 			fileWriter = new FileWriter(file);
 			fileWriter.write(content);
 			fileWriter.close();
 		} catch (IOException e) {
+			// catch any exception occurred
+			System.out.println("IOException found!");
 			e.printStackTrace();
 		}
 	}
@@ -324,29 +337,25 @@ public class MainMenuScene {
 	 * Returns a new Button with width 275, height 40, font Helvetica and font
 	 * size 15.
 	 * 
-	 * @param text
-	 *            is the text of the button
+	 * @param text is the text of the button
 	 * @return a button
 	 */
 	private Button createNewButton(String text) {
-		return createNewButton(text, 275, 40, new Font("Helvetica", 15));
+		// set the font and other style
+		return createNewButt(text, 275, 40, new Font("Helvetica", 15));
 	}
 
 	/**
 	 * Returns a reference to a new Button with certain size and font.
 	 * 
-	 * @param text
-	 *            is the text of the button
-	 * @param width
-	 *            is the preferred width
-	 * @param height
-	 *            is the preferred height
-	 * @param font
-	 *            is the specified font
-	 * @return a button
+	 * @param text is the text of the button
+	 * @param width is the preferred width
+	 * @param height is the preferred height
+	 * @param font is the specified font
+	 * @return a button that is going to be used elsewhere
 	 */
-	private Button createNewButton(String text, double width, double height,
-			Font font) {
+	private Button createNewButt(String text, double width, double height, Font font) {
+		// set the UI control for give parameters
 		Button newButton = new Button(text);
 		newButton.setPrefWidth(width);
 		newButton.setPrefHeight(height);

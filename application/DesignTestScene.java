@@ -1,15 +1,22 @@
 /**
- * Project: CS 400 Final Project
- * Name:	Quiz Generator
- * A-team:	#23
+ * Project: CS 400 Final Project 
+ * Name: Quiz Generator 
+ * A-team: #23
+ * Members: Oscar Zhang, lec 002, tzhang383@wisc.edu
+ * 			Haochen Shi, lec 001, hshi74@wisc.edu
+ * 			Bradley Mao, lec 002, jmao43@wisc.edu
+ * 			Peter Pan,	 lec 002, rpan33@wisc.edu
  * 
  * Credit:
+ * for most of the implementation of java-fx -> http://www.java2s.com/example/java/javafx/
  * 
  */
+
 
 package application;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -42,6 +49,7 @@ public class DesignTestScene {
 								// questions you want to have
 	private HBox options; // contains the options: cancel and start
 	private HBox showTopic; // contains the chosen topics
+	private HBox showNum;
 
 	private TextField questionNum;
 
@@ -50,7 +58,7 @@ public class DesignTestScene {
 	/**
 	 * The constructor of the DesignSecne class
 	 * 
-	 * @param primaryStage
+	 * @param primaryStage is the primary stage
 	 */
 	public DesignTestScene(Stage primaryStage) {
 		stage = primaryStage;
@@ -64,10 +72,10 @@ public class DesignTestScene {
 	 */
 	public Scene getScene() {
 		BorderPane root = new BorderPane();
-		setLayout();
+		setLayout(); // call the layout by calling the helper
 		root.setCenter(planeElement);
 		root.setPadding(new Insets(20, 20, 20, 20));
-		Scene scene = new Scene(root, 400, 250);
+		Scene scene = new Scene(root, 400, 300);
 		scene.getStylesheets().add(
 				getClass().getResource("application.css").toExternalForm());
 		return scene;
@@ -75,8 +83,6 @@ public class DesignTestScene {
 
 	/**
 	 * private helper that sets the layout plan
-	 * 
-	 * @throws Exception if there is an exception when initializing these boxes layout
 	 */
 	private void setLayout() {
 		planeElement = new VBox(); // contains all the HBox
@@ -89,6 +95,7 @@ public class DesignTestScene {
 
 		// this should be imported from another array list in the back end topic
 		// class
+		Collections.sort(MainMenuScene.allallTopics);
 		ComboBox<String> topicList = new ComboBox<String>(
 				FXCollections.observableArrayList(MainMenuScene.allallTopics));
 		chooseTopic.getChildren().add(topicList);
@@ -96,17 +103,35 @@ public class DesignTestScene {
 		// a new HBox for showing the topic
 		showTopic = new HBox();
 		showTopic.setSpacing(5.0);
-
+		
+		// show the number of available questions
+		showNum = new HBox();
+		Label numOfQ = new Label();
+		showNum.getChildren().add(numOfQ);
+		
 		// set up select button
 		Button add = new Button("+");
 		// set the functionality using lambda expression
 		add.setOnAction(event -> {
+			// setting up so that selected topic is displayed
 			if (topicList.getValue() != null
 					&& !chosenTopic.contains(topicList.getValue())) {
 				chosenTopic.add(topicList.getValue());
 				showTopic.getChildren().add(
 						new Label(chosenTopic.get(chosenTopic.size() - 1) + ";"));
+				
 				// get the latest added topic to display on the screen
+				int maxQNum = 0;
+				for (int i = 0; i < MainMenuScene.questionPool.size(); i++) {
+					for (int j = 0; j < chosenTopic.size(); j++) {
+						if (MainMenuScene.questionPool.get(i).getTopic().equals(
+								chosenTopic.get(j))) {
+							
+							maxQNum++;
+						}
+					}
+				}
+				numOfQ.setText("The number of available questions: " + maxQNum);				
 			}
 		});
 		// add the button
@@ -139,11 +164,13 @@ public class DesignTestScene {
 		numQuestion.setAlignment(Pos.CENTER);
 		options.setAlignment(Pos.CENTER);
 		showTopic.setAlignment(Pos.CENTER);
+		showNum.setAlignment(Pos.CENTER);
 
 		// add the HBox into VBox
 		planeElement.getChildren().add(chooseTopic);
 		planeElement.getChildren().add(numQuestion);
 		planeElement.getChildren().add(showTopic);
+		planeElement.getChildren().add(showNum);
 		planeElement.getChildren().add(options);
 	}
 
@@ -157,6 +184,7 @@ public class DesignTestScene {
 		MainMenuScene mainMenu = new MainMenuScene(stage);
 		// set button function
 		cancel.setOnAction(e -> {
+			// back to the main menu
 			stage.setScene(mainMenu.getScene());
 			stage.show();
 		});
@@ -174,8 +202,10 @@ public class DesignTestScene {
 
 		// set button function
 		start.setOnAction(e -> {
+			// go to the quiz session
 			String qNum = questionNum.getText();
 			int maxQNum = 0;
+			// count the maximum questions
 			for (int i = 0; i < MainMenuScene.questionPool.size(); i++) {
 				for (int j = 0; j < chosenTopic.size(); j++) {
 					if (MainMenuScene.questionPool.get(i).getTopic().equals(chosenTopic.get(j))) {
@@ -183,84 +213,101 @@ public class DesignTestScene {
 					}
 				}
 			}
-			System.out.print(maxQNum);
+			
+			// show the alert if the number of question input is not valid
 			if (!qNum.equals("") && !chosenTopic.isEmpty()) {
 				try {
 					int num = Integer.parseInt(qNum);
-					if (num < 1) {
+					if (num < 1) { // number is too small
 						showAlert("numberTooSmall");
-					} else if (num > maxQNum) {
+					} else if (num > maxQNum) { // number exceed the number of questions in the pool
 						showAlert("numberTooLarge");
-					} else {
-						System.out.println("freezing");
+					} else { // if there is no problem, then proceed to the quiz session
+		
 						MainMenuScene.overallQuiz.setQuestionCount(num);
 						MainMenuScene.overallQuiz.setTopic(chosenTopic);
 						MainMenuScene.overallQuiz.generateQuestions();
 						
+						// set up the quiz
 						questionScene.setQuiz(MainMenuScene.overallQuiz);
-						System.out.println("freezing ---");
+						
 						stage.setScene(questionScene.getScene());
-						stage.show();
+						stage.show(); // show the stage
 					}
 				} catch (NumberFormatException exception) {
-					showAlert("numberFormat");
+					showAlert("numberFormat"); // if the number is not be able to parse, then show
+					// this format alert
 				}
 
+			// show other alert if the input is still invalid
 			} else if (chosenTopic.isEmpty()) {
 				showAlert("topic");
 			} else if (qNum.equals("")) {
 				showAlert("number");
 			}
 		});
-		return start;
+		return start; // return the button start with full functionality
 	}
 
 	/**
-	 * 
-	 * @param problem
+	 * show alert according to specified problem
+	 * @param problem the problem that specified
 	 */
 	private void showAlert(String problem) {
-		Text warningMessage = new Text();
+		Text warningMessage = new Text(); // initialize alert message
 
 		switch (problem) {
-			case "topic" :
+			case "topic" : // topic is problematic
 				warningMessage.setText("Please select at least one topic!");
 				break;
-			case "number" :
+			case "number" : // number is problematic
 				warningMessage.setText("Please enter the number of questions!");
 				break;
-			case "numberTooSmall" :
+			case "numberTooSmall" : // number is too small
 				warningMessage.setText("Please enter a positive number!");
 				break;
-			case "numberTooLarge" :
+			case "numberTooLarge" : // number is too large
 				warningMessage.setText("The number is too large!");
 				break;
-			case "numberFormat" :
+			case "numberFormat" : // number format is problematic
 				warningMessage.setText("Please enter a valid number!");
 				break;
-			default :
+			default : // default
 				warningMessage.setText("Please!");
 		}
-
+		// set up the plane for alert pop-up
+		planeSetUpAlert(warningMessage);
+	}
+	
+	/**
+	 * set up the UI for alert pop-up and show it
+	 */
+	private void planeSetUpAlert(Text warningMessage) {
+		// setting up the UI of alert
 		Stage popUpStage = new Stage();
 		BorderPane root = new BorderPane();
 
+		// confirm the alert
 		Button yes = new Button("GOT IT");
 		yes.setOnAction(e -> popUpStage.close());
 
+		// button wrapper
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(yes);
 		buttons.setAlignment(Pos.CENTER);
 
+		// wrapper of all the UI controls in the alert
 		VBox list = new VBox();
 		list.getChildren().addAll(warningMessage, buttons);
 		list.setAlignment(Pos.CENTER);
 		list.setSpacing(20);
 		root.setCenter(list);
 		root.setPadding(new Insets(15, 20, 10, 20));
-
+		
+		// start the alert
 		Scene warning = new Scene(root, 300, 100);
 		popUpStage.setScene(warning);
 		popUpStage.show();
 	}
+	
 }

@@ -1,13 +1,22 @@
 /**
- * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
+ * Project: CS 400 Final Project 
+ * Name: Quiz Generator 
+ * A-team: #23
+ * Members: Oscar Zhang, lec 002, tzhang383@wisc.edu
+ * 			Haochen Shi, lec 001, hshi74@wisc.edu
+ * 			Bradley Mao, lec 002, jmao43@wisc.edu
+ * 			Peter Pan,	 lec 002, rpan33@wisc.edu
  * 
  * Credit:
+ * for most of the implementation of java-fx -> http://www.java2s.com/example/java/javafx/
  * 
  */
 
 package application;
 
 import java.io.File;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -36,7 +45,7 @@ public class AddNewQuestionScene {
 
 	private Stage stage; // to get access to the current stage
 	private double hSpacing = 10; // specify the horizontal spacing between elements in HBox
-									
+
 	/**
 	 * This constructor passes the primary stage into the scene
 	 * 
@@ -77,7 +86,10 @@ public class AddNewQuestionScene {
 		Label choiceELabel = new Label("Choice E: ");
 
 		// combo box
-		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.allallTopics);
+		Collections.sort(MainMenuScene.allallTopics);
+		ObservableList<String> options = FXCollections.observableArrayList(
+				MainMenuScene.allallTopics);
+		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ComboBox topicMenu = new ComboBox(options);
 
@@ -94,8 +106,10 @@ public class AddNewQuestionScene {
 		TextField choiceDText = new TextField();
 		TextField choiceEText = new TextField();
 
-		TextField[] choiceTexts = { choiceAText, choiceBText, choiceCText, choiceDText, choiceEText };
+
+		TextField[] choiceTexts = {choiceAText, choiceBText, choiceCText, choiceDText, choiceEText};
 		
+
 		// check boxes
 		CheckBox choiceABox = new CheckBox("Correct?");
 		CheckBox choiceBBox = new CheckBox("Correct?");
@@ -166,69 +180,80 @@ public class AddNewQuestionScene {
 		});
 
 		// HBoxes
+		
+		// topic label
 		HBox existingTopic = new HBox();
 		existingTopic.getChildren().addAll(topicLabel, topicMenu);
 		existingTopic.setAlignment(Pos.CENTER_LEFT); // alignment
 		existingTopic.setSpacing(hSpacing); // horizontal spacing
 
+		// enter new topic label
 		HBox newTopic = new HBox();
 		newTopic.getChildren().addAll(enterNewTopicLabel, newTopicText);
 		newTopic.setAlignment(Pos.CENTER_LEFT);
 		newTopic.setSpacing(hSpacing);
 
+		// question 
 		HBox question = new HBox();
 		question.getChildren().addAll(questionLabel, questionArea);
 		question.setAlignment(Pos.CENTER_LEFT);
 		question.setSpacing(hSpacing);
 
+		// choice A 
 		HBox choiceAHBox = new HBox();
 		choiceAHBox.getChildren().addAll(choiceALabel, choiceAText, choiceABox);
 		choiceAHBox.setAlignment(Pos.CENTER_LEFT);
 		choiceAHBox.setSpacing(hSpacing);
 
+		// choice B 
 		HBox choiceBHBox = new HBox();
 		choiceBHBox.getChildren().addAll(choiceBLabel, choiceBText, choiceBBox);
 		choiceBHBox.setAlignment(Pos.CENTER_LEFT);
 		choiceBHBox.setSpacing(hSpacing);
 
+		// choice C 
 		HBox choiceCHBox = new HBox();
 		choiceCHBox.getChildren().addAll(choiceCLabel, choiceCText, choiceCBox);
 		choiceCHBox.setAlignment(Pos.CENTER_LEFT);
 		choiceCHBox.setSpacing(hSpacing);
 
+		// choice D 
 		HBox choiceDHBox = new HBox();
 		choiceDHBox.getChildren().addAll(choiceDLabel, choiceDText, choiceDBox);
 		choiceDHBox.setAlignment(Pos.CENTER_LEFT);
 		choiceDHBox.setSpacing(hSpacing);
 
+		// choice E 
 		HBox choiceEHBox = new HBox();
 		choiceEHBox.getChildren().addAll(choiceELabel, choiceEText, choiceEBox);
 		choiceEHBox.setAlignment(Pos.CENTER_LEFT);
 		choiceEHBox.setSpacing(hSpacing);
 
+		// buttons for confirmation
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(cancel, back, addMore);
 		buttons.setAlignment(Pos.CENTER);
 		buttons.setPadding(new Insets(20, 0, 0, 0));
 		buttons.setSpacing(20);
 
-		// VBox
+		// VBox for the HBoxes
 		VBox list = new VBox();
-		list.getChildren().addAll(existingTopic, newTopic, question, choiceAHBox, choiceBHBox, choiceCHBox, choiceDHBox,
-				choiceEHBox, uploadPic, buttons);
+		list.getChildren().addAll(existingTopic, newTopic, question, choiceAHBox, choiceBHBox, 
+				choiceCHBox, choiceDHBox, choiceEHBox, uploadPic, buttons);
+		
 		list.setAlignment(Pos.TOP_CENTER);
 		list.setSpacing(15); // vertical spacing
 
 		// set the border pane
 		BorderPane root = new BorderPane();
 		root.setCenter(list);
-		root.setPadding(new Insets(20, 20, 20, 20)); // padding of the border
-														// pane
+		root.setPadding(new Insets(20, 20, 20, 20)); // padding of the border pane
 		return root;
 	}
 
 	/**
-	 * This method chooses an image from the local and store it in the program by its path
+	 * This method chooses an image from the local and store it in the program by
+	 * its path
 	 * 
 	 * @return the path of the image
 	 */
@@ -258,7 +283,7 @@ public class AddNewQuestionScene {
 			return false;
 		} else {
 			// set the description of the question
-			newQ.setDescription(newQDescription); 
+			newQ.setDescription(newQDescription);
 			return true;
 		}
 	}
@@ -324,6 +349,8 @@ public class AddNewQuestionScene {
 				return false;
 			}
 		}
+		
+		// represent the final choices that are going to be added in the question
 		Choice[] finalChoices = new Choice[choicesCount];
 		for (int j = 0; j < choicesCount; j++) {
 			finalChoices[j] = choices[j];
@@ -337,16 +364,12 @@ public class AddNewQuestionScene {
 				break;
 			}
 		}
+		// show alert if all the choices are set to false (not chosen)
 		if (allFalse) {
 			showAlert("choicesAllFalse");
 			return false;
 		}
 
-		for (int i = 0; i < choices.length; i++) {
-			if (choices[i].getChoiceDescription().equals("")) {
-				
-			}
-		}
 		newQ.setChoices(finalChoices);
 		return true;
 	}
@@ -360,22 +383,22 @@ public class AddNewQuestionScene {
 		Text warningMessage = new Text();
 		// judge which problem it is and set up the warning message accordingly
 		switch (problem) {
-			case "topic":
+			case "topic": // must select one topic 
 				warningMessage.setText("Please select at least one topic!");
 				break;
-			case "topicDuplicate":
+			case "topicDuplicate": // duplicate topic
 				warningMessage.setText("Please enter only one topic!");
 				break;
-			case "description":
+			case "description": // no description
 				warningMessage.setText("Please enter the question description!");
 				break;
-			case "choices":
+			case "choices": // only one or less choice
 				warningMessage.setText("Please enter at least two choices!");
 				break;
-			case "choicesAllFalse":
+			case "choicesAllFalse": // right choices not selected
 				warningMessage.setText("Please select at least one correct answer!");
 				break;
-			case "topicExisting":
+			case "topicExisting": // duplicate topic
 				warningMessage.setText("The topic already exists!");
 				break;
 			default:
@@ -387,13 +410,16 @@ public class AddNewQuestionScene {
 		BorderPane root = new BorderPane();
 		root.setMaxSize(300, 100);
 
+		// the button to close the pop-up window
 		Button yes = new Button("GOT IT");
 		yes.setOnAction(e -> popUpStage.close());
 
+		// layout of the pop-up window
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(yes);
 		buttons.setAlignment(Pos.CENTER);
 
+		// warning message and alert UI
 		VBox list = new VBox();
 		list.getChildren().addAll(warningMessage, buttons);
 		list.setAlignment(Pos.CENTER);
