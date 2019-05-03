@@ -161,14 +161,17 @@ public class QuestionScene {
 			choicesBox.getChildren().add(cb);
 			allCheckBox[i] = cb;
 		}
+		
+		  HBox buttons = new HBox();
+	        buttons.setAlignment(Pos.CENTER);
+	        buttons.setSpacing(30);
+
+		
 		choicesBox.setPadding(new Insets(0, 0, 0, 10));
 		choicesBox.setAlignment(Pos.CENTER_LEFT);
 		choicesBox.setSpacing(20);
 
-		HBox buttons = new HBox();
-		buttons.setAlignment(Pos.CENTER);
-		buttons.setSpacing(30);
-
+	
 		// set prev button
 		Button prev = new Button("PREVIOUS");
 		prev.setOnAction(e -> {
@@ -222,12 +225,7 @@ public class QuestionScene {
 				
 				if (correctChoiceCount<numShouldSelected) redundantChoice=true;
 				
-				// check for answering all current but lack of choices
-				// TODO check for all 
-//				for (Choice c: choices) {
-//					if (c.isCorrect())
-//				}
-//				
+	
 				String correctnessPrompt;
 				if(correctness) {
 				  if(redundantChoice) {

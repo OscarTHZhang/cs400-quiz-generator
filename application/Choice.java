@@ -14,6 +14,25 @@ public class Choice {
 
 	public Choice(boolean correct, String description) {
 		isCorrect = correct;
+		
+		// process question title - Start
+        int tmpLength = description.length();
+        int tmpIndex = 1;
+        int lengthLimit = 40;
+        while (tmpLength-1 > tmpIndex) {
+            if(tmpIndex%lengthLimit==0) { 
+              while(!description.substring(tmpIndex, tmpIndex+1).equals(" ")) {
+                if(tmpIndex==tmpLength-1) break;
+                tmpIndex++;
+              }
+              description=description.substring(0,tmpIndex+1)+"\n"+description.substring(tmpIndex+1);
+              tmpIndex++; 
+            }
+            tmpIndex++;
+        }
+        
+        // process question title - End
+		
 		choiceDescription = description;
 	}
 
