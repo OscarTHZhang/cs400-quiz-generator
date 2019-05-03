@@ -1,7 +1,14 @@
 /**
- * Project: CS 400 Final Project Name: Quiz Generator A-team: #23
+ * Project: CS 400 Final Project 
+ * Name: Quiz Generator 
+ * A-team: #23
+ * Members: Oscar Zhang, lec 002, tzhang383@wisc.edu
+ * 			Haochen Shi, lec 001, hshi74@wisc.edu
+ * 			Bradley Mao, lec 002, jmao43@wisc.edu
+ * 			Peter Pan,	 lec 002, rpan33@wisc.edu
  * 
  * Credit:
+ * for most of the implementation of java-fx -> http://www.java2s.com/example/java/javafx/
  * 
  */
 
