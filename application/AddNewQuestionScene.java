@@ -8,6 +8,8 @@
 package application;
 
 import java.io.File;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -77,6 +79,8 @@ public class AddNewQuestionScene {
 		Label choiceELabel = new Label("Choice E: ");
 
 		// combo box
+		
+		Collections.sort(MainMenuScene.allallTopics);
 		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.allallTopics);
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ComboBox topicMenu = new ComboBox(options);

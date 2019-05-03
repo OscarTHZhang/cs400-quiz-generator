@@ -10,6 +10,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -42,6 +43,7 @@ public class DesignTestScene {
 								// questions you want to have
 	private HBox options; // contains the options: cancel and start
 	private HBox showTopic; // contains the chosen topics
+	private HBox showNum;
 
 	private TextField questionNum;
 
@@ -67,7 +69,7 @@ public class DesignTestScene {
 		setLayout();
 		root.setCenter(planeElement);
 		root.setPadding(new Insets(20, 20, 20, 20));
-		Scene scene = new Scene(root, 400, 250);
+		Scene scene = new Scene(root, 400, 300);
 		scene.getStylesheets().add(
 				getClass().getResource("application.css").toExternalForm());
 		return scene;
@@ -89,6 +91,7 @@ public class DesignTestScene {
 
 		// this should be imported from another array list in the back end topic
 		// class
+		Collections.sort(MainMenuScene.allallTopics);
 		ComboBox<String> topicList = new ComboBox<String>(
 				FXCollections.observableArrayList(MainMenuScene.allallTopics));
 		chooseTopic.getChildren().add(topicList);
@@ -96,7 +99,12 @@ public class DesignTestScene {
 		// a new HBox for showing the topic
 		showTopic = new HBox();
 		showTopic.setSpacing(5.0);
-
+		
+		// show the number of available questions
+		showNum = new HBox();
+		Label numOfQ = new Label();
+		showNum.getChildren().add(numOfQ);
+		
 		// set up select button
 		Button add = new Button("+");
 		// set the functionality using lambda expression
@@ -107,6 +115,15 @@ public class DesignTestScene {
 				showTopic.getChildren().add(
 						new Label(chosenTopic.get(chosenTopic.size() - 1) + ";"));
 				// get the latest added topic to display on the screen
+				int maxQNum = 0;
+				for (int i = 0; i < MainMenuScene.questionPool.size(); i++) {
+					for (int j = 0; j < chosenTopic.size(); j++) {
+						if (MainMenuScene.questionPool.get(i).getTopic().equals(chosenTopic.get(j))) {
+							maxQNum++;
+						}
+					}
+				}
+				numOfQ.setText("The number of available questions: " + maxQNum);				
 			}
 		});
 		// add the button
@@ -139,11 +156,13 @@ public class DesignTestScene {
 		numQuestion.setAlignment(Pos.CENTER);
 		options.setAlignment(Pos.CENTER);
 		showTopic.setAlignment(Pos.CENTER);
+		showNum.setAlignment(Pos.CENTER);
 
 		// add the HBox into VBox
 		planeElement.getChildren().add(chooseTopic);
 		planeElement.getChildren().add(numQuestion);
 		planeElement.getChildren().add(showTopic);
+		planeElement.getChildren().add(showNum);
 		planeElement.getChildren().add(options);
 	}
 
