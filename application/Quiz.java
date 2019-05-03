@@ -43,22 +43,6 @@ public class Quiz {
 			userAnswer.add(new ArrayList<>());
 	}
 	
-	public List<String> getAllTopic() {
-		return allTopic;
-	}
-
-	public void setAllTopic(List<String> allTopic) {
-		this.allTopic = allTopic;
-	}
-
-//	public void setUserAnswer(List<List<String>> userAnswer) {
-//		this.userAnswer = userAnswer;
-//	}
-
-	public void setCurrentQuestionIndex(int currentQuestionIndex) {
-		this.currentQuestionIndex = currentQuestionIndex;
-	}
-
 	/**
 	 * Constructor of Quiz class
 	 * 
@@ -66,6 +50,7 @@ public class Quiz {
 	 * @param questionCount number of questions
 	 */
 	public Quiz(List<String> allTopic, int questionCount) {
+		// setting all relevant parameters
 		this.allTopic = allTopic;
 		this.questionCount = questionCount;
 		this.currentQuestionIndex = 0;
@@ -74,6 +59,31 @@ public class Quiz {
 			userAnswer.add(new ArrayList<>());
 		}	
 	}
+	
+	/**
+	 * get the topics that are included in this quiz
+	 * @return list of topics that are included in this quiz
+	 */
+	public List<String> getAllTopic() {
+		return allTopic;
+	}
+
+	/**
+	 * set the topics that are included in this quiz
+	 * @param allTopic list of topics that is going to be set
+	 */
+	public void setAllTopic(List<String> allTopic) {
+		this.allTopic = allTopic;
+	}
+
+	/**
+	 * set the current question index to a number
+	 * @param currentQuestionIndex current question index that is going to be set to
+	 */
+	public void setCurrentQuestionIndex(int currentQuestionIndex) {
+		this.currentQuestionIndex = currentQuestionIndex;
+	}
+
 		
 	/**
 	 * set the topic list of this quiz
@@ -115,22 +125,22 @@ public class Quiz {
 	/**
 	 * getter of current question
 	 * 
-	 * @return current question
+	 * @return current question that the user is on
 	 */
 	public Question currQuesiton() {
 		return questions.get(currentQuestionIndex);
 	}
 
 	/**
-	 * move to next question
+	 * move to next question by incrementing the index
 	 */
 	public void next() {
 		currentQuestionIndex++;
 	}
 
 	/**
-	 * go back to last question
-	 */
+	 * go back to last question by decrementing the index
+	 */ 
 	public void prev() {
 		currentQuestionIndex--;
 	}
@@ -143,6 +153,7 @@ public class Quiz {
 	 */
 	public boolean answer(Choice choice) {
 		boolean answered = userAnswer.get(currentQuestionIndex).contains(choice);
+		// check if the question is answered
 		userAnswer.get(currentQuestionIndex).add(choice);
 		return answered;
 	}
@@ -157,45 +168,45 @@ public class Quiz {
 	}
 
 	/**
-	 * getter of questionCount
+	 * get the number of questions
 	 * 
-	 * @return questionCount
+	 * @return questionCount the number of questions
 	 */
 	public int getQuestionCount() {
 		return questionCount;
 	}
 
 	/**
-	 * getter of questions
+	 * getter of list of questions
 	 * 
-	 * @return questions
+	 * @return questions a list of questions
 	 */
 	public List<Question> getQuestions() {
 		return questions;
 	}
 
 	/**
-	 * set questions
+	 * set the list of questions
 	 * 
-	 * @param questions
+	 * @param list of questions that will be set
 	 */
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 
 	/**
-	 * getter of currentQuestionCount
+	 * getter of currentQuestionCount current number of questions
 	 * 
-	 * @return currentQuestionCount
+	 * @return currentQuestionCount current number of questions
 	 */
 	public int getCurrentQuestionIndex() {
 		return currentQuestionIndex;
 	}
 
 	/**
-	 * getter of userAnswer
+	 * getter of userAnswer list of list of users answer choices
 	 * 
-	 * @return userAnswer
+	 * @return userAnswer list of list of user answer choices
 	 */
 	public List<List<Choice>> getUserAnswer() {
 		return userAnswer;
