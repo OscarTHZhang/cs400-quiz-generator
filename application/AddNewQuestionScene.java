@@ -38,7 +38,7 @@ public class AddNewQuestionScene {
 
 	private Stage stage; // to get access to the current stage
 	private double hSpacing = 10; // specify the horizontal spacing between elements in HBox
-									
+
 	/**
 	 * This constructor passes the primary stage into the scene
 	 * 
@@ -79,7 +79,6 @@ public class AddNewQuestionScene {
 		Label choiceELabel = new Label("Choice E: ");
 
 		// combo box
-		
 		Collections.sort(MainMenuScene.allallTopics);
 		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.allallTopics);
 		@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -99,7 +98,7 @@ public class AddNewQuestionScene {
 		TextField choiceEText = new TextField();
 
 		TextField[] choiceTexts = { choiceAText, choiceBText, choiceCText, choiceDText, choiceEText };
-		
+
 		// check boxes
 		CheckBox choiceABox = new CheckBox("Correct?");
 		CheckBox choiceBBox = new CheckBox("Correct?");
@@ -226,13 +225,13 @@ public class AddNewQuestionScene {
 		// set the border pane
 		BorderPane root = new BorderPane();
 		root.setCenter(list);
-		root.setPadding(new Insets(20, 20, 20, 20)); // padding of the border
-														// pane
+		root.setPadding(new Insets(20, 20, 20, 20)); // padding of the border pane
 		return root;
 	}
 
 	/**
-	 * This method chooses an image from the local and store it in the program by its path
+	 * This method chooses an image from the local and store it in the program by
+	 * its path
 	 * 
 	 * @return the path of the image
 	 */
@@ -262,7 +261,7 @@ public class AddNewQuestionScene {
 			return false;
 		} else {
 			// set the description of the question
-			newQ.setDescription(newQDescription); 
+			newQ.setDescription(newQDescription);
 			return true;
 		}
 	}
@@ -328,6 +327,8 @@ public class AddNewQuestionScene {
 				return false;
 			}
 		}
+		
+		// represent the final choices that are going to be added in the question
 		Choice[] finalChoices = new Choice[choicesCount];
 		for (int j = 0; j < choicesCount; j++) {
 			finalChoices[j] = choices[j];
@@ -346,11 +347,6 @@ public class AddNewQuestionScene {
 			return false;
 		}
 
-		for (int i = 0; i < choices.length; i++) {
-			if (choices[i].getChoiceDescription().equals("")) {
-				
-			}
-		}
 		newQ.setChoices(finalChoices);
 		return true;
 	}
@@ -391,9 +387,11 @@ public class AddNewQuestionScene {
 		BorderPane root = new BorderPane();
 		root.setMaxSize(300, 100);
 
+		// the button to close the pop-up window
 		Button yes = new Button("GOT IT");
 		yes.setOnAction(e -> popUpStage.close());
 
+		// layout of the pop-up window
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(yes);
 		buttons.setAlignment(Pos.CENTER);
