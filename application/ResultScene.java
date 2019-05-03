@@ -62,7 +62,8 @@ public class ResultScene {
 	 * @return the border pane
 	 */
 	private BorderPane setBorderPane() {
-		// texts indicating the number of answered and correct questions and the final score
+		// texts indicating the number of answered and correct questions and the final
+		// score
 		Text answeredQText = new Text("Number of Correct Questions: " + QuestionScene.correctQuestionCount + " / "
 				+ QuestionScene.questionCount);
 		answeredQText.setFont(new Font("Helvetica", 16));
@@ -77,18 +78,16 @@ public class ResultScene {
 		// buttons
 		Button takeNewQuiz = new Button("Take New Quiz");
 		// create a new instance of MainMenuScene and set the button's action
-		
-		// TODO fix the bug here !!!
-		/////////////////////////////////////////////////////
 		MainMenuScene mainMenu = new MainMenuScene(stage);
 		takeNewQuiz.setOnAction(e -> {
+			// update the quiz to be a new one
 			MainMenuScene.overallQuiz = new Quiz();
 			stage.setScene(mainMenu.getScene());
 			stage.show();
 		});
 		takeNewQuiz.setMinSize(100, 40);
-		/////////////////////////////////////////////////////
-		
+
+		// button to save questions to a JSON file
 		Button saveAns = new Button("Save Questions to a JSON file");
 		saveAns.setMinSize(100, 40);
 		saveAns.setOnAction(e -> saveFileToLocal());
@@ -158,14 +157,13 @@ public class ResultScene {
 	}
 
 	/**
-	 * This method saves the current questions to a local .json file.
+	 * This method saves the current questions to a local JSON file.
 	 */
 	@SuppressWarnings("unchecked")
 	private void saveFileToLocal() {
 		FileChooser fileChooser = new FileChooser();
 
-		// Set extension filter
-		// Look up for the formal name
+		// Set extension filter and look up for the formal name
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON(*.json)", "*.json"));
 
 		// Show save file dialog
@@ -187,7 +185,7 @@ public class ResultScene {
 				q.put("questionText", question.getDescription());
 				q.put("topic", question.getTopic());
 				q.put("image", question.getImgPath());
-				
+
 				// choices of the question
 				JSONArray jsonChoices = new JSONArray();
 				Choice[] choices = question.getChoices();
