@@ -149,7 +149,26 @@ public class MainMenuScene {
 				"Save Current Questions to Local File");
 		saveToLocal.setOnAction(e -> saveFileToLocal());
 		Button exit = createNewButton("Exit");
+		
+		setExitButton(exit); // call the helper to set the button functionality
+		
+		// wrapper for all the UI controls for the main scene
+		VBox buttons = new VBox();
+		buttons.getChildren().addAll(loadFile, addQuestion, saveToLocal, exit);
+		buttons.setSpacing(10);
+		buttons.setAlignment(Pos.CENTER);
 
+		// set the root
+		root.setBottom(buttons);
+		root.setPadding(new Insets(20, 20, 30, 20));
+		return root;
+	}
+	
+	/**
+	 * helper method that sets the functionality of exit button
+	 * @param exit button that is going to be set
+	 */
+	private void setExitButton(Button exit) {
 		// The implementation of the functionalities of the exit button.
 		exit.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -157,16 +176,13 @@ public class MainMenuScene {
 				Stage popUpStage = new Stage();
 				BorderPane root = new BorderPane();
 				root.setMaxSize(300, 100);
-
 				// the display message
 				Text warningMessage = new Text("Are you sure you want to quit?");
-
 				// individual button set up
 				Button no = new Button("NO");
 				no.setOnAction(e -> popUpStage.close());
 				Button yes = new Button("YES");
 				yes.setOnAction(e -> Platform.exit());
-
 				// buttons for yes or no
 				HBox buttons = new HBox();
 				buttons.getChildren().addAll(no, yes);
@@ -187,17 +203,6 @@ public class MainMenuScene {
 				popUpStage.show();
 			}
 		});
-
-		// wrapper for all the UI controls for the main scene
-		VBox buttons = new VBox();
-		buttons.getChildren().addAll(loadFile, addQuestion, saveToLocal, exit);
-		buttons.setSpacing(10);
-		buttons.setAlignment(Pos.CENTER);
-
-		// set the root
-		root.setBottom(buttons);
-		root.setPadding(new Insets(20, 20, 30, 20));
-		return root;
 	}
 
 	/**

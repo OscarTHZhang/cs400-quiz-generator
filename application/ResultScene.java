@@ -54,7 +54,7 @@ public class ResultScene {
 	/**
 	 * This method returns the result scene
 	 * 
-	 * @return the result scene
+	 * @return the result scene of the application
 	 */
 	public Scene getScene() {
 		BorderPane root = setBorderPane();
@@ -66,20 +66,24 @@ public class ResultScene {
 	/**
 	 * This helper method sets the elements and the layout in the border pane
 	 * 
-	 * @return the border pane
+	 * @return the border pane of the UI
 	 */
 	private BorderPane setBorderPane() {
 		// texts indicating the number of answered and correct questions and the final
 		// score
-		Text answeredQText = new Text("Number of Correct Questions: " + QuestionScene.correctQuestionCount + " / "
-				+ QuestionScene.questionCount);
+		Text answeredQText = new Text("Number of Correct Questions: " + 
+				QuestionScene.correctQuestionCount + " / " + QuestionScene.questionCount);
+		
 		answeredQText.setFont(new Font("Helvetica", 16));
 
-		Text correctQText = new Text("Number of Answered Questions: " + QuestionScene.finishedQuestionCount + " / "
-				+ QuestionScene.questionCount);
+		Text correctQText = new Text("Number of Answered Questions: " + 
+				QuestionScene.finishedQuestionCount + " / " + QuestionScene.questionCount);
+		
 		correctQText.setFont(new Font("Helvetica", 16));
 
-		Text scoreText = new Text("Score: " + QuestionScene.score + " / " + QuestionScene.questionCount);
+		Text scoreText = new Text("Score: " + QuestionScene.score + " / " + 
+				QuestionScene.questionCount);
+		
 		scoreText.setFont(new Font("Helvetica", 16));
 
 		// buttons
@@ -102,6 +106,32 @@ public class ResultScene {
 		Button exit = new Button("Exit without Saving");
 		exit.setMinSize(100, 40);
 
+		setExitButton(exit); // set its functionality by calling helper
+
+		// VBoxes
+		VBox buttons = new VBox();
+		buttons.getChildren().addAll(takeNewQuiz, saveAns, exit);
+		buttons.setAlignment(Pos.CENTER);
+		buttons.setSpacing(20);
+
+		VBox list = new VBox();
+		list.getChildren().addAll(answeredQText, correctQText, scoreText, buttons);
+		list.setAlignment(Pos.CENTER);
+		list.setSpacing(30);
+
+		// the border pane
+		BorderPane root = new BorderPane();
+		root.setCenter(list);
+		root.setPadding(new Insets(20, 20, 20, 20));
+
+		return root;
+	}
+	
+	/**
+	 * set the functionality of the exit button
+	 * @param exit button whose functionality is going to be set
+	 */
+	private void setExitButton(Button exit) {
 		// set the button's action to show a warning message
 		exit.setOnAction(e -> {
 			// a new stage aside from the primary stage
@@ -143,24 +173,6 @@ public class ResultScene {
 			popUpStage.setScene(warning);
 			popUpStage.show();
 		});
-
-		// VBoxes
-		VBox buttons = new VBox();
-		buttons.getChildren().addAll(takeNewQuiz, saveAns, exit);
-		buttons.setAlignment(Pos.CENTER);
-		buttons.setSpacing(20);
-
-		VBox list = new VBox();
-		list.getChildren().addAll(answeredQText, correctQText, scoreText, buttons);
-		list.setAlignment(Pos.CENTER);
-		list.setSpacing(30);
-
-		// the border pane
-		BorderPane root = new BorderPane();
-		root.setCenter(list);
-		root.setPadding(new Insets(20, 20, 20, 20));
-
-		return root;
 	}
 
 	/**
@@ -196,7 +208,8 @@ public class ResultScene {
 				// choices of the question
 				JSONArray jsonChoices = new JSONArray();
 				Choice[] choices = question.getChoices();
-
+				
+				// traverse through the choices to put the T and F flag to corresponding choices
 				for (int i = 0; i < choices.length; i++) {
 					JSONObject c = new JSONObject();
 					if (choices[i].isCorrect()) {
@@ -204,6 +217,7 @@ public class ResultScene {
 					} else {
 						c.put("isCorrect", "F");
 					}
+					// put the choices with corresponding descriptions
 					c.put("choice", choices[i].getChoiceDescription());
 					jsonChoices.add(c);
 					q.put("choiceArray", jsonChoices);
@@ -213,7 +227,7 @@ public class ResultScene {
 
 			obj.put("questionArray", questions);
 
-			SaveFile(obj.toJSONString(), file);
+			SaveFile(obj.toJSONString(), file); // save it to the file system
 		}
 	}
 
@@ -226,6 +240,7 @@ public class ResultScene {
 	private void SaveFile(String content, File file) {
 		FileWriter fileWriter = null;
 		try {
+			// write to the file system
 			fileWriter = new FileWriter(file);
 			fileWriter.write(content);
 			fileWriter.close();
