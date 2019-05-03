@@ -108,18 +108,24 @@ public class QuestionScene {
 		Question cur = quiz.currQuesiton(); // get current question
 		String question = cur.getDescription(); // get question title
 		Choice[] choices = cur.getChoices(); // get choices
-
+		
+		// process question title : add \n after certain number of single strings
 		// process question title - Start
 		int tmpLength = question.length();
-		int tmpCount = 1;
-		int lengthLimit = 60;
-		while (tmpLength > lengthLimit) {
-			question = question.substring(0,
-					lengthLimit * tmpCount + question.substring(lengthLimit * tmpCount).indexOf(" ")) + "\n"
-					+ question.substring(40 * tmpCount + question.substring(lengthLimit * tmpCount).indexOf(" "));
-			tmpLength -= lengthLimit + question.substring(lengthLimit * tmpCount).indexOf(" ");
-			tmpCount++;
-		}
+	    int tmpIndex = 1;
+	    int lengthLimit = 55;
+	    while (tmpLength-1 > tmpIndex) {
+	        if(tmpIndex%lengthLimit==0) { 
+	          while(!question.substring(tmpIndex, tmpIndex+1).equals(" ")) {
+	            if(tmpIndex==tmpLength-1) break;
+	            tmpIndex++;
+	          }
+	          question=question.substring(0,tmpIndex+1)+"\n"+question.substring(tmpIndex+1);
+	          tmpIndex++; 
+	        }
+	        tmpIndex++;
+	    }
+	    
 		// process question title - End
 
 		Label questionLabel = new Label(
