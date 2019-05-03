@@ -204,6 +204,7 @@ public class QuestionScene {
 		// if user hits submit button
 
 		submit.setOnAction(new EventHandler<ActionEvent>() {
+		  
 			/**
 			 * set up the functionality of submit button
 			 * @param event the event of the control
@@ -268,8 +269,7 @@ public class QuestionScene {
 					} else {
 						// non of them is correct
 						correctnessPrompt = "incorrect :("; // prepare prompt for each result
-					}
-
+					} 
 					// set pop-up window after user hits submit
 					Stage popUpStage = new Stage();
 					BorderPane pane = new BorderPane();

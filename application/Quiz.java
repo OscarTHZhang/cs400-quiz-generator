@@ -106,10 +106,12 @@ public class Quiz {
 			int index = rdm.nextInt(MainMenuScene.questionPool.size());
 			Question q = MainMenuScene.questionPool.get(index);
 			if (this.allTopic.contains(q.getTopic()) && !this.questions.contains(q)) {
+			    q.setAnswered(false);
 				questions.add(q);
 				newQCount++;
 			}	
 		}
+		
 	}
 	
 	/**
