@@ -81,7 +81,9 @@ public class AddNewQuestionScene {
 		// combo box
 		
 		Collections.sort(MainMenuScene.allallTopics);
-		ObservableList<String> options = FXCollections.observableArrayList(MainMenuScene.allallTopics);
+		ObservableList<String> options = FXCollections.observableArrayList(
+				MainMenuScene.allallTopics);
+		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ComboBox topicMenu = new ComboBox(options);
 
@@ -98,7 +100,7 @@ public class AddNewQuestionScene {
 		TextField choiceDText = new TextField();
 		TextField choiceEText = new TextField();
 
-		TextField[] choiceTexts = { choiceAText, choiceBText, choiceCText, choiceDText, choiceEText };
+		TextField[] choiceTexts = {choiceAText, choiceBText, choiceCText, choiceDText, choiceEText};
 		
 		// check boxes
 		CheckBox choiceABox = new CheckBox("Correct?");
