@@ -21,6 +21,7 @@ public class Question {
 	private Choice[] choices; // answer choices
 	private String topic; // the topic that this question is affiliated to
 	private String imgPath; // a list of images that may be related to this question
+	private boolean answered;
 
 	/**
 	 * The constructor of the Question class that takes in the parameters
@@ -42,6 +43,15 @@ public class Question {
 		this.choices = choices;
 		this.topic = topic;
 		this.imgPath = imgPath;
+		this.answered = false;
+	}
+
+	public boolean isAnswered() {
+		return answered;
+	}
+
+	public void setAnswered(boolean answered) {
+		this.answered = answered;
 	}
 
 	public Question() {
