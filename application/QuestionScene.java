@@ -296,7 +296,7 @@ public class QuestionScene {
 		HBox choicesAndImage = new HBox();
 		choicesAndImage.setAlignment(Pos.CENTER_LEFT);
 		choicesAndImage.setSpacing(80);
-		choicesAndImage.setPadding(new Insets(10, 0, 0, 10));
+		choicesAndImage.setPadding(new Insets(10, 0, 0, 30));
 		choicesAndImage.getChildren().addAll(choicesBox);
 		// if has images
 		if (cur.getImg() != null) {
@@ -311,11 +311,12 @@ public class QuestionScene {
 		list.getChildren().addAll(questionLabel, questionDescription);
 		list.setAlignment(Pos.TOP_LEFT);
 		list.setSpacing(15);
+		list.setPadding(new Insets(0, 0, 0 ,20));
 
 		root.setTop(list);
 		root.setCenter(choicesAndImage);
 		root.setBottom(buttons);
-		root.setPadding(new Insets(20, 30, 20, 30));
+		root.setPadding(new Insets(20, 0, 20, 0));
 
 		return root;
 	}
