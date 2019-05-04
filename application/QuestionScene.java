@@ -108,17 +108,11 @@ public class QuestionScene {
 	}
 
 	/**
-	 * set interface's borderPane
-	 * 
-	 * @return BorderPane the border pane that is set 
+	 * helper method to process the question string so that the question is breaking according to 
+	 * the English grammar
+	 * @return the new string with breaking point setting properly
 	 */
-	private BorderPane setBorderPane() {
-		setScene();
-		BorderPane root = new BorderPane();
-		Question cur = quiz.currQuesiton(); // get current question
-		String question = cur.getDescription(); // get question title
-		Choice[] choices = cur.getChoices(); // get choices
-
+	private String processQuestion(String question) {
 		// process question title : add \n after certain number of single strings
 		// process question title - Start
 		int tmpLength = question.length();
@@ -134,12 +128,30 @@ public class QuestionScene {
 					tmpIndex++;
 				}
 				// add the line breaker
-				question = question.substring(0, tmpIndex + 1) + "\n" + question.substring(tmpIndex + 1);
+				question = question.substring(0, tmpIndex + 1) + "\n" + 
+						question.substring(tmpIndex + 1);
+				
 				tmpIndex++;
 			}
 			tmpIndex++;
 		}
 		// process question title - End
+		return question;
+	}
+	
+	/**
+	 * set interface's borderPane of the UI
+	 * 
+	 * @return BorderPane the border pane that is set 
+	 */
+	private BorderPane setBorderPane() {
+		setScene();
+		BorderPane root = new BorderPane();
+		Question cur = quiz.currQuesiton(); // get current question
+		String question = cur.getDescription(); // get question title
+		Choice[] choices = cur.getChoices(); // get choices
+
+		question = processQuestion(question); // call helper method to process question string
 
 		// question label with paging number
 		Label questionLabel = new Label("Question " + (quiz.getCurrentQuestionIndex() + 1) + 
@@ -286,6 +298,7 @@ public class QuestionScene {
 
 					// if user clicks on next question
 					click.setOnAction(new EventHandler<ActionEvent>() {
+						
 						/**
 						 * set up the functionality of the button "next"
 						 * @param event that is going to start the function of this button
@@ -312,7 +325,7 @@ public class QuestionScene {
 					cur.setAnswered(true);
 					
 				} else {
-					// setting up the pop-up for showing the quesion is answered
+					// setting up the pop-up for showing the question is answered
 					Stage popUpStage = new Stage();
 					BorderPane pane = new BorderPane();
 					VBox vBox = new VBox();
