@@ -14,8 +14,12 @@
 
 package application;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
+
+import javax.imageio.ImageIO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

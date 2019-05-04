@@ -12,3 +12,4 @@ Semester: Spring 2019<br/>
 2. In the adding test scene, after selecting the topic, click + to add the selected topic
 3. In the quiz scene/session, PREVIOUS goes to the previous question, SUBMIT will submit the answer, and SKIP will go the the next question (user is not able to change the answer after he/she submits the answer)
 4. "alert to save" functionality is a little duplicated than what we did. We have already provided a button for saving the question in the menu.
+5. make and .jar is not working because it says it cannot find the symbol for json parser and we don't know why. so probably start the application from the Main.java
