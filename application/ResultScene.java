@@ -103,7 +103,7 @@ public class ResultScene {
 		saveAns.setMinSize(100, 40);
 		saveAns.setOnAction(e -> saveFileToLocal());
 
-		Button exit = new Button("Exit without Saving");
+		Button exit = new Button("Exit");
 		exit.setMinSize(100, 40);
 
 		setExitButton(exit); // set its functionality by calling helper
@@ -145,9 +145,12 @@ public class ResultScene {
 			Text warningMessage = new Text("Are you sure you want to quit?");
 
 			// buttons
-			Button no = new Button("NO");
+			Button save = new Button("SAVE FIRST");
 			// close the warning window
-			no.setOnAction(e2 -> popUpStage.close());
+			save.setOnAction(e2 -> {
+				saveFileToLocal();
+				popUpStage.close();
+			});
 
 			// terminate the program
 			Button yes = new Button("YES");
@@ -155,7 +158,7 @@ public class ResultScene {
 
 			// HBoxs
 			HBox buttons = new HBox();
-			buttons.getChildren().addAll(no, yes);
+			buttons.getChildren().addAll(save, yes);
 			buttons.setAlignment(Pos.CENTER);
 			buttons.setSpacing(20);
 
