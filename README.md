@@ -8,4 +8,7 @@ Semester: Spring 2019<br/>
 4. Oscar Zhang, lec 002, tzhang383@wisc.edu, x-team #53
 
 #### Notes or comments to grader
-Open Main.java to run the application
+1. Open Main.java to run the application
+2. In the adding test scene, after selecting the topic, click + to add the selected topic
+3. In the quiz scene/session, PREVIOUS goes to the previous question, SUBMIT will submit the answer, and SKIP will go the the next question (user is not able to change the answer after he/she submits the answer)
+4. "alert to save" functionality is a little duplicated than what we did. We have already provided a button for saving the question in the menu.
