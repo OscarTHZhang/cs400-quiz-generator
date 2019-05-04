@@ -257,14 +257,29 @@ public class AddNewQuestionScene {
 	 */
 	private String chooseImage() {
 		// a FileChooser to select the image
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Upload your picture");
-		File selectedPic = fileChooser.showOpenDialog(stage);
-		if (selectedPic == null) {
-			return null;
-		} else {
-			return selectedPic.toURI().toString(); // return the URI string
-		}
+		try {
+		        FileChooser fileChooser = new FileChooser();
+		        fileChooser.setTitle("Upload your picture");
+		        File selectedPic = fileChooser.showOpenDialog(stage);
+		        if (selectedPic == null) {
+		            return null;
+		        } else {
+		            // save file to local directory
+		            String fileNameWOPath = selectedPic.getName();
+		            String currentDirectory = System.getProperty("user.dir");
+		            System.out.println("fileNameWOPath: "+fileNameWOPath);
+		            System.out.println("currentDirectory: "+currentDirectory);
+		            BufferedImage origImg = ImageIO.read(selectedPic);
+		            File outputfile = new File(currentDirectory+"/"+fileNameWOPath);
+		            ImageIO.write(origImg, "png", outputfile);
+		            System.out.println("Image successfully written to path: "+currentDirectory+fileNameWOPath);
+		            return selectedPic.toURI().toString(); // return the URI string
+		        }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+		return null;  // Not going to happen
 	}
 
 	/**
