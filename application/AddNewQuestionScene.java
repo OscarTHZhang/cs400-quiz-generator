@@ -106,10 +106,8 @@ public class AddNewQuestionScene {
 		TextField choiceDText = new TextField();
 		TextField choiceEText = new TextField();
 
-
 		TextField[] choiceTexts = {choiceAText, choiceBText, choiceCText, choiceDText, choiceEText};
 		
-
 		// check boxes
 		CheckBox choiceABox = new CheckBox("Correct?");
 		CheckBox choiceBBox = new CheckBox("Correct?");
@@ -352,8 +350,8 @@ public class AddNewQuestionScene {
 		
 		// represent the final choices that are going to be added in the question
 		Choice[] finalChoices = new Choice[choicesCount];
-		for (int j = 0; j < choicesCount; j++) {
-			finalChoices[j] = choices[j];
+		for (int i = 0; i < choicesCount; i++) {
+			finalChoices[i] = choices[i];
 		}
 
 		// at least one correct answer has to be entered
