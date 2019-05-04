@@ -71,7 +71,7 @@ public class ResultScene {
 	private BorderPane setBorderPane() {
 		// texts indicating the number of answered and correct questions and the final
 		// score
-		Text answeredQText = new Text("Number of Correct Questions: " + 
+		Text answeredQText = new Text("Number of Fully Correct Questions: " + 
 				QuestionScene.correctQuestionCount + " / " + QuestionScene.questionCount);
 		
 		answeredQText.setFont(new Font("Helvetica", 16));
