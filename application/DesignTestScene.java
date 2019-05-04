@@ -109,7 +109,7 @@ public class DesignTestScene {
 		showNum.getChildren().add(numOfQ);
 		
 		// set up select button
-		Button add = new Button("+");
+		Button add = new Button("Add Topic");
 		// set the functionality using lambda expression
 		add.setOnAction(event -> {
 			// setting up so that selected topic is displayed

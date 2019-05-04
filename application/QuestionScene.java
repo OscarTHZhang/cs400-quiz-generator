@@ -367,7 +367,7 @@ public class QuestionScene {
 		buttons.getChildren().add(submit); // add the button submit
 
 		// set next button for skipping
-		Button next = new Button("SKIP");
+		Button next = new Button("NEXT");
 		next.setOnAction(e -> {
 			// go the the next question
 			if (quiz.getCurrentQuestionIndex() + 1 < questionCount) {
