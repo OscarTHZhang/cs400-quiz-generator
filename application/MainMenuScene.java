@@ -49,8 +49,8 @@ public class MainMenuScene {
 	private Stage stage; // the stage of the scene
 
 	protected static Quiz overallQuiz =  new Quiz();// a quiz object. See Quiz.java
-	protected static List<Question> questionPool = new ArrayList<Question>(); // all
-																	// questions
+	// all questions
+	protected static List<Question> questionPool = new ArrayList<Question>(); 
 	protected static List<String> allallTopics = new ArrayList<String>();// all topics
 
 	/**
@@ -124,8 +124,7 @@ public class MainMenuScene {
 		});
 
 		// put the title, numQuestions and the start quiz button in a VBox, set
-		// the VBox
-		// in the center of the BorderPane
+		// the VBox in the center of the BorderPane
 		VBox start = new VBox();
 		start.getChildren().addAll(title, startQuizButton, numQuestions);
 		start.setAlignment(Pos.CENTER);
@@ -163,7 +162,7 @@ public class MainMenuScene {
 	}
 	
 	/**
-	 * helper method that sets the functionality of exit button
+	 * Helper method that sets the functionality of exit button
 	 * @param exit button that is going to be set
 	 */
 	private void setExitButton(Button exit) {
