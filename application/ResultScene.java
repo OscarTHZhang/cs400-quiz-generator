@@ -191,7 +191,7 @@ public class ResultScene {
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(stage);
 
-		if (!file.getName().contains(".")) {
+		if (file != null && !file.getName().contains(".")) {
 			file = new File(file.getAbsolutePath() + ".txt");
 		}
 
